@@ -4,7 +4,7 @@ MyDiary is an online journal where users can pen down their thoughts and feeling
 
 #
 
-Click [https://sokopaulsokool.github.io/MyDiary/](https://sokopaulsokool.github.io/MyDiary/UI) and start using the Diary
+Click [https://sokopaulsokool.github.io/MyDiary/UI](https://sokopaulsokool.github.io/MyDiary/UI) and start using the Diary
 
 #Easy to use Features
 

@@ -18,12 +18,12 @@ document.getElementById('signup').onclick = function() {
 
 // adds onclick listener to take user to view their entries when submit on signup form is clicked
 document.getElementById('submit-signup').onclick = function() {
-    window.location.href = "../entries.html";
+    window.location.href = "./entries.html";
 };
 
 // adds onclick listener to take user to view their entries when submit on login form is clicked
 document.getElementById('submit-login').onclick = function() {
-    window.location.href = "../entries.html";
+    window.location.href = "./entries.html";
 };
 // adds onclick listener to show the detailed view of the clicked entry in a list
 document.getElementsByClassName('entries-item').onclick = function() {

@@ -7,15 +7,18 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="css/generalstyles.css">
+    <link rel="stylesheet" href="css/specific.css">
 </head>
 
-<body style="background:blanchedalmond;" class="view">
-    <div class="kool-fit-parent back">
+<body class="view">
+    <!-- gives body a background-->
+    <div class="kool-fit-parent  kool-primary-background"></div>
+    <!-- adds svg image to body -->
+    <div class="kool-fit-parent back "> </div>
 
-    </div>
-    <div style=" width: 70%; margin: 0 auto;  box-sizing: border-box;" class="view kool-fit-parent">
-
-        <div class="center-children-in-parent items-column">
+    <!--Title and simple description of the site project -->
+    <div class="view kool-fit-parent kool-display-flex">
+        <div class="kool-display-flex kool-flex-column  kool-flex-center  kool-w-75 ">
             <h1 class="tittle">My Diary</h1>
             <p class="sub-tittle">Dear Diary</p>
             <p class="w-50">Whatever is on your mind, Trust My Diary is here to help you keep your records.</p>
@@ -23,35 +26,35 @@
         </div>
     </div>
 
-    <section id="kool-signup" class="kool-overlay">
+    <!-- an overlay to display forms-->
+    <section class="kool-overlay">
+        <!--black filter of the overlay -->
         <div class="kool-cover kool-fit-parent"></div>
-        <div class="kool-fit-parent">
-            <form class="center-children-in-parent items-column" action="">
-                <h3 style="color:wheat">Signup</h3>
-                <input class="items-column " type="text" name="username" id="a">
-                <input class="items-column " type="email" name="email" id="b">
-                <input class="items-column " type="text" name="username" id="c">
-                <input class="items-column " type="password" name="password" id="e">
-                <input class="kool-button" type="submit" value="Submit">
-                <p id="login" style="color:wheat">Already have account</p>
+        <!-- signup form-->
+        <div id="signup-form" class="kool-fit-parent kool-show">
+            <form class="kool-fit-parent kool-flex-center kool-flex-center kool-flex-nowrap kool-flex-column" action="">
+                <h3 class="kool-secondary-color">Signup</h3>
+                <input class="kool-input" type="text" name="username" id="a">
+                <input class="kool-input " type="email" name="email" id="b">
+                <input class="kool-input " type="text" name="username" id="c">
+                <input class="kool-input " type="password" name="password" id="e">
+                <input id="submit-signup" class="kool-button" type="button" value="Submit">
+                <p id="login" class="kool-secondary-color kool-pointer">Already have account</p>
+            </form>
+        </div>
+        <!-- login form-->
+        <div id="login-form" class="kool-fit-parent kool-hidden">
+            <form class="kool-fit-parent kool-flex-center kool-flex-center kool-flex-nowrap kool-flex-column" action="">
+                <h3 class="kool-secondary-color">Signup</h3>
+                <input class="kool-input" type="text" name="username" id="f">
+                <input class="kool-input " type="email" name="passwprd" id="g">
+                <input id="submit-login" class="kool-button" type="button" value="Submit">
+                <p id="signup" class="kool-secondary-color kool-pointer">Create account</p>
             </form>
         </div>
     </section>
 
-    <section id="kool-login" class="kool-overlay kool-hidden">
-        <div class="kool-cover kool-fit-parent"></div>
-        <div class="kool-fit-parent">
-            <form class="center-children-in-parent items-column" action="">
-                <h3 style="color:wheat">log in</h3>
-                <input class="items-column " type="text" name="username" id="f">
-                <input class="items-column " type="password" name="passwprd" id="g">
-                <input type="submit" value="Submit">
-                <p id="signup" style="color:wheat">Sign up</p>
-            </form>
-        </div>
-    </section>
 
-    <script src="./js/jquery.min.js"></script>
     <script src="./js/scripts.js"></script>
 
 </body>

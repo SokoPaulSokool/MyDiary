@@ -115,6 +115,32 @@
 }
 
 
+/* padding */
+
+.kool-p-1 {
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.kool-p-2 {
+    padding: 5%;
+    box-sizing: border-box;
+}
+
+
+/* margin */
+
+.kool-m-1 {
+    margin: 1%;
+    box-sizing: border-box;
+}
+
+.kool-m-2 {
+    margin: 5%;
+    box-sizing: border-box;
+}
+
+
 /* positoning  */
 
 .kool-position-relative {
@@ -170,6 +196,11 @@
     flex-direction: column;
 }
 
+.kool-flex-space-around {
+    display: flex;
+    justify-content: space-around;
+}
+
 
 /*  pointer */
 
@@ -178,19 +209,49 @@
 }
 
 
+/*  no margin */
+
+.kool-margin-0 {
+    margin: 0;
+}
+
+
+/*  no padding */
+
+.kool-padding-0 {
+    padding: 0;
+}
+
+
+/*  no padding no margin */
+
+.kool-clean {
+    padding: 0;
+    margin: 0;
+}
+
+
 /* button class */
 
 .kool-button {
     border-radius: 6px;
     padding: 4px;
-    box-shadow: 1px 1px 20px 0px #000000;
-    -webkit-box-shadow: 1px 1px 20px 0px #000000;
-    -moz-box-shadow: 1px 1px 20px 0px #000000;
-    text-shadow: 1px 1px 20px #000000;
-    border: solid #337FED 1px;
+    border: solid #d2691e 1px;
+    text-decoration: none;
+    display: inline-block;
+    background: wheat;
+    cursor: pointer;
+}
+
+.kool-button:hover {
+    border-radius: 6px;
+    padding: 4px;
+    background: #d2691e;
+    border: solid #d2691e 1px;
     text-decoration: none;
     display: inline-block;
     cursor: pointer;
+    color: white;
 }
 
 
@@ -274,7 +335,7 @@
 
 .kool-overlay {
     position: absolute;
-    width: 40vw;
+    width: 25vw;
     height: 100vh;
     top: 0;
     right: 0;
@@ -287,4 +348,47 @@
 
 .kool-text-center {
     text-align: center;
+}
+
+.kool-text-size-1 {
+    font-weight: 400;
+    font-size: 1.1em;
+}
+
+.kool-text-size-2 {
+    font-weight: 500;
+    font-size: 1.5em;
+}
+
+.kool-text-size-3 {
+    font-weight: 700;
+    font-size: 3em;
+}
+
+.kool-text-size-4 {
+    font-weight: 700;
+    font-size: 5em;
+}
+
+.kool-text-size-5 {
+    font-weight: 700;
+    font-size: 9em;
+}
+
+.kool-border-box {
+    box-sizing: border-box;
+}
+
+.kool-data-input {
+    color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5%;
+    box-sizing: border-box;
+}
+
+.koo-text-box {
+    min-height: 250px;
 }

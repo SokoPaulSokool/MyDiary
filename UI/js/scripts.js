@@ -14,6 +14,8 @@ document.getElementById('signup').onclick = function() {
     toggleClass(signupForm, "kool-show", "kool-hidden");
 };
 
+
+
 // adds onclick listener to take user to view their entries when submit on signup form is clicked
 document.getElementById('submit-signup').onclick = function() {
     window.location.href = "../entries.html";

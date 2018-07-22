@@ -15,6 +15,17 @@
     cursor: pointer;
 }
 
+.entry-actions {
+    position: absolute;
+    bottom: 1%;
+}
+
+.add-entry {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+}
+
 .entries-item:hover {
     background: #ffffff;
     color: black;

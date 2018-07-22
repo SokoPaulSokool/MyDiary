@@ -18,8 +18,8 @@
 
     <!--Title and simple description of the site project -->
     <div class="view kool-fit-parent kool-display-flex">
-        <div class="kool-display-flex kool-flex-column  kool-flex-center  kool-w-75 ">
-            <h1 class="tittle">My Diary</h1>
+        <div class="kool-p-1 kool-display-flex kool-flex-column kool-flex-center  kool-w-50 ">
+            <h1 class="kool-text-size-5">My Diary</h1>
             <p class="sub-tittle">Dear Diary</p>
             <p class="w-50">Whatever is on your mind, Trust My Diary is here to help you keep your records.</p>
             <span>Tell My Diary whats on your mind.</span>
@@ -34,10 +34,18 @@
         <div id="signup-form" class="kool-fit-parent kool-show">
             <form class="kool-fit-parent kool-flex-center kool-flex-center kool-flex-nowrap kool-flex-column" action="">
                 <h3 class="kool-secondary-color">Signup</h3>
-                <input class="kool-input" type="text" name="username" id="a">
-                <input class="kool-input " type="email" name="email" id="b">
-                <input class="kool-input " type="text" name="username" id="c">
-                <input class="kool-input " type="password" name="password" id="e">
+                <div class="kool-data-input ">
+                    <div class="kool-label ">User Name</div>
+                    <input class="kool-input " type="text" name="username">
+                </div>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Phone Number</div>
+                    <input class="kool-input " type="text" name="phonenumber">
+                </div>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Password</div>
+                    <input class="kool-input " type="password" name="password">
+                </div>
                 <input id="submit-signup" class="kool-button" type="button" value="Submit">
                 <p id="login" class="kool-secondary-color kool-pointer">Already have account</p>
             </form>
@@ -46,8 +54,14 @@
         <div id="login-form" class="kool-fit-parent kool-hidden">
             <form class="kool-fit-parent kool-flex-center kool-flex-center kool-flex-nowrap kool-flex-column" action="">
                 <h3 class="kool-secondary-color">Signup</h3>
-                <input class="kool-input" type="text" name="username" id="f">
-                <input class="kool-input " type="email" name="passwprd" id="g">
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Phone Number</div>
+                    <input class="kool-input" type="text" name="phonenumber">
+                </div>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Password</div>
+                    <input class="kool-input " type="password" name="password">
+                </div>
                 <input id="submit-login" class="kool-button" type="button" value="Submit">
                 <p id="signup" class="kool-secondary-color kool-pointer">Create account</p>
             </form>

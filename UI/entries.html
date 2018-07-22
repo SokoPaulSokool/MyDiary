@@ -18,28 +18,106 @@
     <div class="kool-fit-parent back ">
     </div>
 
+
     <!-- entries view -->
-    <div class="entries-view kool-h-80 kool-w-80 kool-primary-background 
-    kool-center-vert-hor kool-flex-center kool-flex-nowrap">
-        <!-- entries list -->
-        <div class="kool-w-25 kool-h-75 kool-secondary-background kool-flex-center">
-            <ul class="kool-w-100 kool-display-flex kool-flex-column kool-flex-nowrap ">
-                <li class="entries-item kool-primary-background kool-flex-center-vert">The day that was</li>
-                <li class="entries-item kool-primary-background kool-flex-center-vert">Journey to Kampala</li>
-                <li class="entries-item kool-primary-background kool-flex-center-vert">My History</li>
-                <li class="entries-item kool-primary-background kool-flex-center-vert">Life plane</li>
-                <li class="entries-item kool-primary-background kool-flex-center-vert">Work experience</li>
-            </ul>
+    <div class="kool-h-80 kool-w-80 kool-primary-background kool-center-vert-hor">
+        <h2 class="kool-text-center kool-text-size-3">My Diary Entries</h2>
+        <div class="entries-view kool-center-verticle kool-fit-parent
+             kool-flex-center kool-flex-nowrap">
+
+            <!-- entries list -->
+            <div class="kool-w-25 kool-h-75 kool-secondary-background kool-flex-center">
+                <ul class="kool-w-100 kool-display-flex kool-flex-column kool-flex-nowrap ">
+                    <li class="entries-item kool-primary-background kool-flex-center-vert">The day that was</li>
+                    <li class="entries-item kool-primary-background kool-flex-center-vert">Journey to Kampala</li>
+                    <li class="entries-item kool-primary-background kool-flex-center-vert">My History</li>
+                    <li class="entries-item kool-primary-background kool-flex-center-vert">Life plane</li>
+                    <li class="entries-item kool-primary-background kool-flex-center-vert">Work experience</li>
+                </ul>
+
+            </div>
+            <!-- single detailed entry view -->
+            <div class="kool-w-60 kool-h-75 kool-accent-background kool-position-relative kool-p-1">
+                <!--Entry Date-->
+                <div class="">
+                    27 / April / 2018
+                </div>
+                <div class="kool-flex-column kool-p-2">
+                    <!-- Entry tittle-->
+                    <h3>The day that was</h3>
+                    <!-- Entry -->
+                    <div>
+                        <p class="kool-text-size-1">This is the perfect day of my life. Am getting everything I ever wanted. At first I thought it was a dream until I asked my friend to pinch me. Thanks to my diary, I will never forget this day.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="entry-actions kool-position-absolute">
+                    <button id="edit-entry-button" class="kool-button">Edit</button>
+                    <button id="delete-entry-button" class="kool-button">Delete</button>
+                </div>
+            </div>
+            <input id="add-entry-button" class="add-entry kool-button" type="button" value="Add new entry">
 
         </div>
-        <!-- single detailed entry view -->
-        <div class="kool-w-60 kool-h-75 kool-accent-background">
-
-
-        </div>
-
     </div>
 
+
+
+    <!-- an overlay to display forms-->
+    <section id="forms-overlay" class="kool-overlay kool-hidden">
+        <!--black filter of the overlay -->
+        <div class="kool-cover kool-fit-parent"></div>
+        <!-- exit  form-->
+        <input style="z-index: 7" id="overlay-back-button" class="kool-position-absolute kool-button" type="button" value="Back">
+        <div id="edit-entry-form" class="kool-fit-parent kool-hidden">
+            <form class="kool-border-box kool-fit-parent kool-flex-center kool-flex-center kool-flex-nowrap kool-flex-column" action="">
+                <h3 class="kool-secondary-color">Edit</h3>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Tittle</div>
+                    <input class="kool-input " type="text" name="tittle">
+                </div>
+                <div class="kool-data-input ">
+                    <div class="kool-label">Entry</div>
+                    <textarea class="koo-text-box kool-input kool-clean " type="text" name="entry"></textarea>
+                </div>
+                <input id="submit-edit" class="kool-button" type="button" value="Submit">
+            </form>
+        </div>
+
+        <!-- add entry form-->
+        <div id="add-entry-form" class="kool-fit-parent kool-hidden">
+            <form class="kool-border-box kool-fit-parent kool-flex-center kool-flex-center kool-flex-nowrap kool-flex-column" action="">
+                <h3 class="kool-secondary-color">Add</h3>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Tittle</div>
+                    <input class="kool-input " type="text" name="tittle">
+                </div>
+                <div class="kool-data-input ">
+                    <div class="kool-label">Entry</div>
+                    <textarea class="koo-text-box kool-input kool-clean " type="text" name="entry"></textarea>
+                </div>
+                <input id="submit-edit" class="kool-button" type="button" value="Submit">
+            </form>
+        </div>
+
+
+        <!-- delete confirm view -->
+        <div id="delete-confirm-view" class="kool-fit-parent kool-hidden">
+            <div class=" kool-m-2 kool-p-1 kool-flex-center kool-center-vert-hor kool-h-25 kool-flex-column kool-white-background">
+                <h4 class="kool-w-100">Are you sure you want to delete this entry?</h4>
+                <div class="kool-flex-space-around  kool-flex-row kool-w-75">
+                    <input class="kool-button" type="button" value="Yes">
+                    <input class="kool-button" type="button" value="No">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="./js/entries.js"></script>
 </body>
 
 </html>

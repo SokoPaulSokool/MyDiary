@@ -7,7 +7,7 @@ install:
   - pip install coverage
   - pip install nose
 script:
-  - nosetests --with-coverage
+  - nosetests --with-coverage --cover-tests --cover-package=tests
 after_success:
   - coveralls
   - pytest   

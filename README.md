@@ -4,6 +4,8 @@ MyDiary is an online journal where users can pen down their thoughts and feeling
 
 #
 
+[![Build Status](https://travis-ci.org/SokoPaulSokool/MyDiary.svg?branch=endpoints)](https://travis-ci.org/SokoPaulSokool/MyDiary)
+
 Click [https://sokopaulsokool.github.io/MyDiary/UI](https://sokopaulsokool.github.io/MyDiary/UI) and start using the Diary
 
 #Easy to use Features

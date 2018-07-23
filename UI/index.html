@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/generalstyles.css">
+    <link rel="stylesheet" href="css/specific.css">
+    <base href="./" />
+</head>
+
+<body class="view">
+    <!-- gives body a background-->
+    <div class="kool-fit-parent  kool-primary-background"></div>
+    <!-- adds svg image to body -->
+    <div class="kool-fit-parent back "> </div>
+
+    <!--Title and simple description of the site project -->
+    <div class="view kool-fit-parent kool-display-flex">
+        <div class="kool-p-1 kool-display-flex kool-flex-column kool-flex-center  kool-w-50 ">
+            <h1 class="kool-text-size-5">My Diary</h1>
+            <p class="sub-tittle">Dear Diary</p>
+            <p class="w-50">Whatever is on your mind, Trust My Diary is here to help you keep your records.</p>
+            <span>Tell My Diary whats on your mind.</span>
+        </div>
+    </div>
+
+    <!-- an overlay to display forms-->
+    <section class="kool-overlay">
+        <!--black filter of the overlay -->
+        <div class="kool-cover kool-fit-parent"></div>
+        <!-- signup form-->
+        <div id="signup-form" class="kool-fit-parent kool-show">
+            <form class="kool-fit-parent kool-flex-center kool-flex-center kool-flex-nowrap kool-flex-column" action="">
+                <h3 class="kool-secondary-color">Signup</h3>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">User Name</div>
+                    <input class="kool-input " type="text" name="username">
+                </div>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Phone Number</div>
+                    <input class="kool-input " type="text" name="phonenumber">
+                </div>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Password</div>
+                    <input class="kool-input " type="password" name="password">
+                </div>
+                <input id="submit-signup" class="kool-button" type="button" value="Submit">
+                <p id="login" class="kool-secondary-color kool-pointer">Already have account</p>
+            </form>
+        </div>
+        <!-- login form-->
+        <div id="login-form" class="kool-fit-parent kool-hidden">
+            <form class="kool-fit-parent kool-flex-center kool-flex-center kool-flex-nowrap kool-flex-column" action="">
+                <h3 class="kool-secondary-color">Signup</h3>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Phone Number</div>
+                    <input class="kool-input" type="text" name="phonenumber">
+                </div>
+                <div class="kool-data-input ">
+                    <div class="kool-label ">Password</div>
+                    <input class="kool-input " type="password" name="password">
+                </div>
+                <input id="submit-login" class="kool-button" type="button" value="Submit">
+                <p id="signup" class="kool-secondary-color kool-pointer">Create account</p>
+            </form>
+        </div>
+    </section>
+
+
+    <script src="js/scripts.js"></script>
+
+</body>
+
+</html>

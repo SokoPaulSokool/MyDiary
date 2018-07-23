@@ -1,0 +1,398 @@
+/* these are styles designed to siplify development in html by giving one classes that make it easy to position elements in the dom*/
+
+
+/* full view port class */
+
+.view {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+}
+
+body {
+    overflow: hidden;
+}
+
+
+/* color helper classes */
+
+.kool-primary-background {
+    background-color: #d2691e;
+}
+
+.kool-primary-color {
+    color: #d2691e;
+}
+
+.kool-accent-background {
+    background-color: #ffffff;
+}
+
+.kool-accent-color {
+    color: #ffffff;
+}
+
+.kool-secondary-background {
+    background-color: wheat;
+}
+
+.kool-secondary-color {
+    color: wheat;
+}
+
+.kool-black-background {
+    background-color: #7c3706;
+}
+
+.kool-black-color {
+    color: #000000;
+}
+
+.kool-white-background {
+    background-color: #ffffff;
+}
+
+.kool-white-color {
+    color: #ffffff;
+}
+
+
+/* percentage width helper */
+
+.kool-w-100 {
+    width: 100%;
+}
+
+.kool-w-80 {
+    width: 80%;
+}
+
+.kool-w-75 {
+    width: 75%;
+}
+
+.kool-w-60 {
+    width: 60%;
+}
+
+.kool-w-50 {
+    width: 50%;
+}
+
+.kool-w-30 {
+    width: 30%;
+}
+
+.kool-w-25 {
+    width: 25%;
+}
+
+.kool-w-10 {
+    width: 10%;
+}
+
+
+/* percentage height helper */
+
+.kool-h-100 {
+    height: 100%;
+}
+
+.kool-h-80 {
+    height: 80%;
+}
+
+.kool-h-75 {
+    height: 75%;
+}
+
+.kool-h-50 {
+    height: 50%;
+}
+
+.kool-h-25 {
+    height: 25%;
+}
+
+.kool-h-10 {
+    height: 10%;
+}
+
+
+/* padding */
+
+.kool-p-1 {
+    padding: 1%;
+    box-sizing: border-box;
+}
+
+.kool-p-2 {
+    padding: 5%;
+    box-sizing: border-box;
+}
+
+
+/* margin */
+
+.kool-m-1 {
+    margin: 1%;
+    box-sizing: border-box;
+}
+
+.kool-m-2 {
+    margin: 5%;
+    box-sizing: border-box;
+}
+
+
+/* positoning  */
+
+.kool-position-relative {
+    position: relative;
+}
+
+.kool-position-absolute {
+    position: absolute;
+}
+
+
+/* flex box helper classes */
+
+.kool-display-flex {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.kool-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kool-flex-center-hor {
+    display: flex;
+    justify-content: center;
+}
+
+.kool-flex-center-vert {
+    display: flex;
+    align-items: center;
+}
+
+.kool-flex-nowrap {
+    display: flex;
+    flex-wrap: nowrap
+}
+
+.kool-flex-wrap {
+    display: flex;
+    flex-wrap: wrap
+}
+
+.kool-flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.kool-flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.kool-flex-space-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+/*  pointer */
+
+.kool-pointer {
+    cursor: pointer;
+}
+
+
+/*  no margin */
+
+.kool-margin-0 {
+    margin: 0;
+}
+
+
+/*  no padding */
+
+.kool-padding-0 {
+    padding: 0;
+}
+
+
+/*  no padding no margin */
+
+.kool-clean {
+    padding: 0;
+    margin: 0;
+}
+
+
+/* button class */
+
+.kool-button {
+    border-radius: 6px;
+    padding: 4px;
+    border: solid #d2691e 1px;
+    text-decoration: none;
+    display: inline-block;
+    background: wheat;
+    cursor: pointer;
+}
+
+.kool-button:hover {
+    border-radius: 6px;
+    padding: 4px;
+    background: #d2691e;
+    border: solid #d2691e 1px;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    color: white;
+}
+
+
+/* input view class */
+
+.kool-input {
+    padding: 1em 3em;
+    margin: 0.6em 4em;
+}
+
+
+/* svg background  */
+
+.back {
+    background: url('../assets/diary.svg'), no-repeat;
+    background-size: cover;
+}
+
+
+/* title size */
+
+.tittle {
+    font-weight: bold;
+    font-size: 9em;
+    margin: 0;
+}
+
+.sub-tittle {
+    font-weight: bold;
+    font-size: 4em;
+    margin: 0;
+    color: white;
+}
+
+
+/* hide and shoe helper classes */
+
+.kool-hidden {
+    display: none;
+}
+
+.kool-show {
+    display: flex;
+}
+
+
+/* center element vertically */
+
+.kool-center-verticle {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+
+/* center element vertically */
+
+.kool-center-horizontal {
+    position: relative;
+    margin: 0 auto;
+}
+
+
+/* center element in a parent */
+
+.kool-center-vert-hor {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+}
+
+
+/* fit element in a parent */
+
+.kool-fit-parent {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.kool-overlay {
+    position: absolute;
+    width: 25vw;
+    height: 100vh;
+    top: 0;
+    right: 0;
+}
+
+.kool-cover {
+    opacity: 0.7;
+    background: black;
+}
+
+.kool-text-center {
+    text-align: center;
+}
+
+.kool-text-size-1 {
+    font-weight: 400;
+    font-size: 1.1em;
+}
+
+.kool-text-size-2 {
+    font-weight: 500;
+    font-size: 1.5em;
+}
+
+.kool-text-size-3 {
+    font-weight: 700;
+    font-size: 3em;
+}
+
+.kool-text-size-4 {
+    font-weight: 700;
+    font-size: 5em;
+}
+
+.kool-text-size-5 {
+    font-weight: 700;
+    font-size: 9em;
+}
+
+.kool-border-box {
+    box-sizing: border-box;
+}
+
+.kool-data-input {
+    color: white;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 5%;
+    box-sizing: border-box;
+}
+
+.koo-text-box {
+    min-height: 250px;
+}

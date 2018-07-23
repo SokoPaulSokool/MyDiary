@@ -1,0 +1,37 @@
+/* these are styles designed to cater for a specific element item apearence*/
+
+.entries-view {
+    justify-content: space-evenly;
+}
+
+.entries-item {
+    width: 100%;
+    min-height: 50px;
+    margin: 5px auto;
+    padding: 5px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: white;
+    cursor: pointer;
+}
+
+.entry-actions {
+    position: absolute;
+    bottom: 1%;
+}
+
+.add-entry {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+}
+
+.entries-item:hover {
+    background: #ffffff;
+    color: black;
+}
+
+ul {
+    list-style: none;
+    padding: 2px;
+}

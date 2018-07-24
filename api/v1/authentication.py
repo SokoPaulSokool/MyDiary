@@ -48,8 +48,23 @@ class Entries:
         id = self.entry_list.index(entry)
         self.entry_list[id].entry_id = id
 
+    def get_entry(self, entry_id):
+        try:
+            entry_got = self.entry_list[entry_id].serialize()
+            return str(entry_got)
+        except:
+            return "not found"
+
     def remove_entry(self, entry_id):
-        self.entry_list.pop(entry_id)
+        self.entry_list.remove(entry_id)
+
+    def replace_entry(self, entry_id, entry):
+        if self.get_entry(entry_id) != "not found":
+            self.entry_list.pop(entry_id)
+            self.add_entry(entry)
+            return "success"
+        else:
+            return "not found"
 
     def get_string(self):
         items = []
@@ -125,7 +140,7 @@ def signup():
         except:
             res = 'Either "name" or "phonenumber" or Poassword" is missing'
 
-    return res
+        return res
 
 
 # route to Fetch all entries or create an entry to diary
@@ -155,14 +170,37 @@ def entries():
                 res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
         except:
             res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
-
+        return res
 
 # route to Fetch a single entry or Modify an entry
 
 
-@app.route('/entries/<entryId>', methods=['GET', 'PUT'])
-def entry():
-    return "kool"
+@app.route('/api/v1/entries/<int:entryId>', methods=['GET', 'PUT'])
+def single_entries(entryId):
+    res = ''
+    Id = entryId
+    if request.method == 'GET':
+        entry_one = Entry(1, "dd", "kk", "ll")
+        entry_list.add_entry(entry_one)
+        return str(entry_list.get_entry(entryId))
+    if request.method == 'PUT':
+        try:
+            if request.form['entry'] != None or request.form['entry_date'] != None or request.form['entry_title'] != None:
+                entry = request.form['entry']
+                entry_title = request.form['entry_title']
+                entry_date = request.form['entry_date']
+                id = 1
+                if not entry or not entry_title or not entry_date:
+                    res = '"entry_title" or "entry" or "entry_date" is empty'
+                else:
+                    entry = Entry(
+                        id, entry_title, entry, entry_date)
+                    res = entry_list.replace_entry(Id, entry)
+            else:
+                res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
+        except:
+            res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
+        return res
 
 
 if __name__ == '__main__':

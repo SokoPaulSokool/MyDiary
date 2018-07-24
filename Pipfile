@@ -9,6 +9,7 @@ pytest = "*"
 pylint = "*"
 coveralls = "*"
 coverage = "*"
+"autopep8" = "*"
 
 [dev-packages]
 

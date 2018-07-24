@@ -7,8 +7,3 @@ class User():
 
     def get_user(self):
         return self
-
-
-if __name__ == "__main__":
-    person = User("a", 9, 0)
-    print(person.get_user())

@@ -17,7 +17,7 @@ diary_users = dict()
 # uses post data which must include phone number and password to be used for user authentication
 
 
-@app.route('api/v1/login', methods=['POST'])
+@app.route('/api/v1/login', methods=['POST'])
 def login():
     res = ''
     if request.method == 'POST':
@@ -27,7 +27,7 @@ def login():
 # uses post data which must include "phone number", "name", "password"  to be used for user registration
 
 
-@app.route('api/v1/signup', methods=['POST'])
+@app.route('/api/v1/signup', methods=['POST'])
 def signup():
     res = ''
     if request.method == 'POST':
@@ -56,7 +56,7 @@ def signup():
 # route to Fetch all entries or create an entry to diary
 
 
-@app.route('api/v1/entries', methods=['GET', 'POST'])
+@app.route('/api/v1/entries', methods=['GET', 'POST'])
 def entries():
     return "kool"
 

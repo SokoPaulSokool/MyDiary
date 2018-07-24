@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, request, flash
+from flask import Flask, render_template, url_for, request, flash, jsonify
 
 app = Flask(__name__)
 
@@ -20,7 +20,46 @@ class User():
         self.isloged_in = True
 
 
+class Entry():
+    def __init__(self, entry_id, entry_title, entry, entry_date):
+        self.entry_id = entry_id
+        self.entry_title = entry_title
+        self.entry = entry
+        self.entry_date = entry_date
+
+    def serialize(self):
+        return {
+            'entry_id': self.entry_id,
+            'entry_title': self.entry_title,
+            'entry': self.entry,
+            'entry_date': self.entry_date,
+        }
+
+
 diary_users = dict()
+
+
+class Entries:
+    def __init__(self):
+        self.entry_list = []
+
+    def add_entry(self, entry):
+        self.entry_list.append(entry)
+        id = self.entry_list.index(entry)
+        self.entry_list[id].entry_id = id
+
+    def remove_entry(self, entry_id):
+        self.entry_list.pop(entry_id)
+
+    def get_string(self):
+        items = []
+        for u in self.entry_list:
+            items.append(u.serialize())
+        return jsonify(items)
+
+
+entry_list = Entries()
+
 # uses post data which must include phone number and password to be used for user authentication
 
 
@@ -28,34 +67,34 @@ diary_users = dict()
 def login():
     res = ''
     if request.method == 'POST':
-        # try:
-        if request.form['phonenumber'] != None or request.form['password'] != None:
-            phonenumber = request.form['phonenumber']
-            password = request.form['password']
-            if not phonenumber or not password:
-                res = '"phonenumber" or Password" is empty'
-            else:
-                if phonenumber in diary_users:
-                    current_user = diary_users.get(
-                        phonenumber)
-
-                    print(current_user)
-                    if current_user.password == password:
-                        current_user.login_user()
-
-                    else:
-                        current_user.logout_user()
-
-                    if current_user.isloged_in:
-                        res = "login success"
-                    else:
-                        res = "login failed wrong password"
+        try:
+            if request.form['phonenumber'] != None or request.form['password'] != None:
+                phonenumber = request.form['phonenumber']
+                password = request.form['password']
+                if not phonenumber or not password:
+                    res = '"phonenumber" or Password" is empty'
                 else:
-                    res = "not yet registered or wrong phonenumber"
-        else:
+                    if phonenumber in diary_users:
+                        current_user = diary_users.get(
+                            phonenumber)
+
+                        print(current_user)
+                        if current_user.password == password:
+                            current_user.login_user()
+
+                        else:
+                            current_user.logout_user()
+
+                        if current_user.isloged_in:
+                            res = "login success"
+                        else:
+                            res = "login failed wrong password"
+                    else:
+                        res = "not yet registered or wrong phonenumber"
+            else:
+                res = 'Either "phonenumber" or Poassword" is missing'
+        except:
             res = 'Either "phonenumber" or Poassword" is missing'
-        # except:
-        #     res = 'Either "name" or "phonenumber" or Poassword" is missing'
     else:
         pass
     return res
@@ -94,12 +133,34 @@ def signup():
 
 @app.route('/api/v1/entries', methods=['GET', 'POST'])
 def entries():
-    return "kool"
+    res = ''
+    if request.method == 'GET':
+        entry_one = Entry(1, "dd", "kk", "ll")
+        entry_list.add_entry(entry_one)
+        return entry_list.get_string()
+    if request.method == 'POST':
+        try:
+            if request.form['entry'] != None or request.form['entry_date'] != None or request.form['entry_title'] != None:
+                entry = request.form['entry']
+                entry_title = request.form['entry_title']
+                entry_date = request.form['entry_date']
+                entry_id = ""
+                if not entry or not entry_title or not entry_date:
+                    res = '"entry_title" or "entry" or "entry_date" is empty'
+                else:
+                    entry_list.add_entry(
+                        Entry(entry_id, entry_title, entry, entry_date))
+                    res = "success"
+            else:
+                res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
+        except:
+            res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
+
 
 # route to Fetch a single entry or Modify an entry
 
 
-@app.route('/entries/<entryId>', methods=['GET', 'POST'])
+@app.route('/entries/<entryId>', methods=['GET', 'PUT'])
 def entry():
     return "kool"
 

@@ -16,10 +16,11 @@ class test_login(unittest.TestCase):
                                      )
     # Signup default user for test
 
-    def test_user_signup(self, phonenumber, password):
+    def user_signup(self):
         return self.test_client.post('/api/v1/signup',
                                      data=dict(phonenumber="12",
-                                               password="24"
+                                               password="24",
+                                               name="kool"
                                                )
                                      )
     # requires name of the field to be skipped and returns a response from login
@@ -65,8 +66,25 @@ class test_login(unittest.TestCase):
 
         assert response.data == b'Either "phonenumber" or Poassword" is missing'
 
+    # tests logging in wrong password
+
+    def test_login_user_wrong_password(self):
+        self.user_signup()
+        response = self.login("12", "120")
+
+        assert response.data == b'login failed wrong password'
+
+      # tests logging in wrong phone
+
+    def test_login_user_wrong_phone(self):
+        self.user_signup()
+        response = self.login("12ii", "10")
+
+        assert response.data == b'not yet registered or wrong phonenumber'
 
 # Testing the signup feature
+
+
 class test_signup(unittest.TestCase):
 
     test_client = app.test_client()

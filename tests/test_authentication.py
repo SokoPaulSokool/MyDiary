@@ -42,11 +42,33 @@ class test_signup(unittest.TestCase):
                                                    phonenumber="3"
                                                    )
                                          )
+    # tests adding a single user
 
     def test_signup_add_user(self):
         response = self.signup("paul", "1", "12")
 
         assert response.data == b'added'
+
+    # tests adding a single user empty name
+
+    def test_signup_add_user_empty_name(self):
+        response = self.signup("", "1", "12")
+
+        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
+
+    # tests adding a single user empty phonenumber
+
+    def test_signup_add_user_empty_phonenumber(self):
+        response = self.signup("paul", "", "12")
+
+        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
+
+    # tests adding a single user empty Passssword
+
+    def test_signup_add_user_empty_password(self):
+        response = self.signup("paul", "1", "")
+
+        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
 
     # tests adding a single user with missing name
 

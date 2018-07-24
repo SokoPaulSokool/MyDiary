@@ -8,9 +8,16 @@ class User():
         self.name = name
         self.phone_number = phone_number
         self.password = password
+        self.isloged_in = False
 
     def get_user(self):
         return self
+
+    def logout_user(self):
+        self.isloged_in = False
+
+    def login_user(self):
+        self.isloged_in = True
 
 
 diary_users = dict()
@@ -21,6 +28,35 @@ diary_users = dict()
 def login():
     res = ''
     if request.method == 'POST':
+        # try:
+        if request.form['phonenumber'] != None or request.form['password'] != None:
+            phonenumber = request.form['phonenumber']
+            password = request.form['password']
+            if not phonenumber or not password:
+                res = '"phonenumber" or Password" is empty'
+            else:
+                if phonenumber in diary_users:
+                    current_user = diary_users.get(
+                        phonenumber)
+
+                    print(current_user)
+                    if current_user.password == password:
+                        current_user.login_user()
+
+                    else:
+                        current_user.logout_user()
+
+                    if current_user.isloged_in:
+                        res = "login success"
+                    else:
+                        res = "login failed wrong password"
+                else:
+                    res = "not yet registered or wrong phonenumber"
+        else:
+            res = 'Either "phonenumber" or Poassword" is missing'
+        # except:
+        #     res = 'Either "name" or "phonenumber" or Poassword" is missing'
+    else:
         pass
     return res
 
@@ -37,7 +73,7 @@ def signup():
                 phonenumber = request.form['phonenumber']
                 password = request.form['password']
                 if not name or not phonenumber or not password:
-                    res = 'Either "name" or "phonenumber" or Poassword" is empty'
+                    res = 'Either "name" or "phonenumber" or Passssword" is empty'
                 else:
                     diary_user = User(name, phonenumber, password)
                     if phonenumber in diary_users:

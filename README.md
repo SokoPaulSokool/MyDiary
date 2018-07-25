@@ -79,3 +79,29 @@ These are instructions for setting up MyDiary app in a development enivornment.
   ```
 
 This site should now be running at http://localhost:5000
+
+### Run Tests
+
+- Make sure pytest is installed
+
+  ```
+  $ py.test
+  ```
+
+### Coverage
+
+```
+$ py.test --cov-config .coveragerc  --cov=api  tests/
+```
+
+- generated report
+
+```
+$ coverage html
+```
+
+```
+$ cd ~/htmlcov
+```
+
+- open index.html in a browser

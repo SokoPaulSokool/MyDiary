@@ -11,6 +11,7 @@ coveralls = "*"
 coverage = "*"
 "autopep8" = "*"
 gunicorn = "*"
+pytest-cov = "*"
 
 [dev-packages]
 

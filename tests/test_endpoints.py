@@ -241,6 +241,7 @@ class test_entries(unittest.TestCase):
                                                    entry="entry"
                                                    )
                                          )
+
        # tests adding a single user with missing name
 
     def test_submit_entry_missing_entry_title_field(self):
@@ -287,5 +288,91 @@ class test_entries(unittest.TestCase):
 
     def test_submit_entry(self):
         response = self.submit_entry("mm", "mmm", "mmm")
+
+        assert response.data == b'success'
+
+    # Testing the put  entries feature
+
+
+class test_put_entries(unittest.TestCase):
+    test_client = app.test_client()
+
+    # submit entry  up user with the provided args
+
+    def submit_put_entry(self, entry_title, entry, entry_date):
+        return self.test_client.put('/api/v1/entries/0',
+                                    data=dict(entry_title=entry_title,
+                                              entry=entry,
+                                              entry_date=entry_date
+                                              )
+                                    )
+    # requires name of the field to be skipped and returns a response from sigbup
+
+    def submit_put_entry_with_missing_form_value(self, missing_form_name):
+        if missing_form_name == "entry_title":
+            return self.test_client.put('/api/v1/entries/0',
+                                        data=dict(entry="entry",
+                                                  entry_date="entry_date"
+                                                  )
+                                        )
+        if missing_form_name == "entry":
+            return self.test_client.post('/api/v1/entries',
+                                         data=dict(entry_title="entry_title",
+                                                   entry_date="entry_date"
+                                                   )
+                                         )
+        if missing_form_name == "entry_date":
+            return self.test_client.post('/api/v1/entries',
+                                         data=dict(entry_title="entry_title",
+                                                   entry="entry"
+                                                   )
+                                         )
+
+       # tests adding a single user with missing name
+
+    def test_submit_entry_missing_put_entry_title_field(self):
+        response = self.submit_put_entry_with_missing_form_value("entry_title")
+
+        assert response.data == b'Either "entry_title" or "entry" or "entry_date"  is missing'
+
+        # tests adding a single user with missing entry
+
+    def test_submit_entry_missing_put_entry_field(self):
+        response = self.submit_put_entry_with_missing_form_value("entry")
+
+        assert response.data == b'Either "entry_title" or "entry" or "entry_date"  is missing'
+
+        # tests adding a single user with missing name
+
+    def test_submit_entry_missing_put_entry_date_field(self):
+        response = self.submit_put_entry_with_missing_form_value("entry_date")
+
+        assert response.data == b'Either "entry_title" or "entry" or "entry_date"  is missing'
+
+      # tests adding a single user empty entry title
+
+    def test_submit_entry_with_empty_put_entry_title(self):
+        response = self.submit_put_entry("", "dd", "dd")
+
+        assert response.data == b'"entry_title" or "entry" or "entry_date" is empty'
+
+    # tests adding a single user empty entry
+
+    def test_submit_entry_with_put_empty_entry(self):
+        response = self.submit_put_entry("mm", "", "dd")
+
+        assert response.data == b'"entry_title" or "entry" or "entry_date" is empty'
+
+    # tests adding a single user empty entry  date
+
+    def test_submit_entry_with_empty_put_entry_date(self):
+        response = self.submit_put_entry("mm", "mmm", "")
+
+        assert response.data == b'"entry_title" or "entry" or "entry_date" is empty'
+
+       # tests adding a single user empty entry  date
+
+    def test_submit_put_entry(self):
+        response = self.submit_put_entry("mm", "mmm", "mmm")
 
         assert response.data == b'success'

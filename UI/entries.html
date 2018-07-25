@@ -22,6 +22,11 @@
     <!-- entries view -->
     <div class="kool-h-80 kool-w-80 kool-primary-background kool-center-vert-hor">
         <h2 class="kool-text-center kool-text-size-3">My Diary Entries</h2>
+
+        <div style="z-index: 7" class=" kool-right-top">
+            <button id="view-profile-button" class="kool-button">Profile</button>
+            <button id="logout-button" class="kool-button">Logout</button>
+        </div>
         <div class="entries-view kool-center-verticle kool-fit-parent
              kool-flex-center kool-flex-nowrap">
 
@@ -114,10 +119,23 @@
                 </div>
             </div>
         </div>
+
+        <!-- delete confirm view -->
+        <div id="profile-view" class="kool-fit-parent kool-hidden">
+            <div class=" kool-p-2 kool-m-2 kool-p-1 kool-flex-center kool-center-vert-hor kool-h-25 kool-flex-column kool-white-background">
+                <h1 class="kool-w-100 kool-center-horizontal">User Name</h1>
+                <h2 class="kool-w-100 kool-center-horizontal">Soko Paul</h2>
+                <h1 class="kool-w-100 kool-center-horizontal">Number of entries</h1>
+                <h2 class="kool-w-100 kool-p-2 kool-center-horizontal">5</h2>
+
+            </div>
+        </div>
+
+
     </section>
 
-
-    <script src="./js/entries.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/koolscripts.js"></script>
 </body>
 
 </html>

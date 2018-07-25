@@ -13,6 +13,12 @@ body {
     overflow: hidden;
 }
 
+.kool-right-top {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
 
 /* color helper classes */
 

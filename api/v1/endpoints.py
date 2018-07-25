@@ -111,12 +111,10 @@ def login():
                             res = "login failed wrong password"
                     else:
                         res = "not yet registered or wrong phonenumber"
-            else:
-                res = 'Either "phonenumber" or Poassword" is missing'
+
         except:
             res = 'Either "phonenumber" or Poassword" is missing'
-    else:
-        pass
+            return res
     return res
 
 # signup user endpoint
@@ -140,11 +138,9 @@ def signup():
                     else:
                         diary_users[str(phonenumber)] = diary_user
                         res = "added"
-            else:
-                res = 'Either "name" or "phonenumber" or Poassword" is missing'
         except:
             res = 'Either "name" or "phonenumber" or Poassword" is missing'
-
+            return res
         return res
 
 
@@ -156,8 +152,8 @@ def entries():
     res = ''
     if request.method == 'GET':
         # add dummy entry
-        entry_one = Entry(1, "My title", "my entry body", "20/ july /2018")
-        entry_list.add_entry(entry_one)
+        # entry_one = Entry(1, "My title", "my entry body", "20/ july /2018")
+        # entry_list.add_entry(entry_one)
         # returns all entries
         return entry_list.get_string()
     if request.method == 'POST':
@@ -174,10 +170,9 @@ def entries():
                     entry_list.add_entry(
                         Entry(entry_id, entry_title, entry, entry_date))
                     res = "success"
-            else:
-                res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
         except:
             res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
+            return res
         return res
 
 # endpoint to Fetch a single entry or Modify an entry
@@ -206,10 +201,9 @@ def single_entries(entryId):
                         id, entry_title, entry, entry_date)
                     # replaces entry at a given id with the new data sent
                     res = entry_list.replace_entry(Id, entry)
-            else:
-                res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
         except:
             res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
+            return res
         return res
 
 

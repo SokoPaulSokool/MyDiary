@@ -74,6 +74,8 @@ function hideAllForms() {
     addEnteryForm = $('#add-entry-form');
     deleteEnteryForm = $('#delete-confirm-view');
     editEnteryForm = $('#edit-entry-form');
+    editEnteryForm = $('#profile-view');
+    editEnteryForm = $('#edit-entry-form');
     hide(formsOverlay);
     hide(addEnteryForm);
     hide(editEnteryForm);

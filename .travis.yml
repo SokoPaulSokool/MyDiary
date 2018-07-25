@@ -5,7 +5,6 @@ install:
   - pip install -r requirements.txt
 script:
   - py.test
-  - py.test --cov-config .coveragerc  --cov=api  tests/
   - nosetests --with-coverage --cover-tests --cover-package=tests
 after_success:
   - coveralls

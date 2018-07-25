@@ -4,7 +4,7 @@ MyDiary is an online journal where users can pen down their thoughts and feeling
 
 #
 
-[![Build Status](https://travis-ci.org/SokoPaulSokool/MyDiary.svg?branch=endpoints)](https://travis-ci.org/SokoPaulSokool/MyDiary)
+[![Build Status](https://travis-ci.org/SokoPaulSokool/MyDiary.svg?branch=develop)](https://travis-ci.org/SokoPaulSokool/MyDiary)
 
 [![Coverage Status](https://coveralls.io/repos/github/SokoPaulSokool/MyDiary/badge.svg?branch=endpoints)](https://coveralls.io/github/SokoPaulSokool/MyDiary?branch=endpoints)
 
@@ -30,8 +30,52 @@ These are the endpoints to test
 | POST   |  /api/v1/entries   | Create a new entry                  |
 | PUT    | /api/v1/entries/id | Modify a specific entry using an id |
 
-## Site and epi
+## Site and api
 
 Click [https://sokopaulsokool.github.io/MyDiary/UI](https://sokopaulsokool.github.io/MyDiary/UI) and start using the Diary
 
 Click [https://blooming-escarpment-93743.herokuapp.com/api/v1/entries](https://blooming-escarpment-93743.herokuapp.com/api/v1/entries) for api calls
+
+## Setting Up for Development
+
+These are instructions for setting up MyDiary app in a development enivornment.
+
+### Prerequisites
+
+- Python 3.6
+
+- Make a directory on your computer and a virtual environment
+
+  ```
+  $ mkdir myDiary
+  ```
+
+- Prepare the virtual environment
+
+  ```
+  $ pip install pipenv
+  $ pipenv shell
+  ```
+
+- Clone the project repo
+
+  ```
+  $ git clone https://github.com/SokoPaulSokool/MyDiary.git
+  ```
+
+  ```
+  $ cd ~/MyDiary
+  ```
+
+* Install necessary requirements
+
+  ```
+  $ pip install -r requirements.txt
+  ```
+
+* Run development server
+  ```
+  $ python app.py
+  ```
+
+This site should now be running at http://localhost:5000

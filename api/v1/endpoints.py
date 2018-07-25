@@ -215,5 +215,3 @@ def single_entries(entryId):
 
 app.config['SECRET_KEY'] = os.environ.get(
     'SECRET_KEY', 'this_should_be_configured')
-if __name__ == '__main__':
-    app.run(debug=True)

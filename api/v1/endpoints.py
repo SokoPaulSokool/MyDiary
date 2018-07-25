@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, flash, jsonify
-
+import os
 app = Flask(__name__)
 
 
@@ -213,5 +213,7 @@ def single_entries(entryId):
         return res
 
 
+app.config['SECRET_KEY'] = os.environ.get(
+    'SECRET_KEY', 'this_should_be_configured')
 if __name__ == '__main__':
     app.run(debug=True)

@@ -10,6 +10,7 @@ pylint = "*"
 coveralls = "*"
 coverage = "*"
 "autopep8" = "*"
+gunicorn = "*"
 
 [dev-packages]
 

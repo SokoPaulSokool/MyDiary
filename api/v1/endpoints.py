@@ -61,7 +61,11 @@ class Entries:
             return "not found"
 
     def remove_entry(self, entry_id):
-        self.entry_list.remove(entry_id)
+        try:
+            self.entry_list.pop(entry_id)
+            return "deleted"
+        except:
+            return "not found"
 
     def replace_entry(self, entry_id, entry):
         if self.get_entry(entry_id) != "not found":
@@ -147,7 +151,7 @@ def signup():
 # endpoint to Fetch all entries or create an entry to diary
 
 
-@app.route('/api/v1/entries', methods=['GET', 'POST'])
+@app.route('/api/v1/entries', methods=['GET', 'POST', 'DELETE'])
 def entries():
     res = ''
     if request.method == 'GET':
@@ -156,7 +160,7 @@ def entries():
         # entry_list.add_entry(entry_one)
         # returns all entries
         return entry_list.get_string()
-    if request.method == 'POST':
+    elif request.method == 'POST':
         try:
             if request.form['entry'] != None or request.form['entry_date'] != None or request.form['entry_title'] != None:
                 entry = request.form['entry']
@@ -170,11 +174,28 @@ def entries():
                     entry_list.add_entry(
                         Entry(entry_id, entry_title, entry, entry_date))
                     res = "success"
+                return res
         except:
             res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
             return res
-        return res
+    elif request.method == 'DELETE':
+        try:
+            if request.form['entry_id'] != None or request.form['entry'] != None or request.form['entry_date'] != None or request.form['entry_title'] != None:
+                entry = request.form['entry']
+                entry_title = request.form['entry_title']
+                entry_date = request.form['entry_date']
+                entry_id = request.form['entry_id']
+                if not entry_id or not entry or not entry_title or not entry_date:
+                    res = '"entry_id" or "entry_title" or "entry" or "entry_date" is empty'
 
+                else:
+                    entrygot = Entry(
+                        int(entry_id), entry_title, entry, entry_date)
+                    res = entry_list.remove_entry(entrygot.entry_id)
+                return res
+        except:
+            res = 'Either "entry_id"  "entry_title" or "entry" or "entry_date"  is missing'
+            return res
 # endpoint to Fetch a single entry or Modify an entry
 
 
@@ -183,11 +204,12 @@ def single_entries(entryId):
     res = ''
     Id = entryId
     if request.method == 'GET':
-        entry_one = Entry(1, "dd", "kk", "ll")
-        entry_list.add_entry(entry_one)
+        # entry_one = Entry(1, "dd", "kk", "ll")
+        # entry_list.add_entry(entry_one)
         # return single entry of a give id
         return str(entry_list.get_entry(entryId))
-    if request.method == 'PUT':
+
+    elif request.method == 'PUT':
         try:
             if request.form['entry'] != None or request.form['entry_date'] != None or request.form['entry_title'] != None:
                 entry = request.form['entry']
@@ -201,10 +223,10 @@ def single_entries(entryId):
                         id, entry_title, entry, entry_date)
                     # replaces entry at a given id with the new data sent
                     res = entry_list.replace_entry(Id, entry)
+                return res
         except:
             res = 'Either "entry_title" or "entry" or "entry_date"  is missing'
             return res
-        return res
 
 
 app.config['SECRET_KEY'] = os.environ.get(

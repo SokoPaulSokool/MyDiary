@@ -82,3 +82,10 @@ class test_login(unittest.TestCase):
         response = self.login("12ii", "10")
 
         assert response.data == b'not yet registered or wrong phonenumber'
+    # tests logging in wrong password
+
+    def test_login_user_correct_password(self):
+        self.user_signup()
+        response = self.login("12", "24")
+
+        assert response.data == b'login success'

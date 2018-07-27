@@ -23,10 +23,10 @@ class create_tables():
             self.conn
             try:
                 # entry_id, entry_title, entry, entry_date
-                # self.cursor.execute('DROP  TABLE Entries ;')
+                self.cursor.execute('DROP  TABLE Entries ;')
                 create_table_query = (
                     """CREATE TABLE IF NOT EXISTS Entries (entry_id SERIAL PRIMARY KEY,entry_title VARCHAR(255) NOT NULL, entry VARCHAR(255) NOT NULL, entry_date VARCHAR(255) NOT NULL)""")
-                self.cursor.execute(create_table_query)
+                # self.cursor.execute(create_table_query)
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
                 print("I can't  create entries!")

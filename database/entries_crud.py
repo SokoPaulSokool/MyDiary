@@ -57,3 +57,32 @@ class entries_crud():
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
             print("I am unable to fetch to the database")
+
+    def delete_entry(self, id):
+        try:
+            cur = self.conn.cursor()
+            try:
+                cur.execute(
+                    """DELETE FROM Entries WHERE entry_id = %s""", [id])
+
+            except (Exception, psycopg2.DatabaseError) as error:
+                print(error)
+                print("I can't fetch  test database!")
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+            print("I am unable to fetch to the database")
+
+    def edit_entry(self, enty):
+        try:
+            cur = self.conn.cursor()
+            db_query = """UPDATE Entries SET entry_id = %s, entry_title = %s, entry = %s, WHERE entry_id = %s """
+            cur.execute(db_query, (enty.entry_id, enty.entry_title, enty.entry,
+                                   enty.id))
+
+            print("created")
+
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
+        finally:
+            if self.conn is not None:
+                self.conn.close()

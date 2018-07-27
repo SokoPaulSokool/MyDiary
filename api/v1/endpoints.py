@@ -1,6 +1,5 @@
 from flask import Flask, render_template, url_for, request, flash, jsonify
 import os
-from database.entries_crud import entries_crud
 app = Flask(__name__)
 
 
@@ -81,13 +80,6 @@ class Entries:
         id = self.entry_list.index(entry)
         self.entry_list[id].entry_id = id
         self.entry_list.clear()
-        entries_crud().add_entry(entry)
-        self.entry_list = KoolConverter().turple_list_to_entry_list(
-            entries_crud().get_all())
-
-    def refresh_list(self):
-        self.entry_list = KoolConverter().turple_list_to_entry_list(
-            entries_crud().get_all())
 
     def get_entry(self, entry_id):
         try:
@@ -107,22 +99,18 @@ class Entries:
         if self.get_entry(entry_id) != "not found":
             self.entry_list.pop(entry_id)
             self.add_entry(entry)
-            entries_crud().edit_entry(entry)
             return ResponseMessage("success", 200).response()
         else:
             return ResponseMessage("not found", 404).response()
 
     def get_string(self):
         items = []
-        self.entry_list = KoolConverter().turple_list_to_entry_list(
-            entries_crud().get_all())
-        for u in self.entry_list:
-            items.append(u.serialize())
+        for item in self.entry_list:
+            items.append(item.serialize())
         return jsonify(items)
 
 
 entry_list = Entries()
-entry_list.refresh_list()
 
 # login endpoint
 
@@ -162,7 +150,7 @@ def login():
 
         except:
             res = ResponseMessage(
-                'Either "phonenumber" or Poassword" is missing', 500).response()
+                'Either "phonenumber" or Poassword" is missing', 400).response()
             return res
     return res
 
@@ -190,7 +178,7 @@ def signup():
                         res = ResponseMessage("added", 200).response()
         except:
             res = ResponseMessage(
-                'Either "name" or "phonenumber" or Poassword" is missing', 500).response()
+                'Either "name" or "phonenumber" or Poassword" is missing', 400).response()
             return res
         return res
 
@@ -202,7 +190,7 @@ def signup():
 def entries():
     res = ''
     if request.method == 'GET':
-        return entry_list.get_string(), 200
+        return ResponseMessage(entry_list.get_string(), 200).response()
     elif request.method == 'POST':
         try:
             if request.form['entry'] != None or request.form['entry_date'] != None or request.form['entry_title'] != None:
@@ -213,11 +201,16 @@ def entries():
                 if not entry or not entry_title or not entry_date:
                     res = ResponseMessage(
                         '"entry_title" or "entry" or "entry_date" is empty', 400).response()
+                    return res
                 else:
                     # adds new entry to list of diary entries
                     entry_list.add_entry(
                         Entry(entry_id, entry_title, entry, entry_date))
                     res = ResponseMessage("success", 200).response()
+                    return res
+            else:
+                res = ResponseMessage(
+                    'Either "entry_title" or "entry" or "entry_date"  is missing', 400).response()
                 return res
         except:
             res = ResponseMessage(
@@ -243,13 +236,17 @@ def single_entries(entryId):
                 id = 1
                 if not entry or not entry_title or not entry_date:
                     res = '"entry_title" or "entry" or "entry_date" is empty'
-                    return ResponseMessage(res, 400)
+                    return ResponseMessage(res, 400).response()
                 else:
                     entry = Entry(
                         id, entry_title, entry, entry_date)
                     # replaces entry at a given id with the new data sent
                     res = entry_list.replace_entry(Id, entry)
                     return ResponseMessage(res, 200).response()
+            else:
+                res = ResponseMessage(
+                    'Either "entry_title" or "entry" or "entry_date"  is missing', 400).response()
+                return res
 
         except:
             res = ResponseMessage(
@@ -257,7 +254,7 @@ def single_entries(entryId):
             return res
     elif request.method == 'DELETE':
         res = entry_list.remove_entry(Id)
-        return ResponseMessage(res, 200)
+        return ResponseMessage(res, 200).response()
 
 
 app.config['SECRET_KEY'] = os.environ.get(

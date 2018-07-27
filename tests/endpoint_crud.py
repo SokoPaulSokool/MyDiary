@@ -54,6 +54,7 @@ class entriescrud():
     # put entry with the provided args
 
     def submit_put_entry(self, entry_title, entry, entry_date):
+        self.submit_entry("kk", "kk", "kkk")
         return self.test_client.put('/api/v1/entries/0',
                                     data=dict(entry_title=entry_title,
                                               entry=entry,
@@ -63,6 +64,7 @@ class entriescrud():
     # put entry with some form key  missing
 
     def submit_put_entry_with_missing_form_value(self, missing_form_key):
+        self.submit_entry("mm", "mm", "MM")
         if missing_form_key == "entry_title":
             return self.test_client.put('/api/v1/entries/0',
                                         data=dict(entry="entry",
@@ -84,41 +86,5 @@ class entriescrud():
     # delete entry with the provided args
 
     def submit_delete_entry(self, entry_id, entry_title, entry, entry_date):
-        return self.test_client.delete('/api/v1/entries/0',
-                                       data=dict(entry_id=entry_id,
-                                                 entry_title=entry_title,
-                                                 entry=entry,
-                                                 entry_date=entry_date
-                                                 )
-                                       )
-    # delete entry with some form key missing
-
-    def submit_delete_entry_with_missing_form_value(self, missing_form_key):
-        if missing_form_key == "entry_id":
-            return self.test_client.delete('/api/v1/entries/o',
-                                           data=dict(entry_title="entry_title",
-                                                     entry="entry",
-                                                     entry_date="entry_date"
-                                                     )
-                                           )
-        if missing_form_key == "entry_title":
-            return self.test_client.delete('/api/v1/entries/0',
-                                           data=dict(entry_id="entry_id",
-                                                     entry="entry",
-                                                     entry_date="entry_date"
-                                                     )
-                                           )
-        if missing_form_key == "entry":
-            return self.test_client.delete('/api/v1/entries/0',
-                                           data=dict(entry_id="entry_id",
-                                                     entry_title="entry_title",
-                                                     entry_date="entry_date"
-                                                     )
-                                           )
-        if missing_form_key == "entry_date":
-            return self.test_client.delete('/api/v1/entries/0',
-                                           data=dict(entry_id="entry_id",
-                                                     entry_title="entry_title",
-                                                     entry="entry"
-                                                     )
-                                           )
+        self.submit_entry("mm", "mm", "MM")
+        return self.test_client.delete('/api/v1/entries/0')

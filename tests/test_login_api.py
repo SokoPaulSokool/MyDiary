@@ -81,7 +81,7 @@ class test_login(unittest.TestCase):
         self.user_signup()
         response = self.login("12ii", "10")
 
-        assert response.status_code == 400
+        assert response.status_code == 401
     # tests logging in wrong password
 
     def test_login_user_correct_password(self):

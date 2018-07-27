@@ -45,27 +45,27 @@ class test_login(unittest.TestCase):
     def test_login_user_empty_phonenumber(self):
         response = self.login("", "12")
 
-        assert response.data == b'"phonenumber" or Password" is empty'
+        assert response.status_code == 400
 
     # tests logging in a single user empty Passssword
 
     def test_login_user_empty_password(self):
         response = self.login("1", "")
-        assert response.data == b'"phonenumber" or Password" is empty'
+        assert response.status_code == 400
 
       # tests login a  user with missing phonenumber
 
     def test_login_user_missing_phomenumber_field(self):
         response = self.login_with_missing_form_value("phonenumber")
 
-        assert response.data == b'Either "phonenumber" or Poassword" is missing'
+        assert response.status_code == 400
 
     # tests login a user with missing password
 
     def test_login_user_missing_password_field(self):
         response = self.login_with_missing_form_value("password")
 
-        assert response.data == b'Either "phonenumber" or Poassword" is missing'
+        assert response.status_code == 400
 
      # tests logging in wrong password
 
@@ -73,7 +73,7 @@ class test_login(unittest.TestCase):
         self.user_signup()
         response = self.login("12", "120")
 
-        assert response.data == b'login failed wrong password'
+        assert response.status_code == 401
 
       # tests logging in wrong phone
 
@@ -81,11 +81,11 @@ class test_login(unittest.TestCase):
         self.user_signup()
         response = self.login("12ii", "10")
 
-        assert response.data == b'not yet registered or wrong phonenumber'
+        assert response.status_code == 400
     # tests logging in wrong password
 
     def test_login_user_correct_password(self):
         self.user_signup()
         response = self.login("12", "24")
 
-        assert response.data == b'login success'
+        assert response.status_code == 200

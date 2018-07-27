@@ -84,7 +84,7 @@ class entriescrud():
     # delete entry with the provided args
 
     def submit_delete_entry(self, entry_id, entry_title, entry, entry_date):
-        return self.test_client.delete('/api/v1/entries',
+        return self.test_client.delete('/api/v1/entries/0',
                                        data=dict(entry_id=entry_id,
                                                  entry_title=entry_title,
                                                  entry=entry,
@@ -95,28 +95,28 @@ class entriescrud():
 
     def submit_delete_entry_with_missing_form_value(self, missing_form_key):
         if missing_form_key == "entry_id":
-            return self.test_client.delete('/api/v1/entries',
+            return self.test_client.delete('/api/v1/entries/o',
                                            data=dict(entry_title="entry_title",
                                                      entry="entry",
                                                      entry_date="entry_date"
                                                      )
                                            )
         if missing_form_key == "entry_title":
-            return self.test_client.delete('/api/v1/entries',
+            return self.test_client.delete('/api/v1/entries/0',
                                            data=dict(entry_id="entry_id",
                                                      entry="entry",
                                                      entry_date="entry_date"
                                                      )
                                            )
         if missing_form_key == "entry":
-            return self.test_client.delete('/api/v1/entries',
+            return self.test_client.delete('/api/v1/entries/0',
                                            data=dict(entry_id="entry_id",
                                                      entry_title="entry_title",
                                                      entry_date="entry_date"
                                                      )
                                            )
         if missing_form_key == "entry_date":
-            return self.test_client.delete('/api/v1/entries',
+            return self.test_client.delete('/api/v1/entries/0',
                                            data=dict(entry_id="entry_id",
                                                      entry_title="entry_title",
                                                      entry="entry"

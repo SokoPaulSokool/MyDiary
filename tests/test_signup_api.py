@@ -44,49 +44,49 @@ class test_signup(unittest.TestCase):
     def test_signup_add_user(self):
         response = self.signup("paul", "1", "12")
 
-        assert response.data == b'added'
+        assert response.status_code == 200
 
     # tests adding a single user empty name
 
     def test_signup_add_user_empty_name(self):
         response = self.signup("", "1", "12")
 
-        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
+        assert response.status_code == 400
 
     # tests adding a single user empty phonenumber
 
     def test_signup_add_user_empty_phonenumber(self):
         response = self.signup("paul", "", "12")
 
-        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
+        assert response.status_code == 400
 
     # tests adding a single user empty Passssword
 
     def test_signup_add_user_empty_password(self):
         response = self.signup("paul", "1", "")
 
-        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
+        assert response.status_code == 400
 
     # tests adding a single user with missing name
 
     def test_signup_add_user_missing_name_field(self):
         response = self.signup_with_missing_form_value("name")
 
-        assert response.data == b'Either "name" or "phonenumber" or Poassword" is missing'
+        assert response.status_code == 400
 
     # tests adding a single user with missing phonenumber
 
     def test_signup_add_user_missing_phomenumber_field(self):
         response = self.signup_with_missing_form_value("phonenumber")
 
-        assert response.data == b'Either "name" or "phonenumber" or Poassword" is missing'
+        assert response.status_code == 400
 
     # tests adding a single user with missing password
 
     def test_signup_add_user_missing_password_field(self):
         response = self.signup_with_missing_form_value("password")
 
-        assert response.data == b'Either "name" or "phonenumber" or Poassword" is missing'
+        assert response.status_code == 400
 
     # Test adding an existing user
 
@@ -103,4 +103,4 @@ class test_signup(unittest.TestCase):
                                                    )
                                          )
 
-        assert response.data == b'exists'
+        assert response.status_code == 401

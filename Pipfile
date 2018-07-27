@@ -12,6 +12,8 @@ coverage = "*"
 "autopep8" = "*"
 gunicorn = "*"
 pytest-cov = "*"
+"pep8" = "*"
+pycodestyle = "*"
 
 [dev-packages]
 

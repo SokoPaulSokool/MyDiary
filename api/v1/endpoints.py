@@ -74,6 +74,10 @@ class Entries:
         self.entry_list = KoolConverter().turple_list_to_entry_list(
             entries_crud().get_all())
 
+    def refresh_list(self):
+        self.entry_list = KoolConverter().turple_list_to_entry_list(
+            entries_crud().get_all())
+
     def get_entry(self, entry_id):
         try:
             # entry_got_from_list = self.entry_list[entry_id].serialize()
@@ -96,6 +100,7 @@ class Entries:
         if self.get_entry(entry_id) != "not found":
             self.entry_list.pop(entry_id)
             self.add_entry(entry)
+            entries_crud().edit_entry(entry)
             return "success"
         else:
             return "not found"
@@ -110,6 +115,7 @@ class Entries:
 
 
 entry_list = Entries()
+entry_list.refresh_list()
 
 # login endpoint
 

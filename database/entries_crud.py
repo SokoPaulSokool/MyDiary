@@ -67,22 +67,25 @@ class entries_crud():
 
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
-                print("I can't fetch  test database!")
+                print("I can't delete  test database!")
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I am unable to fetch to the database")
+            print("I am unable to delete to the database")
 
     def edit_entry(self, enty):
         try:
             cur = self.conn.cursor()
-            db_query = """UPDATE Entries SET entry_id = %s, entry_title = %s, entry = %s, WHERE entry_id = %s """
-            cur.execute(db_query, (enty.entry_id, enty.entry_title, enty.entry,
+
+            db_query = """UPDATE Entries SET  entry_id = s.entry_id, entry_title = s.entry_title, entry = s.entry from unnest(%s) s(entry_id numeric, gid integer) WHERE entry_id = %s """
+            cur.execute(db_query, (enty.id, enty.entry_title, enty.entry,
                                    enty.id))
 
             print("created")
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
+            print("I can't fetch  edit database!")
         finally:
             if self.conn is not None:
                 self.conn.close()
+                print("I am unable to edit to the database")

@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, request, flash, jsonify
 import os
+from database.entries_crud import entries_crud
 app = Flask(__name__)
 
 
@@ -38,6 +39,22 @@ class Entry():
         }
 
 
+class KoolConverter():
+    @staticmethod
+    def turple_list_to_entry_list(turple_list):
+        new_list = []
+        for item in turple_list:
+            ent = Entry(item[0], item[1], item[2], item[3])
+            new_list.append(ent)
+        return new_list
+
+    @staticmethod
+    def turple_to_entry(turple):
+        ent = Entry(turple[0], turple[1], turple[2], turple[3])
+        return ent
+
+
+
 # dictionary to store all users
 diary_users = dict()
 
@@ -52,11 +69,19 @@ class Entries:
         self.entry_list.append(entry)
         id = self.entry_list.index(entry)
         self.entry_list[id].entry_id = id
+        self.entry_list.clear()
+        entries_crud().add_entry(entry)
+        self.entry_list = KoolConverter().turple_list_to_entry_list(
+            entries_crud().get_all())
 
     def get_entry(self, entry_id):
         try:
-            entry_got = self.entry_list[entry_id].serialize()
-            return str(entry_got)
+            # entry_got_from_list = self.entry_list[entry_id].serialize()
+            entry_from_bd = entries_crud().get_entry_by_id(0)
+            print(entry_from_bd)
+
+            # return str(entry_got_from_list)
+            return str(KoolConverter().turple_to_entry(entry_from_bd).serialize())
         except:
             return "not found"
 
@@ -77,6 +102,8 @@ class Entries:
 
     def get_string(self):
         items = []
+        self.entry_list = KoolConverter().turple_list_to_entry_list(
+            entries_crud().get_all())
         for u in self.entry_list:
             items.append(u.serialize())
         return jsonify(items)

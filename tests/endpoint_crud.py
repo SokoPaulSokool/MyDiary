@@ -17,8 +17,8 @@ class entriescrud():
 
     # Fetch empty entries
 
-    def test_fetch_one_empty_entries(self):
-        return self.test_client.get('/api/v1/entries/9')
+    def fetch_one_empty_entries(self):
+        return self.test_client.get('/api/v1/entries/100')
 
     # post put entry with the provided args
 
@@ -85,6 +85,9 @@ class entriescrud():
                                         )
     # delete entry with the provided args
 
-    def submit_delete_entry(self, entry_id, entry_title, entry, entry_date):
+    def submit_delete_entry(self):
         self.submit_entry("mm", "mm", "MM")
         return self.test_client.delete('/api/v1/entries/0')
+
+    def submit_delete_empty_entry(self):
+        return self.test_client.get('/api/v1/entries/200')

@@ -4,9 +4,10 @@ import pytest
 # Testing the signup feature
 
 
-class test_signup(unittest.TestCase):
+class test_signup():
 
-    test_client = app.test_client()
+    def __init__(self, app):
+        self.test_client = app.test_client()
 
     # signs  up user with the provided args
 
@@ -39,68 +40,48 @@ class test_signup(unittest.TestCase):
                                                    phonenumber="3"
                                                    )
                                          )
-    # tests adding a single user
 
-    def test_signup_add_user(self):
-        response = self.signup("paul", "1", "12")
 
-        assert response.status_code == 200
+test_client = test_signup(app)
+# tests adding a single user
 
-    # tests adding a single user empty name
 
-    def test_signup_add_user_empty_name(self):
-        response = self.signup("", "1", "12")
+def test_signup_add_user():
+    response = test_client.signup("paul", "1", "12")
 
-        assert response.status_code == 400
+    assert response.status_code == 200
 
-    # tests adding a single user empty phonenumber
+# tests adding a single user empty field
 
-    def test_signup_add_user_empty_phonenumber(self):
-        response = self.signup("paul", "", "12")
 
-        assert response.status_code == 400
+@pytest.mark.parametrize("name,phonenumber,password", [("", "phonenumber", "password"), ("name", "", "password"), ("name", "phonenumber", ""), ])
+def test_signup_add_user_empty_field(name, phonenumber, password):
+    response = test_client.signup(name, phonenumber, password)
 
-    # tests adding a single user empty Passssword
+    assert response.status_code == 400
 
-    def test_signup_add_user_empty_password(self):
-        response = self.signup("paul", "1", "")
 
-        assert response.status_code == 400
+# tests adding a single user with missing field
 
-    # tests adding a single user with missing name
+@pytest.mark.parametrize("value", [("name"), ("phonenumber"), ("password")])
+def test_login_user_missing_field(value):
+    response = test_client.signup_with_missing_form_value(value)
+    assert response.status_code == 400
 
-    def test_signup_add_user_missing_name_field(self):
-        response = self.signup_with_missing_form_value("name")
+# Test adding an existing user
 
-        assert response.status_code == 400
 
-    # tests adding a single user with missing phonenumber
+def test_signup_add_existing_user():
+    test_client.test_client.post('/api/v1/signup', data=dict(name="soko",
+                                                             phonenumber="123",
+                                                             password="8"
+                                                             )
+                                 )
+    response = test_client.test_client.post('/api/v1/signup',
+                                            data=dict(name="soko",
+                                                      phonenumber="123",
+                                                      password="8"
+                                                      )
+                                            )
 
-    def test_signup_add_user_missing_phomenumber_field(self):
-        response = self.signup_with_missing_form_value("phonenumber")
-
-        assert response.status_code == 400
-
-    # tests adding a single user with missing password
-
-    def test_signup_add_user_missing_password_field(self):
-        response = self.signup_with_missing_form_value("password")
-
-        assert response.status_code == 400
-
-    # Test adding an existing user
-
-    def test_signup_add_existing_user(self):
-        self.test_client.post('/api/v1/signup', data=dict(name="soko",
-                                                          phonenumber="123",
-                                                          password="8"
-                                                          )
-                              )
-        response = self.test_client.post('/api/v1/signup',
-                                         data=dict(name="soko",
-                                                   phonenumber="123",
-                                                   password="8"
-                                                   )
-                                         )
-
-        assert response.status_code == 401
+    assert response.status_code == 401

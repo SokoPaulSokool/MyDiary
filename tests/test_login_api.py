@@ -4,8 +4,9 @@ import pytest
 # Testing the login feature
 
 
-class test_login(unittest.TestCase):
-    test_client = app.test_client()
+class test_login():
+    def __init__(self, app):
+        self.test_client = app.test_client()
 
     # logs in user with the provided args
 
@@ -40,52 +41,48 @@ class test_login(unittest.TestCase):
                                                    )
                                          )
 
-    # tests logging in a single user empty phonenumber
 
-    def test_login_user_empty_phonenumber(self):
-        response = self.login("", "12")
+test_client = test_login(app)
+# tests logging in a single user empty field
 
-        assert response.status_code == 400
 
-    # tests logging in a single user empty Passssword
+@pytest.mark.parametrize("phonenumber,password", [("", "password"), ("name", "")])
+def test_login_user_empty_field(phonenumber, password):
+    response = test_client.login(phonenumber, password)
 
-    def test_login_user_empty_password(self):
-        response = self.login("1", "")
-        assert response.status_code == 400
+    assert response.status_code == 400
 
-      # tests login a  user with missing phonenumber
+# tests login a user with missing field
 
-    def test_login_user_missing_phomenumber_field(self):
-        response = self.login_with_missing_form_value("phonenumber")
 
-        assert response.status_code == 400
+@pytest.mark.parametrize("value", [("phonenumber"), ("password")])
+def test_login_user_missing_field(value):
+    response = test_client.login_with_missing_form_value(value)
 
-    # tests login a user with missing password
+    assert response.status_code == 400
 
-    def test_login_user_missing_password_field(self):
-        response = self.login_with_missing_form_value("password")
-
-        assert response.status_code == 400
-
-     # tests logging in wrong password
-
-    def test_login_user_wrong_password(self):
-        self.user_signup()
-        response = self.login("12", "120")
-
-        assert response.status_code == 401
-
-      # tests logging in wrong phone
-
-    def test_login_user_wrong_phone(self):
-        self.user_signup()
-        response = self.login("12ii", "10")
-
-        assert response.status_code == 401
     # tests logging in wrong password
 
-    def test_login_user_correct_password(self):
-        self.user_signup()
-        response = self.login("12", "24")
 
-        assert response.status_code == 200
+def test_login_user_wrong_password():
+    test_client.user_signup()
+    response = test_client.login("12", "120")
+
+    assert response.status_code == 401
+
+    # tests logging in wrong phone
+
+
+def test_login_user_wrong_phone():
+    test_client.user_signup()
+    response = test_client.login("12ii", "10")
+
+    assert response.status_code == 401
+# tests logging in wrong password
+
+
+def test_login_user_correct_password():
+    test_client.user_signup()
+    response = test_client.login("12", "24")
+
+    assert response.status_code == 200

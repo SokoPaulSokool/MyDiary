@@ -16,7 +16,7 @@ def test_submit_entry_missing_entry_field(value):
     response = test_client.submit_entry_with_missing_form_value(value)
 
     # assert response.data == b'Either "entry_title" or "entry" or "entry_date"  is missing'
-    assert response.status_code == 500
+    assert response.status_code == 400
 
 # tests create entry with an empty entry v
 # alue
@@ -26,7 +26,7 @@ def test_submit_entry_missing_entry_field(value):
 def test_submit_entry_with_empty_entry(entry_title, entry, entry_date):
     response = test_client.submit_entry(entry_title, entry, entry_date)
 
-    # assert response.status == b'"entry_title" or "entry" or "entry_date" is empty'
+    # assert response.data == b'{"message": "entry_title or entry or entry_date is empty"}\n'
     assert response.status_code == 400
 
 
@@ -44,7 +44,7 @@ def test_submit_entry():
 def test_submit_entry_missing_put_entry_field(value):
     response = test_client.submit_put_entry_with_missing_form_value(value)
 
-    assert response.status_code == 500
+    assert response.status_code == 400
 
 # tests put entry with an empty entry value
 
@@ -54,6 +54,7 @@ def test_submit_entry_with_empty_put_entry(entry_title, entry, entry_date):
     response = test_client.submit_put_entry(entry_title, entry, entry_date)
 
     assert response.status_code == 400
+    # assert response.data == b'{"message": "entry_title or entry or entry_date is empty"}\n'
 
 # tests put full entry
 
@@ -73,7 +74,7 @@ def test_fetch_one_entry_id():
 
 
 def test_fetch_one_empty_entries():
-    assert test_client.test_fetch_one_empty_entries().status_code == 400
+    assert test_client.fetch_one_empty_entries().status_code == 404
 
 # tests get all entries
 
@@ -82,34 +83,15 @@ def test_fetch_all():
     assert test_client.test_fetch_all_entries().status_code == 200
 
 
-# tests delete entry with missing field value
-
-
-@pytest.mark.parametrize("value", [("entry_id"), ("entry_date"), ("entry"), ("entry_date")])
-def test_delete_entry_missing_entry_field(value):
-    response = test_client.submit_delete_entry_with_missing_form_value(value)
-
-    assert response.status_code == 500
-
-# tests delete entry with an empty entry value
-
-
-@pytest.mark.parametrize("entry_id,entry_title,entry,entry_date", [
-    ("", "entry_title", "entry", "entry_date"),
-    ("entry_id", "", "entry", "entry_date"),
-    ("entry_id", "entry_title", "", "entry_date"),
-    ("entry_id", "entry_title", "entry", "")
-])
-def test_delete_entry_with_empty_entry(entry_id, entry_title, entry, entry_date):
-    response = test_client.submit_delete_entry(
-        entry_id, entry_title, entry, entry_date)
-
-    assert response.status_code == 400
-
-
 # tests delete full entry
 
 def test_delete_entry():
-    response = test_client.submit_delete_entry(1, "mm", "mmm", "mmm")
-
+    response = test_client.submit_delete_entry()
     assert response.status_code == 200
+
+# tests delete empty entry
+
+
+def test_delete_empty_entry():
+    response = test_client.submit_delete_empty_entry()
+    assert response.status_code == 404

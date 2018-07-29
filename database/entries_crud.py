@@ -19,7 +19,8 @@ class entries_crud():
     def add_entry(self, enty):
         try:
             cur = self.conn.cursor()
-            db_query = """INSERT INTO Entries (entry_id,entry_title,entry, entry_date) VALUES (%s,%s,%s,%s) """
+            db_query = """INSERT INTO Entries (entry_id,entry_title,entry, entry_date)
+                         VALUES (%s,%s,%s,%s) """
             cur.execute(db_query, (enty.entry_id, enty.entry_title, enty.entry,
                                    enty.entry_date))
 

@@ -1,6 +1,5 @@
-from flask import Flask, render_template, url_for, request, flash, jsonify, Response
+from flask import Flask
 import os
-import json
 from api.v1.models.response_message import ResponseMessage
 from flask_restful import Resource, Api, reqparse
 from api.v1.api_entry import EntryApi
@@ -15,8 +14,8 @@ api = Api(app)
 
 api.add_resource(EntriesApi, '/api/v1/entries')
 api.add_resource(EntryApi, '/api/v1/entries/<int:enty_id>')
-api.add_resource(SignUpApi, '/api/v1/signup')
-api.add_resource(LoginApi, '/api/v1/login')
+api.add_resource(SignUpApi, '/api/v1/auth/signup')
+api.add_resource(LoginApi, '/api/v1/auth/login')
 
 
 app.config['SECRET_KEY'] = os.environ.get(

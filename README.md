@@ -6,7 +6,7 @@ MyDiary is an online journal where users can pen down their thoughts and feeling
 
 [![Build Status](https://travis-ci.org/SokoPaulSokool/MyDiary.svg?branch=develop)](https://travis-ci.org/SokoPaulSokool/MyDiary)
 
-[![Coverage Status](https://coveralls.io/repos/github/SokoPaulSokool/MyDiary/badge.svg?branch=endpoints)](https://coveralls.io/github/SokoPaulSokool/MyDiary?branch=endpoints)
+[![Build Status](https://travis-ci.org/SokoPaulSokool/MyDiary.svg?branch=develop)](https://travis-ci.org/SokoPaulSokool/MyDiary)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/79a0023ae3ce8ab4049e/maintainability)](https://codeclimate.com/github/SokoPaulSokool/MyDiary/maintainability)
 

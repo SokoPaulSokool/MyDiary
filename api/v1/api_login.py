@@ -38,8 +38,10 @@ class LoginApi(Resource):
                     current_user.logout_user()
 
                 if current_user.isloged_in:
+
                     res = ResponseMessage(
                         "login success", 200).response()
+
                 else:
                     res = ResponseMessage(
                         "login failed wrong password", 401).response()

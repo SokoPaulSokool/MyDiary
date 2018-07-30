@@ -12,7 +12,7 @@ class test_signup():
     # signs  up user with the provided args
 
     def signup(self, name, phonenumber, password):
-        return self.test_client.post('/api/v1/signup',
+        return self.test_client.post('/api/v1/auth/signup',
                                      data=dict(name=name,
                                                phonenumber=phonenumber,
                                                password=password
@@ -22,20 +22,20 @@ class test_signup():
 
     def signup_with_missing_form_value(self, missing_form_name):
         if missing_form_name == "name":
-            return self.test_client.post('/api/v1/signup',
+            return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(
                                              phonenumber="3",
                                              password="5"
                                          )
                                          )
         if missing_form_name == "phonenumber":
-            return self.test_client.post('/api/v1/signup',
+            return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(name="paul",
                                                    password="5"
                                                    )
                                          )
         if missing_form_name == "password":
-            return self.test_client.post('/api/v1/signup',
+            return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(name="paul",
                                                    phonenumber="3"
                                                    )
@@ -72,12 +72,12 @@ def test_login_user_missing_field(value):
 
 
 def test_signup_add_existing_user():
-    test_client.test_client.post('/api/v1/signup', data=dict(name="soko",
-                                                             phonenumber="123",
-                                                             password="8"
-                                                             )
+    test_client.test_client.post('/api/v1/auth/signup', data=dict(name="soko",
+                                                                  phonenumber="123",
+                                                                  password="8"
+                                                                  )
                                  )
-    response = test_client.test_client.post('/api/v1/signup',
+    response = test_client.test_client.post('/api/v1/auth/signup',
                                             data=dict(name="soko",
                                                       phonenumber="123",
                                                       password="8"

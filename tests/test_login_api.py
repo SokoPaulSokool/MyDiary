@@ -11,7 +11,7 @@ class test_login():
     # logs in user with the provided args
 
     def login(self, phonenumber, password):
-        return self.test_client.post('/api/v1/login',
+        return self.test_client.post('/api/v1/auth/login',
                                      data=dict(phonenumber=phonenumber,
                                                password=password
                                                )
@@ -19,7 +19,7 @@ class test_login():
     # Signup default user for test
 
     def user_signup(self):
-        return self.test_client.post('/api/v1/signup',
+        return self.test_client.post('/api/v1/auth/signup',
                                      data=dict(phonenumber="12",
                                                password="24",
                                                name="kool"
@@ -29,13 +29,13 @@ class test_login():
 
     def login_with_missing_form_value(self, missing_form_name):
         if missing_form_name == "phonenumber":
-            return self.test_client.post('/api/v1/login',
+            return self.test_client.post('/api/v1/auth/login',
                                          data=dict(name="paul",
                                                    password="5"
                                                    )
                                          )
         if missing_form_name == "password":
-            return self.test_client.post('/api/v1/login',
+            return self.test_client.post('/api/v1/auth/login',
                                          data=dict(name="paul",
                                                    phonenumber="3"
                                                    )

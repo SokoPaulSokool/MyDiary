@@ -15,6 +15,7 @@ pytest-cov = "*"
 "pep8" = "*"
 pycodestyle = "*"
 flask-restful = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 

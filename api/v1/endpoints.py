@@ -7,8 +7,8 @@ from api.v1.api_entries import EntriesApi
 from api.v1.api_login import LoginApi
 from api.v1.api_signup import SignUpApi
 
-app = Flask(__name__)
 
+app = Flask(__name__)
 
 api = Api(app)
 

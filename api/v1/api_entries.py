@@ -3,6 +3,9 @@ from flask import Flask, render_template, url_for, request
 from flask_restful import Resource, Api, reqparse
 from api.v1.models.first_data import entry_list
 from api.v1.models.entry_model import Entry
+from flask_jwt_extended import (create_access_token, create_refresh_token,
+                                jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+
 
 # endpoint to Fetch all entries or create an entry to diary
 

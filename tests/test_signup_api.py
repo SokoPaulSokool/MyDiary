@@ -18,7 +18,7 @@ class test_signup():
                                                password=password
                                                )
                                      )
-    # requires name of the field to be skipped and returns a response from sigbup
+    # requires name of the field to be skipped and returns a response   from sigbup
 
     def signup_with_missing_form_value(self, missing_form_name):
         if missing_form_name == "name":

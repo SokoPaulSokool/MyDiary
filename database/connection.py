@@ -10,5 +10,5 @@ def connect():
         user='soko',
         password='sokool',
         host='localhost',
-        port='5434')
+        port='5432')
     return conn

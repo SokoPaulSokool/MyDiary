@@ -10,6 +10,7 @@ from api.v1.models.first_data import diary_users, entry_list
 from database.create_tables import create_tables
 
 
+
 app = Flask(__name__)
 
 api = Api(app)
@@ -18,6 +19,7 @@ create_tables().users_drop_table()
 create_tables().entries_drop_table()
 create_tables().users_table()
 create_tables().entries_table()
+print("starting")
 
 
 api.add_resource(EntriesApi, '/api/v1/entries')

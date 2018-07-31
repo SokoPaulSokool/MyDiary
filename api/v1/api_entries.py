@@ -2,6 +2,7 @@ from api.v1.models.response_message import ResponseMessage
 from flask import Flask, render_template, url_for, request
 from flask_restful import Resource, Api, reqparse
 from api.v1.models.first_data import entry_list
+import datetime
 
 from api.v1.models.entry_model import Entry
 from flask_jwt_extended import (create_access_token, create_refresh_token,
@@ -16,11 +17,6 @@ parser.add_argument('entry',
                     required=True,
                     help="This field is required"
                     ),
-parser.add_argument('entry_date',
-                    type=str,
-                    required=True,
-                    help="This field is required"
-                    )
 parser.add_argument('entry_title',
                     type=str,
                     required=True,
@@ -35,16 +31,17 @@ class EntriesApi(Resource):
     def post(self):
         args = parser.parse_args()
         entry = args['entry']
-        entry_date = args['entry_date']
         entry_title = args['entry_title']
         entry_id = 1
-        if not entry or not entry_title or not entry_date:
+        if not entry or not entry_title:
+
             res = ResponseMessage(
                 'entry_title or entry or entry_date is empty', 400).response()
             return res
         else:
             # adds new entry to list of diary entries
-            entry_list.add_entry(
-                Entry(entry_id, entry_title, entry, entry_date))
-            res = ResponseMessage("success", 200).response()
+            entry_date = datetime.datetime.now().timestamp()
+            new_entry = Entry(entry_id, entry_title, entry, entry_date)
+            entry_list.add_entry(new_entry)
+            res = new_entry.serialize(), 200
             return res

@@ -4,6 +4,7 @@ from flask import Flask, render_template, url_for, request
 from flask_restful import Resource, Api, reqparse
 from api.v1.models.first_data import entry_list
 from api.v1.models.entry_model import Entry
+import datetime
 
 parser = reqparse.RequestParser()
 parser.add_argument('entry',
@@ -11,11 +12,6 @@ parser.add_argument('entry',
                     required=True,
                     help="This field is required"
                     ),
-parser.add_argument('entry_date',
-                    type=str,
-                    required=True,
-                    help="This field is required"
-                    )
 parser.add_argument('entry_title',
                     type=str,
                     required=True,
@@ -30,13 +26,14 @@ class EntryApi(Resource):
     def put(self, enty_id):
         args = parser.parse_args()
         entry = args['entry']
-        entry_date = args['entry_date']
         entry_title = args['entry_title']
 
-        if not entry or not entry_title or not entry_date:
+        if not entry or not entry_title:
             res = 'entry_title or entry or entry_date is empty'
             return ResponseMessage(res, 400).response()
         else:
+            entry_date = datetime.datetime.now().timestamp()
+
             entry = Entry(
                 enty_id, entry_title, entry, entry_date)
             # replaces entry at a given id with the new data sent

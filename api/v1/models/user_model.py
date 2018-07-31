@@ -1,4 +1,6 @@
 
+from database.auth_crud import auth_crud
+
 
 class User():
     def __init__(self, name, phone_number, password):
@@ -14,4 +16,7 @@ class User():
         self.isloged_in = False
 
     def login_user(self):
+        self.isloged_in = True
+
+    def authenticate_iser(self):
         self.isloged_in = True

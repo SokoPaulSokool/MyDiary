@@ -3,7 +3,7 @@ from flask import jsonify
 from api.v1.models.entry_model import Entry
 from database.entries_crud import entries_crud
 
-current_user_id = 0
+current_user_id = 1
 
 
 class Entries:

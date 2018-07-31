@@ -13,7 +13,7 @@ class entries_crud():
         self.dict_cursor = self.conn.cursor(
             cursor_factory=extra.DictCursor)
 
-        # create_tables().users_table()
+    # create_tables().users_table()
 
     # creates table for entries
 

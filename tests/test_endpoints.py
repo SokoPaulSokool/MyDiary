@@ -11,7 +11,7 @@ test_client = entriescrud(app)
 # tests create entry with missing field value
 
 
-@pytest.mark.parametrize("value", [("entry_date"), ("entry"), ("entry_date")])
+@pytest.mark.parametrize("value", [("entry_title"), ("entry")])
 def test_submit_entry_missing_entry_field(value):
     response = test_client.submit_entry_with_missing_form_value(value)
 
@@ -22,9 +22,9 @@ def test_submit_entry_missing_entry_field(value):
 # alue
 
 
-@pytest.mark.parametrize("entry_title,entry,entry_date", [("", "entry", "entry_date"), ("entry_title", "", "entry_date"), ("entry_title", "entry", "")])
-def test_submit_entry_with_empty_entry(entry_title, entry, entry_date):
-    response = test_client.submit_entry(entry_title, entry, entry_date)
+@pytest.mark.parametrize("entry_title,entry", [("", "entry"), ("entry_title", "")])
+def test_submit_entry_with_empty_entry(entry_title, entry):
+    response = test_client.submit_entry(entry_title, entry)
 
     # assert response.data == b'{"message": "entry_title or entry or entry_date is empty"}\n'
     assert response.status_code == 400
@@ -33,14 +33,14 @@ def test_submit_entry_with_empty_entry(entry_title, entry, entry_date):
 # tests create full entry
 
 def test_submit_entry():
-    response = test_client.submit_entry("mm", "mmm", "mmm")
+    response = test_client.submit_entry("mm", "mmm")
 
     assert response.status_code == 200
 
 
 # tests put entry with missing field value
 
-@pytest.mark.parametrize("value", [("entry_date"), ("entry"), ("entry_date")])
+@pytest.mark.parametrize("value", [("entry_title"), ("entry")])
 def test_submit_entry_missing_put_entry_field(value):
     response = test_client.submit_put_entry_with_missing_form_value(value)
 
@@ -49,9 +49,9 @@ def test_submit_entry_missing_put_entry_field(value):
 # tests put entry with an empty entry value
 
 
-@pytest.mark.parametrize("entry_title,entry,entry_date", [("", "entry", "entry_date"), ("entry_title", "", "entry_date"), ("entry_title", "entry", "")])
-def test_submit_entry_with_empty_put_entry(entry_title, entry, entry_date):
-    response = test_client.submit_put_entry(entry_title, entry, entry_date)
+@pytest.mark.parametrize("entry_title,entry", [("", "entry"), ("entry_title", "")])
+def test_submit_entry_with_empty_put_entry(entry_title, entry):
+    response = test_client.submit_put_entry(entry_title, entry)
 
     assert response.status_code == 400
     # assert response.data == b'{"message": "entry_title or entry or entry_date is empty"}\n'
@@ -60,7 +60,7 @@ def test_submit_entry_with_empty_put_entry(entry_title, entry, entry_date):
 
 
 def test_submit_put_entry():
-    response = test_client.submit_put_entry("mm", "mmm", "mmm")
+    response = test_client.submit_put_entry("mm", "mmm")
 
     assert response.status_code == 200
 

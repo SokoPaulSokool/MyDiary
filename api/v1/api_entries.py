@@ -34,7 +34,6 @@ class EntriesApi(Resource):
         entry_title = args['entry_title']
         entry_id = 1
         if not entry or not entry_title:
-
             res = ResponseMessage(
                 'entry_title or entry or entry_date is empty', 400).response()
             return res

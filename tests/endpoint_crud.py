@@ -12,7 +12,7 @@ class entriescrud():
     # Fetch single entry
 
     def test_fetch_one_entries(self):
-        self.submit_entry("mm", "mm", "MM")
+        self.submit_entry("mm", "mm")
         return self.test_client.get('/api/v1/entries/0')
 
     # Fetch empty entries
@@ -22,11 +22,10 @@ class entriescrud():
 
     # post put entry with the provided args
 
-    def submit_entry(self, entry_title, entry, entry_date):
+    def submit_entry(self, entry_title, entry):
         return self.test_client.post('/api/v1/entries',
                                      data=dict(entry_title=entry_title,
-                                               entry=entry,
-                                               entry_date=entry_date
+                                               entry=entry
                                                )
                                      )
 
@@ -41,52 +40,36 @@ class entriescrud():
                                          )
         if missing_form_name == "entry":
             return self.test_client.post('/api/v1/entries',
-                                         data=dict(entry_title="entry_title",
-                                                   entry_date="entry_date"
-                                                   )
-                                         )
-        if missing_form_name == "entry_date":
-            return self.test_client.post('/api/v1/entries',
-                                         data=dict(entry_title="entry_title",
-                                                   entry="entry"
+                                         data=dict(entry_title="entry_title"
                                                    )
                                          )
     # put entry with the provided args
 
-    def submit_put_entry(self, entry_title, entry, entry_date):
-        self.submit_entry("kk", "kk", "kkk")
+    def submit_put_entry(self, entry_title, entry):
+        self.submit_entry("kk", "kk")
         return self.test_client.put('/api/v1/entries/0',
                                     data=dict(entry_title=entry_title,
-                                              entry=entry,
-                                              entry_date=entry_date
+                                              entry=entry
                                               )
                                     )
     # put entry with some form key  missing
 
     def submit_put_entry_with_missing_form_value(self, missing_form_key):
-        self.submit_entry("mm", "mm", "MM")
+        self.submit_entry("mm", "mm")
         if missing_form_key == "entry_title":
             return self.test_client.put('/api/v1/entries/0',
-                                        data=dict(entry="entry",
-                                                  entry_date="entry_date"
+                                        data=dict(entry="entry"
                                                   )
                                         )
         if missing_form_key == "entry":
             return self.test_client.put('/api/v1/entries/0',
-                                        data=dict(entry_title="entry_title",
-                                                  entry_date="entry_date"
-                                                  )
-                                        )
-        if missing_form_key == "entry_date":
-            return self.test_client.put('/api/v1/entries/0',
-                                        data=dict(entry_title="entry_title",
-                                                  entry="entry"
+                                        data=dict(entry_title="entry_title"
                                                   )
                                         )
     # delete entry with the provided args
 
     def submit_delete_entry(self):
-        self.submit_entry("mm", "mm", "MM")
+        self.submit_entry("mm", "mm")
         return self.test_client.delete('/api/v1/entries/0')
 
     def submit_delete_empty_entry(self):

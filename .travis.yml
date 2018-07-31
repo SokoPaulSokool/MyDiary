@@ -1,8 +1,12 @@
 language: python
 python:
   - "3.6"
+services:
+ - postgresql
 install:
   - pip install -r requirements.txt
+before_script:
+ - createdb mydiary psql -c 'create database mydiary;' -U soko -P 'sokool'
 script:
   - py.test
   - py.test --cov-config .coveragerc  --cov=api  tests/

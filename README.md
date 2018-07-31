@@ -23,12 +23,14 @@ You can;
 
 These are the endpoints to test
 
-| METHOD |      Endpoint      | Description                         |
-| ------ | :----------------: | ----------------------------------- |
-| GET    |  /api/v1/entries   | Get all entries                     |
-| GET    | /api/v1/entries/id | Get specific entry using an id      |
-| POST   |  /api/v1/entries   | Create a new entry                  |
-| PUT    | /api/v1/entries/id | Modify a specific entry using an id |
+| METHOD |      Endpoint       | Description                         |
+| ------ | :-----------------: | ----------------------------------- |
+| GET    |   /api/v1/entries   | Get all entries                     |
+| GET    | /api/v1/entries/id  | Get specific entry using an id      |
+| POST   |   /api/v1/entries   | Create a new entry                  |
+| PUT    | /api/v1/entries/id  | Modify a specific entry using an id |
+| POST   | /api/v1/auth/login  | Login user                          |
+| POST   | /api/v1/auth/signup | Signup user                         |
 
 ## Site and api
 
@@ -79,6 +81,14 @@ These are instructions for setting up MyDiary app in a development enivornment.
   ```
 
 This site should now be running at http://localhost:5000
+
+### Set up Databese
+
+- Install Postgres on your machine
+- Create a database a database called mydiary
+- from the database folder in connection.py, change password, name,host and port to meet you database connection
+- Make sure pytest is installed
+- Make sure pytest is installed
 
 ### Run Tests
 

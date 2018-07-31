@@ -6,11 +6,19 @@ from api.v1.api_entry import EntryApi
 from api.v1.api_entries import EntriesApi
 from api.v1.api_login import LoginApi
 from api.v1.api_signup import SignUpApi
+from api.v1.models.first_data import diary_users, entry_list
+from database.create_tables import create_tables
 
 
 app = Flask(__name__)
 
 api = Api(app)
+
+create_tables().users_drop_table()
+create_tables().entries_drop_table()
+create_tables().users_table()
+create_tables().entries_table()
+
 
 api.add_resource(EntriesApi, '/api/v1/entries')
 api.add_resource(EntryApi, '/api/v1/entries/<int:enty_id>')

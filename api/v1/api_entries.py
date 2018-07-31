@@ -2,6 +2,7 @@ from api.v1.models.response_message import ResponseMessage
 from flask import Flask, render_template, url_for, request
 from flask_restful import Resource, Api, reqparse
 from api.v1.models.first_data import entry_list
+
 from api.v1.models.entry_model import Entry
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
@@ -36,8 +37,7 @@ class EntriesApi(Resource):
         entry = args['entry']
         entry_date = args['entry_date']
         entry_title = args['entry_title']
-        print(entry)
-        entry_id = ""
+        entry_id = 1
         if not entry or not entry_title or not entry_date:
             res = ResponseMessage(
                 'entry_title or entry or entry_date is empty', 400).response()

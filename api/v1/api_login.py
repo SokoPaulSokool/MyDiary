@@ -3,6 +3,7 @@ from flask import Flask, render_template, url_for, request
 from flask_restful import Resource, Api, reqparse
 from api.v1.models.entry_model import Entry
 from api.v1.models.first_data import diary_users
+from database.auth_crud import auth_crud
 
 parser = reqparse.RequestParser()
 parser.add_argument('phonenumber',
@@ -27,6 +28,8 @@ class LoginApi(Resource):
             res = ResponseMessage(
                 '"phonenumber" or Password" is empty', 400).response()
         else:
+            print(auth_crud().get_user_by_phone_and_password(
+                phonenumber, password))
             if phonenumber in diary_users:
                 current_user = diary_users.get(
                     phonenumber)

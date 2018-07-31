@@ -91,7 +91,7 @@ This site should now be running at http://localhost:5000
 ### Coverage
 
 ```
-$ py.test --cov-config .coveragerc  --cov=api  tests/
+$ py.test --cov-config .coveragerc  --cov=api --cov=database  tests/
 ```
 
 - generated report

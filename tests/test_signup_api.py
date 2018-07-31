@@ -18,7 +18,7 @@ class test_signup():
                                                password=password
                                                )
                                      )
-    # requires name of the field to be skipped and returns a response from sigbup
+    # requires name of the field to be skipped and returns a response   from sigbup
 
     def signup_with_missing_form_value(self, missing_form_name):
         if missing_form_name == "name":
@@ -57,7 +57,6 @@ def test_signup_add_user():
 @pytest.mark.parametrize("name,phonenumber,password", [("", "phonenumber", "password"), ("name", "", "password"), ("name", "phonenumber", ""), ])
 def test_signup_add_user_empty_field(name, phonenumber, password):
     response = test_client.signup(name, phonenumber, password)
-
     assert response.status_code == 400
 
 

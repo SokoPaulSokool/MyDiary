@@ -50,7 +50,7 @@ class create_tables():
                 user_id SERIAL PRIMARY KEY, 
                 name VARCHAR(20),
                 phone_number VARCHAR(20),
-                password VARCHAR(20)
+                password VARCHAR(260)
                 );
                 """)
             # FOREIGN KEY (user_id) REFERENCES Entries (entry_id) ON DELETE CASCADE

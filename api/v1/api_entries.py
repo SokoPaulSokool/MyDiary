@@ -25,9 +25,11 @@ parser.add_argument('entry_title',
 
 
 class EntriesApi(Resource):
+    @jwt_required
     def get(self):
         return entry_list.get_string()
 
+    @jwt_required
     def post(self):
         args = parser.parse_args()
         entry = args['entry']

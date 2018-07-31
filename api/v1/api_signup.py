@@ -7,7 +7,7 @@ from api.v1.models.user_model import User
 from database.auth_crud import auth_crud
 
 
-# signup user endpoint
+# signup user  endpoint
 
 
 parser = reqparse.RequestParser()
@@ -41,11 +41,5 @@ class SignUpApi(Resource):
                 400).response()
         else:
             diary_user = User(name, phonenumber, password)
-            if phonenumber in diary_users:
-                res = ResponseMessage("exists", 401).response()
-            else:
-                diary_users[str(phonenumber)] = diary_user
-                res = ResponseMessage("added", 200).response()
-                auth_crud().add_user(diary_user)
-        # auth_crud().edit_user(diary_user, 2)
+            res = diary_user.signup_user()
         return res

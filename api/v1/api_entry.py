@@ -5,6 +5,8 @@ from flask_restful import Resource, Api, reqparse
 from api.v1.models.first_data import entry_list
 from api.v1.models.entry_model import Entry
 import datetime
+from flask_jwt_extended import (create_access_token, create_refresh_token,
+                                jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
 parser = reqparse.RequestParser()
 parser.add_argument('entry',
@@ -20,9 +22,11 @@ parser.add_argument('entry_title',
 
 
 class EntryApi(Resource):
+    @jwt_required
     def get(self, enty_id):
         return entry_list.get_entry(enty_id)
 
+    @jwt_required
     def put(self, enty_id):
         args = parser.parse_args()
         entry = args['entry']
@@ -40,6 +44,7 @@ class EntryApi(Resource):
             res = entry_list.replace_entry(enty_id, entry)
             return res
 
+    @jwt_required
     def delete(self, enty_id):
         res = entry_list.remove_entry(enty_id)
         return res

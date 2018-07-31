@@ -16,6 +16,7 @@ pytest-cov = "*"
 pycodestyle = "*"
 flask-restful = "*"
 flask-jwt-extended = "*"
+passlib = "*"
 
 [dev-packages]
 

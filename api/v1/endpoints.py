@@ -8,12 +8,15 @@ from api.v1.api_login import LoginApi
 from api.v1.api_signup import SignUpApi
 from api.v1.models.first_data import diary_users, entry_list
 from database.create_tables import create_tables
-
+from flask_jwt_extended import JWTManager
 
 
 app = Flask(__name__)
 
 api = Api(app)
+
+app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
+jwt = JWTManager(app)
 
 create_tables().users_drop_table()
 create_tables().entries_drop_table()

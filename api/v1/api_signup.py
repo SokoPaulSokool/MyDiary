@@ -4,6 +4,7 @@ from flask_restful import Resource, Api, reqparse
 from api.v1.models.entry_model import Entry
 from api.v1.models.first_data import diary_users
 from api.v1.models.user_model import User
+from database.auth_crud import auth_crud
 
 
 # signup user endpoint
@@ -45,4 +46,6 @@ class SignUpApi(Resource):
             else:
                 diary_users[str(phonenumber)] = diary_user
                 res = ResponseMessage("added", 200).response()
+                auth_crud().add_user(diary_user)
+        # auth_crud().edit_user(diary_user, 2)
         return res

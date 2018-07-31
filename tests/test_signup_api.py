@@ -57,7 +57,6 @@ def test_signup_add_user():
 @pytest.mark.parametrize("name,phonenumber,password", [("", "phonenumber", "password"), ("name", "", "password"), ("name", "phonenumber", ""), ])
 def test_signup_add_user_empty_field(name, phonenumber, password):
     response = test_client.signup(name, phonenumber, password)
-
     assert response.status_code == 400
 
 

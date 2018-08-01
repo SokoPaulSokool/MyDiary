@@ -4,6 +4,8 @@ from passlib.hash import pbkdf2_sha256 as sha256
 from api.v1.models.response_message import ResponseMessage
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+import json
+from flask import jsonify
 
 
 class User():
@@ -11,16 +13,6 @@ class User():
         self.name = name
         self.phone_number = phone_number
         self.password = password
-        self.isloged_in = False
-
-    def get_user(self):
-        return self
-
-    def logout_user(self):
-        self.isloged_in = False
-
-    def login_user(self):
-        self.isloged_in = True
 
     def signup_user(self):
         check_result = auth_crud().add_user(
@@ -35,12 +27,11 @@ class User():
                 "phone number is already being used", 401).response()
         else:
             print(check_result)
+            message = "user '" + \
+                check_result[1] + \
+                "' has been successfully registered. You can now login"
             return {
-                "user": {"user_id": check_result[0],
-                         "name": check_result[1],
-                         "phone_number": check_result[2],
-                         "password": check_result[3]
-                         }
+                "message": message
             }, 200
 
     def authenticate_user(self):
@@ -49,23 +40,19 @@ class User():
             self.phone_number)
         if check_result == 'failed':
             return ResponseMessage(
-                "login failed  phone number does not exist ", 401).response()
+                "Login failed  phone number does not exist. First signup ", 401).response()
         else:
             print(check_result[0])
             print(sha256.verify(self.password, check_result[3]))
             if sha256.verify(self.password, check_result[3]):
                 access_token = create_access_token(identity={
                                                    "user_id": check_result[0], "name": check_result[1], "phone_number": check_result[2]})
-                refresh_token = create_refresh_token(
-                    identity={"user_id": check_result[0], "name": check_result[1], "phone_number": check_result[2]})
+                message = "user '" + \
+                    check_result[1] + \
+                    "' has been authorised."
                 return {
-                    "user": {"user_id": check_result[0],
-                             "name": check_result[1],
-                             "phone_number": check_result[2],
-                             "password": check_result[3]
-                             },
-                    'access_token': access_token,
-                    'refresh_token': refresh_token
+                    "message": message,
+                    'access_token': access_token
                 }, 200
             else:
                 return ResponseMessage(

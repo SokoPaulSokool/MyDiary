@@ -30,31 +30,9 @@ class LoginApi(Resource):
         res = ''
         if not phonenumber or not password:
             res = ResponseMessage(
-                '"phonenumber" or Password" is empty', 400).response()
+                "'phonenumber' or 'Password' is empty", 400).response()
         else:
 
             new_user = User("", phonenumber, password)
             res = new_user.authenticate_user()
-
-            # new_user = User("", phonenumber, password)
-            # if phonenumber in diary_users:
-            #     current_user = diary_users.get(
-            #         phonenumber)
-
-            #     if current_user.password == password:
-            #         current_user.login_user()
-
-            #     else:
-            #         current_user.logout_user()
-
-            #     if current_user.isloged_in:
-
-            #         res = current_user, 200
-
-            #     else:
-            #         res = ResponseMessage(
-            #             "login failed wrong password", 401).response()
-            # else:
-            #     res = ResponseMessage(
-            #         "not yet registered or wrong phonenumber", 401).response()
         return res

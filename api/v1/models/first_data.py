@@ -6,3 +6,5 @@ diary_users = dict()
 # Manages all entries
 
 # entry_list = Entries()
+
+run_test_database = True

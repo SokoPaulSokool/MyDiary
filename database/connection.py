@@ -5,11 +5,17 @@ import os
 
 def connect():
 
+    # conn = psycopg2.connect(
+    #     database='mydiary',
+    #     user='postgres',
+    #     password='',
+    #     host='localhost',
+    #     port='5432')
     conn = psycopg2.connect(
         database='mydiary',
-        user='postgres',
-        password='',
+        user='soko',
+        password='sokool',
         host='localhost',
-        port='5432')
+        port='5434')
 
     return conn

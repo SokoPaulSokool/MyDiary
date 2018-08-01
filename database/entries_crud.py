@@ -25,21 +25,13 @@ class entries_crud():
                             VALUES (DEFAULT,%s,%s,%s,%s) RETURNING entry_id, user_id,  entry_title, entry, entry_date"""
                 cur.execute(db_query, (user_id, enty.entry_title, enty.entry,
                                        enty.entry_date))
-
-                print("created")
                 rows = cur.fetchone()
                 return rows
             else:
-                print("user not found")
+                return "user not found"
 
-        except (Exception, psycopg2.DatabaseError) as error:
-
-            print(error)
-        finally:
-            if self.conn is not None:
-                self.conn.close()
-
-    
+        except:
+            return "failed"
 
     def get_all_user_entries(self, user_id):
         try:
@@ -73,10 +65,12 @@ class entries_crud():
         try:
             cur = self.conn.cursor()
             try:
-                cur.execute(
+                deli = cur.execute(
                     """DELETE FROM Entries WHERE user_id =%s AND entry_id = %s""", [user_id, entry_id])
+                rows_deleted = cur.rowcount
+                print(rows_deleted)
 
-                return "deleted"
+                return rows_deleted
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
                 print("I can't delete  test database!")
@@ -94,7 +88,6 @@ class entries_crud():
                                    enty.entry_id))
             rows = cur.fetchall()
             return rows[0]
-            print("edited")
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)

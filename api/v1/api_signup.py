@@ -37,7 +37,7 @@ class SignUpApi(Resource):
         res = ''
         if not name or not phonenumber or not password:
             res = ResponseMessage(
-                'Either "name" or "phonenumber" or Passssword" is empty',
+                "'phonenumber' or 'Password' is empty",
                 400).response()
         else:
             diary_user = User(name, phonenumber, password)

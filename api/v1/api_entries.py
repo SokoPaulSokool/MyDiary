@@ -5,8 +5,10 @@ import datetime
 from database.entries_crud import entries_crud
 
 from api.v1.models.entries_model import Entries
+import json
 
 from api.v1.models.entry_model import Entry
+import json
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
@@ -48,5 +50,5 @@ class EntriesApi(Resource):
             entry_date = datetime.datetime.now().timestamp()
             new_entry = Entries(current_user["user_id"]).add_entry(Entry(
                 entry_id, current_user["user_id"], entry_title, entry, entry_date))
-            res = new_entry, 200
+            res = new_entry
             return res

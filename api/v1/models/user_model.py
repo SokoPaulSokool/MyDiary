@@ -54,9 +54,10 @@ class User():
             print(check_result[0])
             print(sha256.verify(self.password, check_result[3]))
             if sha256.verify(self.password, check_result[3]):
-                access_token = create_access_token(identity=self.phone_number)
+                access_token = create_access_token(identity={
+                                                   "user_id": check_result[0], "name": check_result[1], "phone_number": check_result[2]})
                 refresh_token = create_refresh_token(
-                    identity=self.phone_number)
+                    identity={"user_id": check_result[0], "name": check_result[1], "phone_number": check_result[2]})
                 return {
                     "user": {"user_id": check_result[0],
                              "name": check_result[1],

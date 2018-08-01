@@ -6,7 +6,7 @@ from api.v1.api_entry import EntryApi
 from api.v1.api_entries import EntriesApi
 from api.v1.api_login import LoginApi
 from api.v1.api_signup import SignUpApi
-from api.v1.models.first_data import diary_users, entry_list
+from api.v1.models.first_data import diary_users
 from database.create_tables import create_tables
 from flask_jwt_extended import JWTManager
 

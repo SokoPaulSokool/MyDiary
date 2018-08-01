@@ -3,61 +3,58 @@ from flask import jsonify
 from api.v1.models.entry_model import Entry
 from database.entries_crud import entries_crud
 
-current_user_id = 1
-
 
 class Entries:
-    def __init__(self):
+    def __init__(self, user_id):
         self.entry_list = []
+        self.user_id = user_id
 
     def add_entry(self, entry):
         self.entry_list.append(entry)
-        id = self.entry_list.index(entry)
+        entry_turple = entries_crud().add_entry(self.user_id, entry)
+        new_entry = Entry(entry_turple[0], entry_turple[1],
+                          entry_turple[2], entry_turple[3], entry_turple[4])
 
-        print(entries_crud().add_entry(current_user_id, entry))
-        self.entry_list[id].entry_id = id
+        return new_entry.serialize()
 
     def get_entry(self, entry_id):
+        print(entries_crud().get_entry_by_id(
+            self.user_id, entry_id))
         try:
-            entry_got_from_list = self.entry_list[entry_id].serialize()
+            entry_got_from_db = entries_crud().get_entry_by_id(
+                self.user_id, entry_id)
+            new_entry = Entry(entry_got_from_db[0], entry_got_from_db[1],
+                              entry_got_from_db[2], entry_got_from_db[3], entry_got_from_db[4])
 
-            return ResponseMessage(str(entry_got_from_list), 200).response()
+            return new_entry.serialize()
         except:
             return ResponseMessage("not found", 404).response()
 
     def remove_entry(self, entry_id):
         try:
-            self.entry_list.pop(entry_id)
-            print(entries_crud().delete_entry(current_user_id, entry_id))
-            return ResponseMessage("deleted", 200).response()
+            entry_deleted_from_db = entries_crud().delete_entry(
+                self.user_id, entry_id)
+
+            return ResponseMessage(entry_deleted_from_db, 200).response()
         except:
             return ResponseMessage("not found", 404).response()
 
-    def replace_entry(self, entry_id, entry):
-        try:
-            if self.get_entry(entry_id)["message"] == "not found":
-                return ResponseMessage("not found", 404).response()
-            else:
-                try:
-                    self.entry_list.insert(entry_id, entry)
-                    self.add_entry(entry)
-                    print(entries_crud().edit_entry(1, entry_id, entry))
-                    return ResponseMessage("success", 200).response()
-                except:
-                    return ResponseMessage("not found", 404).response()
+    def replace_entry(self,  entry):
+        edited = entries_crud().edit_entry(self.user_id, entry)
+        if edited:
+            edited_entry = Entry(edited[0], edited[1],
+                                 edited[2], edited[3], edited[4])
 
-        except:
-            try:
-                self.entry_list.insert(entry_id, entry)
-                self.add_entry(entry)
-                return ResponseMessage("success", 200).response()
-            except:
-                return ResponseMessage("not found", 404).response()
+            return edited_entry.serialize()
+        else:
+            return ResponseMessage("not found", 404).response()
 
-    def get_string(self):
+    def entries_from_turple_list(self):
         items = []
-        got_from_database = entries_crud().get_all_user_entries(current_user_id)
+        got_from_database = entries_crud().get_all_user_entries(self.user_id)
         print(got_from_database)
-        for item in self.entry_list:
-            items.append(item.serialize())
-        return jsonify(items)
+        for entry_turple in got_from_database:
+            entry = Entry(entry_turple[0], entry_turple[1],
+                          entry_turple[2], entry_turple[3], entry_turple[4])
+            items.append(entry.serialize())
+        return items

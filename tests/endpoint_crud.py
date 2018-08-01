@@ -30,7 +30,7 @@ class entriescrud():
 
     def test_fetch_one_entries(self):
         self.submit_entry("mm", "mm")
-        return self.test_client.get('/api/v1/entries/0', headers={'Authorization': 'Bearer ' + self.signup_get_token()})
+        return self.test_client.get('/api/v1/entries/1', headers={'Authorization': 'Bearer ' + self.signup_get_token()})
 
     # Fetch empty entries
 
@@ -64,7 +64,7 @@ class entriescrud():
 
     def submit_put_entry(self, entry_title, entry):
         self.submit_entry("kk", "kk")
-        return self.test_client.put('/api/v1/entries/0',
+        return self.test_client.put('/api/v1/entries/1',
                                     data=dict(entry_title=entry_title,
                                               entry=entry
                                               ), headers={'Authorization': 'Bearer ' + self.signup_get_token()}
@@ -74,12 +74,12 @@ class entriescrud():
     def submit_put_entry_with_missing_form_value(self, missing_form_key):
         self.submit_entry("mm", "mm")
         if missing_form_key == "entry_title":
-            return self.test_client.put('/api/v1/entries/0',
+            return self.test_client.put('/api/v1/entries/1',
                                         data=dict(entry="entry"
                                                   ), headers={'Authorization': 'Bearer ' + self.signup_get_token()}
                                         )
         if missing_form_key == "entry":
-            return self.test_client.put('/api/v1/entries/0',
+            return self.test_client.put('/api/v1/entries/1',
                                         data=dict(entry_title="entry_title"
                                                   ), headers={'Authorization': 'Bearer ' + self.signup_get_token()}
                                         )
@@ -87,7 +87,7 @@ class entriescrud():
 
     def submit_delete_entry(self):
         self.submit_entry("mm", "mm")
-        return self.test_client.delete('/api/v1/entries/0', headers={'Authorization': 'Bearer ' + self.signup_get_token()})
+        return self.test_client.delete('/api/v1/entries/1', headers={'Authorization': 'Bearer ' + self.signup_get_token()})
 
     def submit_delete_empty_entry(self):
         return self.test_client.get('/api/v1/entries/200', headers={'Authorization': 'Bearer ' + self.signup_get_token()})

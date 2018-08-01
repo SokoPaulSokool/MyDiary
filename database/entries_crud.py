@@ -22,11 +22,13 @@ class entries_crud():
             if auth_crud().get_user_by_id(user_id) != "failed":
                 cur = self.conn.cursor()
                 db_query = """INSERT INTO Entries (entry_id,user_id,entry_title,entry, entry_date)
-                            VALUES (DEFAULT,%s,%s,%s,%s) """
+                            VALUES (DEFAULT,%s,%s,%s,%s) RETURNING entry_id, user_id,  entry_title, entry, entry_date"""
                 cur.execute(db_query, (user_id, enty.entry_title, enty.entry,
                                        enty.entry_date))
 
                 print("created")
+                rows = cur.fetchone()
+                return rows
             else:
                 print("user not found")
 
@@ -37,17 +39,7 @@ class entries_crud():
             if self.conn is not None:
                 self.conn.close()
 
-    def get_all(self):
-        try:
-            cur = self.conn.cursor()
-            try:
-                cur.execute("""SELECT * from Entries""")
-                rows = cur.fetchall()
-                return rows
-            except:
-                print("I can't fetch  test database!")
-        except:
-            print("I am unable to fetch to the database")
+    
 
     def get_all_user_entries(self, user_id):
         try:
@@ -67,7 +59,7 @@ class entries_crud():
             cur = self.conn.cursor()
             try:
                 cur.execute(
-                    """SELECT * from Entries WHERE user_id =%s, entry_id = %s""", [user_id, entry_id])
+                    """SELECT * from Entries WHERE user_id =%s AND entry_id = %s""", [user_id, entry_id])
                 rows = cur.fetchall()
                 return rows[0]
             except (Exception, psycopg2.DatabaseError) as error:
@@ -82,8 +74,9 @@ class entries_crud():
             cur = self.conn.cursor()
             try:
                 cur.execute(
-                    """DELETE FROM Entries WHERE user_id =%s, entry_id = %s""", [user_id, entry_id])
+                    """DELETE FROM Entries WHERE user_id =%s AND entry_id = %s""", [user_id, entry_id])
 
+                return "deleted"
             except (Exception, psycopg2.DatabaseError) as error:
                 print(error)
                 print("I can't delete  test database!")
@@ -91,14 +84,16 @@ class entries_crud():
             print(error)
             print("I am unable to delete to the database")
 
-    def edit_entry(self, user_id, entry_id, enty):
+    def edit_entry(self, user_id, enty):
         try:
             cur = self.conn.cursor()
 
-            db_query = """UPDATE Entries SET  entry_id = %s, entry_title =  %s, entry =  %s  WHERE user_id= %s, entry_id = %s """
-            cur.execute(db_query, (enty.id, enty.entry_title, enty.entry, user_id,
-                                   entry_id))
-
+            db_query = """UPDATE Entries SET   entry_title =  %s, entry =  %s 
+             WHERE user_id= %s AND entry_id = %s RETURNING entry_id, user_id,  entry_title, entry, entry_date"""
+            cur.execute(db_query, (enty.entry_title, enty.entry, user_id,
+                                   enty.entry_id))
+            rows = cur.fetchall()
+            return rows[0]
             print("edited")
 
         except (Exception, psycopg2.DatabaseError) as error:

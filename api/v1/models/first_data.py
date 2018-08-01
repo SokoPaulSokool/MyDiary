@@ -5,4 +5,4 @@ diary_users = dict()
 
 # Manages all entries
 
-entry_list = Entries()
+# entry_list = Entries()

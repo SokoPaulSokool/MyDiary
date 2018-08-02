@@ -2,7 +2,7 @@
 url = "https://pypi.org/simple"
 verify_ssl = true
 name = "pypi"
-
+ 
 [packages]
 flask = "*"
 pytest = "*"
@@ -15,6 +15,7 @@ pytest-cov = "*"
 "pep8" = "*"
 pycodestyle = "*"
 flask-restful = "*"
+psycopg2 = "*"
 flask-jwt-extended = "*"
 passlib = "*"
 flask-restful-swagger = "*"

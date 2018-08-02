@@ -9,15 +9,15 @@ from api.v1.api_signup import SignUpApi
 from api.v1.models.first_data import diary_users
 from database.create_tables import create_tables
 from flask_jwt_extended import JWTManager
-
-from flask_restful_swagger import swagger
 from flask_restful_swagger import swagger
 
 
 app = Flask(__name__)
 
 # api = Api(app)
-api = swagger.docs(Api(app), apiVersion='0.1')
+api = swagger.docs(Api(app), apiVersion='0.1',
+                   description='My Diary APIs')
+
 
 app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
 jwt = JWTManager(app)

@@ -33,7 +33,10 @@ parser.add_argument('entry_title',
 class EntryApi(Resource):
     "Documentation for get by id"
     @swagger.operation(
-        notes="Documentation for get entry by id",
+        notes="""This gets a specific entry from the user's entries.\n
+        First login using the login end point and obtain the user's 
+        access token to use for Authorization""",
+        nickname="get entry by id",
         parameters=[
             {
                 "name": "Authorization",
@@ -50,14 +53,6 @@ class EntryApi(Resource):
                 "name": "enty_id",
                 "paramType": "path",
                 "required": True
-            },
-            {
-                "name": "Signup body",
-                "description": "requires ones entry title  and entry ",
-                "required": True,
-                "allowMultiple": False,
-                "dataType": EntryModel.__name__,
-                "paramType": "body"
             }
         ],
         responseMessages=[

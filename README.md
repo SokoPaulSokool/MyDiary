@@ -29,8 +29,10 @@ These are the endpoints to test
 | GET    | /api/v1/entries/id  | Get specific entry using an id      |
 | POST   |   /api/v1/entries   | Create a new entry                  |
 | PUT    | /api/v1/entries/id  | Modify a specific entry using an id |
+| DELETE | /api/v1/entries/id  | Delete a specific entry using an id |
 | POST   | /api/v1/auth/login  | Login user                          |
 | POST   | /api/v1/auth/signup | Signup user                         |
+| GET    |   /api/spec.html    | Access api documentation            |
 
 ## Site and api
 

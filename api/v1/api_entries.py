@@ -40,7 +40,10 @@ parser.add_argument('entry_title',
 class EntriesApi(Resource):
     "Documentation for get"
     @swagger.operation(
-        notes="Documentation for get entry  ",
+        notes="""Gets all entries of a given user. 
+        First login using the login end point and obtain the user's 
+        access token to use for Authorization""",
+        nickname='fetch entries',
         parameters=[
             {
                 "name": "Authorization",
@@ -54,11 +57,11 @@ class EntriesApi(Resource):
         responseMessages=[
             {
                 "code": 401,
-                "message": "Not authorised. The reason should be in the returned message"
+                "message": "The reason should be in the returned message"
             },
             {
-                "code": 405,
-                "message": "Invalid input"
+                "code": 400,
+                "message": "The reason should be in the returned message"
             }
         ]
     )
@@ -69,9 +72,13 @@ class EntriesApi(Resource):
 
     "Documentation for create entry"
     @swagger.operation(
-        notes="Documentation for create entry",
+        notes="""This adds an entry to the user's entries.\n
+        First login using the login end point and obtain the user's 
+        access token to use for Authorization\n
+        Then send the entry and tittle through the body as described in the schema""",
+        nickname="add entry",
         parameters=[
-             {
+            {
                 "name": "Authorization",
                 "description": "After loging in, get the access_token add 'Beaer' +access_token",
                 "required": True,

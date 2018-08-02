@@ -6,8 +6,18 @@ from api.v1.models.entry_model import Entry
 from api.v1.models.entries_model import Entries
 from database.entries_crud import entries_crud
 import datetime
+from flask_restful_swagger import swagger
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+
+
+@swagger.model
+class EntryModel:
+    "Model describing inputs for documetation"
+
+    def __init__(self, entry, entry_title):
+        pass
+
 
 parser = reqparse.RequestParser()
 parser.add_argument('entry',
@@ -21,11 +31,91 @@ parser.add_argument('entry_title',
 
 
 class EntryApi(Resource):
+    "Documentation for get by id"
+    @swagger.operation(
+        notes="Documentation for get entry by id",
+        parameters=[
+            {
+                "name": "Authorization",
+                "description": "After loging in, get the access_token add 'Beaer' +access_token",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": "string",
+                "paramType": "header"
+            },
+            {
+                "allowMultiple": False,
+                "dataType": "string",
+                "description": "The ID of the TODO item",
+                "name": "enty_id",
+                "paramType": "path",
+                "required": True
+            },
+            {
+                "name": "Signup body",
+                "description": "requires ones entry title  and entry ",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": EntryModel.__name__,
+                "paramType": "body"
+            }
+        ],
+        responseMessages=[
+            {
+                "code": 401,
+                "message": "Not authorised. The reason should be in the returned message"
+            },
+            {
+                "code": 405,
+                "message": "Invalid input"
+            }
+        ]
+    )
     @jwt_required
     def get(self, enty_id):
         current_user = get_jwt_identity()
         return Entries(current_user["user_id"]).get_entry(enty_id)
 
+    "Documentation for put"
+    @swagger.operation(
+        notes="Documentation for put",
+        parameters=[
+            {
+                "name": "Authorization",
+                "description": "After loging in, get the access_token add 'Beaer' +access_token",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": "string",
+                "paramType": "header"
+            },
+            {
+                "allowMultiple": False,
+                "dataType": "string",
+                "description": "The ID of the TODO item",
+                "name": "enty_id",
+                "paramType": "path",
+                "required": True
+            },
+            {
+                "name": "Edit entry body",
+                "description": "requires ones entry title  and entry ",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": EntryModel.__name__,
+                "paramType": "body"
+            }
+        ],
+        responseMessages=[
+            {
+                "code": 401,
+                "message": "Not authorised. The reason should be in the returned message"
+            },
+            {
+                "code": 405,
+                "message": "Invalid input"
+            }
+        ]
+    )
     @jwt_required
     def put(self, enty_id):
         args = parser.parse_args()
@@ -44,8 +134,40 @@ class EntryApi(Resource):
             # replaces entry at a given id with the new data sent
             res = Entries(current_user["user_id"]
                           ).replace_entry(entry)
-            return res 
+            return res
 
+    "Documentation for delete"
+    @swagger.operation(
+        notes="Documentation for delete",
+        parameters=[
+            {
+                "name": "Authorization",
+                "description": "After loging in, get the access_token add 'Beaer' +access_token",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": "string",
+                "paramType": "header"
+            },
+            {
+                "allowMultiple": False,
+                "dataType": "string",
+                "description": "The ID of the TODO item",
+                "name": "enty_id",
+                "paramType": "path",
+                "required": True
+            }
+        ],
+        responseMessages=[
+            {
+                "code": 401,
+                "message": "Not authorised. The reason should be in the returned message"
+            },
+            {
+                "code": 405,
+                "message": "Invalid input"
+            }
+        ]
+    )
     @jwt_required
     def delete(self, enty_id):
         current_user = get_jwt_identity()

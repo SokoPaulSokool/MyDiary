@@ -9,11 +9,20 @@ import json
 
 from api.v1.models.entry_model import Entry
 import json
+from flask_restful_swagger import swagger
 from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
 
+@swagger.model
+class EntryModel:
+    "Model describing inputs for documetation"
+
+    def __init__(self, entry, entry_title):
+        pass
+
 # endpoint to Fetch all entries or create an entry to diary
+
 
 parser = reqparse.RequestParser()
 parser.add_argument('entry',
@@ -29,11 +38,67 @@ parser.add_argument('entry_title',
 
 
 class EntriesApi(Resource):
+    "Documentation for get"
+    @swagger.operation(
+        notes="Documentation for get entry  ",
+        parameters=[
+            {
+                "name": "Authorization",
+                "description": "After loging in, get the access_token add 'Beaer' +access_token",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": "string",
+                "paramType": "header"
+            }
+        ],
+        responseMessages=[
+            {
+                "code": 401,
+                "message": "Not authorised. The reason should be in the returned message"
+            },
+            {
+                "code": 405,
+                "message": "Invalid input"
+            }
+        ]
+    )
     @jwt_required
     def get(self):
         current_user = get_jwt_identity()
         return Entries(current_user["user_id"]).entries_from_turple_list(), 200
 
+    "Documentation for create entry"
+    @swagger.operation(
+        notes="Documentation for create entry",
+        parameters=[
+             {
+                "name": "Authorization",
+                "description": "After loging in, get the access_token add 'Beaer' +access_token",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": "string",
+                "paramType": "header"
+            },
+            {
+                "name": "Add new entry body",
+                "description": "requires ones entry title  and entry ",
+                "required": True,
+                "allowMultiple": False,
+                "dataType": EntryModel.__name__,
+                "paramType": "body"
+            }
+        ],
+        responseMessages=[
+            {
+                "code": 401,
+                "message": "The reason should be in the returned message"
+            },
+            {
+                "code": 405,
+                "message": "Invalid input"
+            }
+        ]
+    )
     @jwt_required
     def post(self):
         args = parser.parse_args()

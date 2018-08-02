@@ -10,15 +10,18 @@ from api.v1.models.first_data import diary_users
 from database.create_tables import create_tables
 from flask_jwt_extended import JWTManager
 
+from flask_restful_swagger import swagger
+from flask_restful_swagger import swagger
 
 
 app = Flask(__name__)
 
-api = Api(app)
+# api = Api(app)
+api = swagger.docs(Api(app), apiVersion='0.1')
 
 app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
 jwt = JWTManager(app)
- 
+
 create_tables().users_drop_table()
 create_tables().entries_drop_table()
 create_tables().users_table()

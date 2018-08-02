@@ -17,6 +17,7 @@ pycodestyle = "*"
 flask-restful = "*"
 flask-jwt-extended = "*"
 passlib = "*"
+flask-restful-swagger = "*"
 
 [dev-packages]
 

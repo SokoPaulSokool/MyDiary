@@ -73,7 +73,10 @@ class EntryApi(Resource):
 
     "Documentation for put"
     @swagger.operation(
-        notes="Documentation for put",
+        notes="""This edits a specific entry from the user's entries.\n
+        First login using the login end point and obtain the user's 
+        access token to use for Authorization. Then send the edited title and the entry in the body as described in the Shema""",
+        nickname="edit entry",
         parameters=[
             {
                 "name": "Authorization",
@@ -133,7 +136,10 @@ class EntryApi(Resource):
 
     "Documentation for delete"
     @swagger.operation(
-        notes="Documentation for delete",
+        notes="""Theis deletes an entry from user's entries using an id. 
+        First login using the login end point and obtain the user's 
+        access token to use for Authorization. Then add the entry id if the item to delete.""",
+        nickname='delete entry',
         parameters=[
             {
                 "name": "Authorization",

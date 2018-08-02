@@ -57,8 +57,8 @@ These are instructions for setting up MyDiary app in a development enivornment.
 - Prepare the virtual environment
 
   ```
-  $ pip install pipenv
-  $ pipenv shell
+  $ pip install virtualenv
+  $ virtualenv venv
   ```
 
 - Clone the project repo

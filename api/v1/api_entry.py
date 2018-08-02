@@ -49,7 +49,8 @@ class EntryApi(Resource):
             {
                 "allowMultiple": False,
                 "dataType": "string",
-                "description": "The ID of the TODO item",
+                "description": """This is the id of the entry to be obtained. 
+                Its better to first get all entries for the user to idetify the id""",
                 "name": "enty_id",
                 "paramType": "path",
                 "required": True
@@ -71,7 +72,9 @@ class EntryApi(Resource):
         current_user = get_jwt_identity()
         return Entries(current_user["user_id"]).get_entry(enty_id)
 
-    "Documentation for put"
+    #
+    # "Documentation for put"
+    #
     @swagger.operation(
         notes="""This edits a specific entry from the user's entries.\n
         First login using the login end point and obtain the user's 
@@ -89,7 +92,8 @@ class EntryApi(Resource):
             {
                 "allowMultiple": False,
                 "dataType": "string",
-                "description": "The ID of the TODO item",
+                "description": """This is the id of the entry to be obtained. 
+                                Its better to first get all entries for the user to idetify the id""",
                 "name": "enty_id",
                 "paramType": "path",
                 "required": True
@@ -134,7 +138,7 @@ class EntryApi(Resource):
                           ).replace_entry(entry)
             return res
 
-    "Documentation for delete"
+    # "Documentation for delete"
     @swagger.operation(
         notes="""Theis deletes an entry from user's entries using an id. 
         First login using the login end point and obtain the user's 
@@ -152,7 +156,8 @@ class EntryApi(Resource):
             {
                 "allowMultiple": False,
                 "dataType": "string",
-                "description": "The ID of the TODO item",
+                "description": """This is the id of the entry to be obtained. 
+                Its better to first get all entries for the user to idetify the id""",
                 "name": "enty_id",
                 "paramType": "path",
                 "required": True

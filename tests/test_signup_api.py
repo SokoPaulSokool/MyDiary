@@ -1,106 +1,99 @@
 from api.v1.endpoints import app
 import unittest
 import pytest
+import json
 # Testing the signup feature
 
 
-class test_signup(unittest.TestCase):
+class test_signup():
 
-    test_client = app.test_client()
+    def __init__(self, app):
+        self.test_client = app.test_client()
 
     # signs  up user with the provided args
 
     def signup(self, name, phonenumber, password):
-        return self.test_client.post('/api/v1/signup',
+        return self.test_client.post('/api/v1/auth/signup',
                                      data=dict(name=name,
                                                phonenumber=phonenumber,
                                                password=password
                                                )
                                      )
-    # requires name of the field to be skipped and returns a response from sigbup
+    # requires name of the field to be skipped and returns a response   from
+    # sigbup
 
     def signup_with_missing_form_value(self, missing_form_name):
         if missing_form_name == "name":
-            return self.test_client.post('/api/v1/signup',
+            return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(
                                              phonenumber="3",
                                              password="5"
                                          )
                                          )
         if missing_form_name == "phonenumber":
-            return self.test_client.post('/api/v1/signup',
+            return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(name="paul",
                                                    password="5"
                                                    )
                                          )
         if missing_form_name == "password":
-            return self.test_client.post('/api/v1/signup',
+            return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(name="paul",
                                                    phonenumber="3"
                                                    )
                                          )
-    # tests adding a single user
 
-    def test_signup_add_user(self):
-        response = self.signup("paul", "1", "12")
 
-        assert response.data == b'added'
+test_client = test_signup(app)
+# tests adding a single user
 
-    # tests adding a single user empty name
 
-    def test_signup_add_user_empty_name(self):
-        response = self.signup("", "1", "12")
+def test_signup_add_user():
+    response = test_client.signup("paul", "+256753000000", "password")
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "user 'paul' has been successfully registered. You can now login"
 
-        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
+# tests adding a single user empty field
 
-    # tests adding a single user empty phonenumber
 
-    def test_signup_add_user_empty_phonenumber(self):
-        response = self.signup("paul", "", "12")
+@pytest.mark.parametrize("name,phonenumber,password,key",
+                         [("",
+                           "phonenumber",
+                           "password",
+                           "name"),
+                          ("name",
+                           "",
+                           "password",
+                           "phonenumber"),
+                             ("name",
+                              "phonenumber",
+                              "",
+                              "password"),
+                          ])
+def test_signup_add_user_empty_field(name, phonenumber, password, key):
+    response = test_client.signup(name, phonenumber, password)
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "The field '" + key + "' is empty. Please add " + key
 
-        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
 
-    # tests adding a single user empty Passssword
+# tests adding a single user with missing field
 
-    def test_signup_add_user_empty_password(self):
-        response = self.signup("paul", "1", "")
+@pytest.mark.parametrize("value", [("name"), ("phonenumber"), ("password")])
+def test_login_user_missing_field(value):
+    response = test_client.signup_with_missing_form_value(value)
+    data = json.loads(response.get_data(as_text=True))[
+        "message"][value]
+    assert data == "This field is required"
 
-        assert response.data == b'Either "name" or "phonenumber" or Passssword" is empty'
+# Test adding an existing user
 
-    # tests adding a single user with missing name
 
-    def test_signup_add_user_missing_name_field(self):
-        response = self.signup_with_missing_form_value("name")
-
-        assert response.data == b'Either "name" or "phonenumber" or Poassword" is missing'
-
-    # tests adding a single user with missing phonenumber
-
-    def test_signup_add_user_missing_phomenumber_field(self):
-        response = self.signup_with_missing_form_value("phonenumber")
-
-        assert response.data == b'Either "name" or "phonenumber" or Poassword" is missing'
-
-    # tests adding a single user with missing password
-
-    def test_signup_add_user_missing_password_field(self):
-        response = self.signup_with_missing_form_value("password")
-
-        assert response.data == b'Either "name" or "phonenumber" or Poassword" is missing'
-
-    # Test adding an existing user
-
-    def test_signup_add_existing_user(self):
-        self.test_client.post('/api/v1/signup', data=dict(name="soko",
-                                                          phonenumber="123",
-                                                          password="8"
-                                                          )
-                              )
-        response = self.test_client.post('/api/v1/signup',
-                                         data=dict(name="soko",
-                                                   phonenumber="123",
-                                                   password="8"
-                                                   )
-                                         )
-
-        assert response.data == b'exists'
+def test_signup_add_existing_user():
+    test_client.signup("kool", "+256753682060", "sokool")
+    response = test_client.signup("kool", "+256753682060", "sokool")
+    # assert response.status_code == 401
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "phone number is already being used"

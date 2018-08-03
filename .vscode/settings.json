@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\WOHU-DENNIS 001\\.virtualenvs\\My_Diary-03xE5-M5\\Scripts\\python.exe"
+    "python.pythonPath": "${workspaceFolder}\\venv\\Scripts\\python.exe",
+    "python.linting.pep8Enabled": false
 }

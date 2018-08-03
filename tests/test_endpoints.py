@@ -2,77 +2,108 @@ from api.v1.endpoints import app
 import unittest
 import pytest
 from tests.endpoint_crud import entriescrud
+import json
+# Testing the entries endpoints
 
-# Testing the login feature
-
-
-# Testing the entries feature
 
 test_client = entriescrud(app)
 
-# tests adding a single user with missing name
+# tests create entry with missing field value
 
 
-@pytest.mark.parametrize("value", [("entry_date"), ("entry"), ("entry_date")])
+@pytest.mark.parametrize("value", [("entry_title"), ("entry")])
 def test_submit_entry_missing_entry_field(value):
     response = test_client.submit_entry_with_missing_form_value(value)
-
-    assert response.data == b'Either "entry_title" or "entry" or "entry_date"  is missing'
-
-    # tests adding a single user empty entry title
-
-
-@pytest.mark.parametrize("entry_title,entry,entry_date", [("", "entry", "entry_date"), ("entry_title", "", "entry_date"), ("entry_title", "entry", "")])
-def test_submit_entry_with_empty_entry(entry_title, entry, entry_date):
-    response = test_client.submit_entry(entry_title, entry, entry_date)
-
-    assert response.data == b'"entry_title" or "entry" or "entry_date" is empty'
+    data = json.loads(response.get_data(as_text=True))[
+        "message"][value]
+    assert data == "This field is required"
 
 
-# tests adding a single user empty entry  date
+@pytest.mark.parametrize(
+    "entry_title,entry", [
+        ("", "entry"), ("entry_title", "")])
+def test_submit_entry_with_empty_entry(entry_title, entry):
+    response = test_client.submit_entry(entry_title, entry)
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "entry_title or entry or entry_date is empty"
+
+# tests create full entry
+
 
 def test_submit_entry():
-    response = test_client.submit_entry("mm", "mmm", "mmm")
+    response = test_client.submit_entry("mm", "mmm")
 
-    assert response.data == b'success'
+    assert response.status_code == 201
 
 
-# tests adding a single user with missing name
-@pytest.mark.parametrize("value", [("entry_date"), ("entry"), ("entry_date")])
+# tests put entry with missing field value
+
+@pytest.mark.parametrize("value", [("entry_title"), ("entry")])
 def test_submit_entry_missing_put_entry_field(value):
     response = test_client.submit_put_entry_with_missing_form_value(value)
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "entry_title or entry or entry_date is empty"
 
-    assert response.data == b'Either "entry_title" or "entry" or "entry_date"  is missing'
-
-    # tests adding a single user empty entry title
+# tests put entry with an empty entry value
 
 
-@pytest.mark.parametrize("entry_title,entry,entry_date", [("", "entry", "entry_date"), ("entry_title", "", "entry_date"), ("entry_title", "entry", "")])
-def test_submit_entry_with_empty_put_entry(entry_title, entry, entry_date):
-    response = test_client.submit_put_entry(entry_title, entry, entry_date)
+@pytest.mark.parametrize(
+    "entry_title,entry", [
+        ("", "entry"), ("entry_title", "")])
+def test_submit_entry_with_empty_put_entry(entry_title, entry):
+    response = test_client.submit_put_entry(entry_title, entry)
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "entry_title or entry or entry_date is empty"
 
-    assert response.data == b'"entry_title" or "entry" or "entry_date" is empty'
-
-# tests adding a single user empty entry  date
+# tests put full entry
 
 
 def test_submit_put_entry():
-    response = test_client.submit_put_entry("mm", "mmm", "mmm")
+    response = test_client.submit_put_entry("mm", "mmm")
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "entry with id '1' has been edited"
 
-    assert response.status_code == 200
-
-# Fetch single entries
+# tests get single entries
 
 
 def test_fetch_one_entry_id():
-    assert test_client.test_fetch_one_entries().status_code == 200
+    response = test_client.test_fetch_one_entries()
+    data = json.loads(response.get_data(as_text=True))[
+        "entry_id"]
+    assert data == 1
 
-    # Fetch empty entries
+# tests get non existing  entry
 
 
 def test_fetch_one_empty_entries():
-    assert test_client.test_fetch_one_empty_entries().status_code == 200
+    response = test_client.fetch_one_empty_entries()
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "entry with id '100' not found"
+
+# tests get all entries
 
 
 def test_fetch_all():
-    assert test_client.test_fetch_all_entries().status_code == 200
+    response = test_client.test_fetch_all_entries()
+    assert response.status_code == 200
+
+
+# tests delete full entry
+
+def test_delete_entry():
+    response = test_client.submit_delete_entry()
+    data = json.loads(response.get_data(as_text=True))["message"]
+    assert data == "entry with id '1' has been deleted"
+
+# tests delete empty entry
+
+
+def test_delete_empty_entry():
+    response = test_client.submit_delete_empty_entry()
+    data = json.loads(response.get_data(as_text=True))["message"]
+    assert data == "entry with id '200' not found"

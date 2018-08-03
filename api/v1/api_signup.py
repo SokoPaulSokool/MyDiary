@@ -95,7 +95,7 @@ class SignUpApi(Resource):
                 400).response()
         if len(password) < 5:
             return ResponseMessage(
-                "password is too short. mut have atleats 4 characters",
+                "password is too short. mut have atleats 5 characters",
                 400).response()
 
         if name or phonenumber or password:

@@ -13,10 +13,6 @@ class entries_crud():
         self.dict_cursor = self.conn.cursor(
             cursor_factory=extra.DictCursor)
 
-    # create_tables().users_table()
-
-    # creates table for entries
-
     def add_entry(self, user_id, enty):
         try:
             if auth_crud().get_user_by_id(user_id) != "failed":
@@ -30,7 +26,7 @@ class entries_crud():
             else:
                 return "user not found"
 
-        except:
+        except BaseException:
             return "failed"
         finally:
             if self.conn is not None:
@@ -43,7 +39,7 @@ class entries_crud():
                 """SELECT * from Entries WHERE user_id=%s""", [user_id])
             rows = cur.fetchall()
             return rows
-        except:
+        except BaseException:
             print("I can't fetch  test database!")
         finally:
             if self.conn is not None:
@@ -68,7 +64,8 @@ class entries_crud():
         cur = self.conn.cursor()
         try:
             deli = cur.execute(
-                """DELETE FROM Entries WHERE user_id =%s AND entry_id = %s""", [user_id, entry_id])
+                """DELETE FROM Entries WHERE user_id =%s AND entry_id = %s""", [
+                    user_id, entry_id])
             rows_deleted = cur.rowcount
             print(rows_deleted)
 
@@ -84,7 +81,7 @@ class entries_crud():
         try:
             cur = self.conn.cursor()
 
-            db_query = """UPDATE Entries SET   entry_title =  %s, entry =  %s 
+            db_query = """UPDATE Entries SET   entry_title =  %s, entry =  %s
              WHERE user_id= %s AND entry_id = %s RETURNING entry_id, user_id,  entry_title, entry, entry_date"""
             cur.execute(db_query, (enty.entry_title, enty.entry, user_id,
                                    enty.entry_id))

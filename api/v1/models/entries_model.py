@@ -27,7 +27,7 @@ class Entries:
                               entry_turple[2],
                               entry_turple[3],
                               entry_turple[4])
-            message = "Entry with title '"+new_entry.entry_title + \
+            message = "Entry with title '" + new_entry.entry_title + \
                 "' has been successfully created"
             return {"message": message,
                     "entry_id": str(new_entry.entry_id)
@@ -46,30 +46,40 @@ class Entries:
                               self.timestamp_to_date(entry_got_from_db[4]))
 
             return new_entry.serialize()
-        except:
-            return ResponseMessage("entry with id '"+str(entry_id)+"' not found", 404).response()
+        except BaseException:
+            return ResponseMessage(
+                "entry with id '" +
+                str(entry_id) +
+                "' not found",
+                404).response()
 
     def remove_entry(self, entry_id):
         entry_deleted_from_db = entries_crud().delete_entry(
             self.user_id, entry_id)
         print(entry_deleted_from_db)
         if entry_deleted_from_db == 1:
-            message = "entry with id '"+str(entry_id)+"' has been deleted"
+            message = "entry with id '" + str(entry_id) + "' has been deleted"
             return ResponseMessage(message, 200).response()
         else:
-            return ResponseMessage("entry with id '"+str(entry_id)+"' not found", 404).response()
+            return ResponseMessage(
+                "entry with id '" +
+                str(entry_id) +
+                "' not found",
+                404).response()
 
-    def replace_entry(self,  entry):
+    def replace_entry(self, entry):
         edited = entries_crud().edit_entry(self.user_id, entry)
         if edited:
             edited_entry = Entry(edited[0], edited[1],
                                  edited[2], edited[3], edited[4])
 
             message = "entry with id '" + \
-                str(edited_entry.entry_id)+"' has been edited"
+                str(edited_entry.entry_id) + "' has been edited"
             return ResponseMessage(message, 200).response()
         else:
-            return ResponseMessage("entry with id '"+str(entry.entry_id)+"' not found", 404).response()
+            return ResponseMessage("entry with id '" +
+                                   str(entry.entry_id) +
+                                   "' not found", 404).response()
 
     def entries_from_turple_list(self):
         items = []

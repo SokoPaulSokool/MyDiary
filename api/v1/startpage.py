@@ -1,5 +1,5 @@
-from flask import redirect, url_for, send_from_directory
-from flask_restful import Resource, Api, reqparse
+from flask import send_from_directory
+from flask_restful import Resource
 
 
 class StartPage(Resource):

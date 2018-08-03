@@ -1,16 +1,11 @@
 from api.v1.models.response_message import ResponseMessage
-from flask import Flask, render_template, url_for, request
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Resource, reqparse
 from api.v1.models.entry_model import Entry
 from api.v1.models.first_data import diary_users
 from api.v1.models.user_model import User
 from database.auth_crud import auth_crud
 from flask_restful_swagger import swagger
-from re import match as re_match
-from re import compile, findall
-
-
-# signup user  endpoint
+from re import match
 
 
 @swagger.model
@@ -85,10 +80,15 @@ class SignUpApi(Resource):
 
         if not name.isalpha():
             return ResponseMessage(
-                "The name " + name+" is not accepted. Please use a different name",
+                "The name " +
+                name +
+                " is not accepted. Please use a different name",
                 400).response()
 
-        if not bool(re_match(r"^\+\d{0,3}.\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}?", phonenumber)):
+        if not bool(
+            match(
+                r"^\+\d{0,3}.\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}?",
+                phonenumber)):
             print(phonenumber.isdigit())
             return ResponseMessage(
                 "The field 'phonenumber' is not valid. use example +256753112233",

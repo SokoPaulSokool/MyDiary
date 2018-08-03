@@ -12,9 +12,7 @@ class auth_crud():
         self.dict_cursor = self.conn.cursor(
             cursor_factory=extra.DictCursor)
 
-        # create_tables().users_table()
 
-    # creates table for entries
 
     def add_user(self, user):
         try:
@@ -53,7 +51,8 @@ class auth_crud():
         cur = self.conn.cursor()
         try:
             cur.execute(
-                """SELECT * from Users WHERE phone_number = %s  """, [phone_number])
+                """SELECT * from Users WHERE phone_number = %s  """,
+                [phone_number])
             rows = cur.fetchall()
             return rows[0]
         except (Exception, psycopg2.DatabaseError) as error:

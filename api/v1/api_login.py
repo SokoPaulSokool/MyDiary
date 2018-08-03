@@ -1,14 +1,13 @@
 from api.v1.models.response_message import ResponseMessage
-from flask import Flask, render_template, url_for, request
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Resource, reqparse
 from api.v1.models.entry_model import Entry
 from api.v1.models.user_model import User
 from api.v1.models.first_data import diary_users
-from database.auth_crud import auth_crud
 from flask_restful_swagger import swagger
 
-from flask_jwt_extended import (create_access_token, create_refresh_token,
-                                jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+from flask_jwt_extended import (
+    jwt_required,
+    get_jwt_identity)
 
 
 @swagger.model

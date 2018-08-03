@@ -12,13 +12,9 @@ class create_tables():
         self.dict_cursor = self.conn.cursor(
             cursor_factory=extra.DictCursor)
 
-    # creates table for entries
-
     def entries_table(self):
         self.conn
         try:
-            # entry_id, entry_title, entry, entry_date
-            # self.cursor.execute('DROP  TABLE Entries ;')
             create_table_query = (
                 """CREATE TABLE IF NOT EXISTS Entries (
                         entry_id SERIAL PRIMARY KEY,
@@ -36,8 +32,6 @@ class create_tables():
             if self.conn is not None:
                 self.conn.close()
 
-    # create table for users
-
     def users_table(self):
         try:
             cur = self.conn.cursor()
@@ -49,7 +43,6 @@ class create_tables():
                 password VARCHAR(260)
                 );
                 """)
-            # FOREIGN KEY (user_id) REFERENCES Entries (entry_id) ON DELETE CASCADE
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)

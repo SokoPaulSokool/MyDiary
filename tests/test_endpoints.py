@@ -19,7 +19,9 @@ def test_submit_entry_missing_entry_field(value):
     assert data == "This field is required"
 
 
-@pytest.mark.parametrize("entry_title,entry", [("", "entry"), ("entry_title", "")])
+@pytest.mark.parametrize(
+    "entry_title,entry", [
+        ("", "entry"), ("entry_title", "")])
 def test_submit_entry_with_empty_entry(entry_title, entry):
     response = test_client.submit_entry(entry_title, entry)
     data = json.loads(response.get_data(as_text=True))[
@@ -47,7 +49,9 @@ def test_submit_entry_missing_put_entry_field(value):
 # tests put entry with an empty entry value
 
 
-@pytest.mark.parametrize("entry_title,entry", [("", "entry"), ("entry_title", "")])
+@pytest.mark.parametrize(
+    "entry_title,entry", [
+        ("", "entry"), ("entry_title", "")])
 def test_submit_entry_with_empty_put_entry(entry_title, entry):
     response = test_client.submit_put_entry(entry_title, entry)
     data = json.loads(response.get_data(as_text=True))[
@@ -97,6 +101,7 @@ def test_delete_entry():
     assert data == "entry with id '1' has been deleted"
 
 # tests delete empty entry
+
 
 def test_delete_empty_entry():
     response = test_client.submit_delete_empty_entry()

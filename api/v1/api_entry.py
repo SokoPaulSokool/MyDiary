@@ -1,14 +1,12 @@
 from api.v1.models.response_message import ResponseMessage
-from api.v1.models.response_message import ResponseMessage
-from flask import Flask, render_template, url_for, request
-from flask_restful import Resource, Api, reqparse
+from flask_restful import Resource, reqparse
 from api.v1.models.entry_model import Entry
 from api.v1.models.entries_model import Entries
-from database.entries_crud import entries_crud
 import datetime
 from flask_restful_swagger import swagger
-from flask_jwt_extended import (create_access_token, create_refresh_token,
-                                jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+from flask_jwt_extended import (
+    jwt_required,
+    get_jwt_identity)
 
 
 @swagger.model
@@ -34,41 +32,27 @@ parser.add_argument('entry_title',
 
 class EntryApi(Resource):
     "Documentation for get by id"
-    @swagger.operation(
-        notes="""This gets a specific entry from the user's entries.\n
-        First login using the login end point and obtain the user's 
+    @swagger.operation(notes="""This gets a specific entry from the user's entries.\n
+        First login using the login end point and obtain the user's
         access token to use for Authorization""",
-        nickname="get entry by id",
-        parameters=[
-            {
-                "name": "Authorization",
-                "description": "After loging in, get the access_token add 'Beaer' +access_token",
-                "required": True,
-                "allowMultiple": False,
-                "dataType": "string",
-                "paramType": "header"
-            },
-            {
-                "allowMultiple": False,
-                "dataType": "string",
-                "description": """This is the id of the entry to be obtained. 
+                       nickname="get entry by id",
+                       parameters=[{"name": "Authorization",
+                                    "description": "After loging in, get the access_token add 'Beaer' +access_token",
+                                    "required": True,
+                                    "allowMultiple": False,
+                                    "dataType": "string",
+                                    "paramType": "header"},
+                                   {"allowMultiple": False,
+                                    "dataType": "string",
+                                    "description": """This is the id of the entry to be obtained.
                 Its better to first get all entries for the user to idetify the id""",
-                "name": "enty_id",
-                "paramType": "path",
-                "required": True
-            }
-        ],
-        responseMessages=[
-            {
-                "code": 401,
-                "message": "Not authorised. The reason should be in the returned message"
-            },
-            {
-                "code": 405,
-                "message": "Invalid input"
-            }
-        ]
-    )
+                                    "name": "enty_id",
+                                    "paramType": "path",
+                                    "required": True}],
+                       responseMessages=[{"code": 401,
+                                          "message": "Not authorised. The reason should be in the returned message"},
+                                         {"code": 405,
+                                          "message": "Invalid input"}])
     @jwt_required
     def get(self, enty_id):
         current_user = get_jwt_identity()
@@ -77,49 +61,33 @@ class EntryApi(Resource):
     #
     # "Documentation for put"
     #
-    @swagger.operation(
-        notes="""This edits a specific entry from the user's entries.\n
-        First login using the login end point and obtain the user's 
+    @swagger.operation(notes="""This edits a specific entry from the user's entries.\n
+        First login using the login end point and obtain the user's
         access token to use for Authorization. Then send the edited title and the entry in the body as described in the Shema""",
-        nickname="edit entry",
-        parameters=[
-            {
-                "name": "Authorization",
-                "description": "After loging in, get the access_token add 'Beaer' +access_token",
-                "required": True,
-                "allowMultiple": False,
-                "dataType": "string",
-                "paramType": "header"
-            },
-            {
-                "allowMultiple": False,
-                "dataType": "string",
-                "description": """This is the id of the entry to be obtained. 
+                       nickname="edit entry",
+                       parameters=[{"name": "Authorization",
+                                    "description": "After loging in, get the access_token add 'Beaer' +access_token",
+                                    "required": True,
+                                    "allowMultiple": False,
+                                    "dataType": "string",
+                                    "paramType": "header"},
+                                   {"allowMultiple": False,
+                                    "dataType": "string",
+                                    "description": """This is the id of the entry to be obtained.
                                 Its better to first get all entries for the user to idetify the id""",
-                "name": "enty_id",
-                "paramType": "path",
-                "required": True
-            },
-            {
-                "name": "Edit entry body",
-                "description": "requires ones entry title  and entry ",
-                "required": True,
-                "allowMultiple": False,
-                "dataType": EntryModel.__name__,
-                "paramType": "body"
-            }
-        ],
-        responseMessages=[
-            {
-                "code": 401,
-                "message": "Not authorised. The reason should be in the returned message"
-            },
-            {
-                "code": 405,
-                "message": "Invalid input"
-            }
-        ]
-    )
+                                    "name": "enty_id",
+                                    "paramType": "path",
+                                    "required": True},
+                                   {"name": "Edit entry body",
+                                    "description": "requires ones entry title  and entry ",
+                                    "required": True,
+                                    "allowMultiple": False,
+                                    "dataType": EntryModel.__name__,
+                                    "paramType": "body"}],
+                       responseMessages=[{"code": 401,
+                                          "message": "Not authorised. The reason should be in the returned message"},
+                                         {"code": 405,
+                                          "message": "Invalid input"}])
     @jwt_required
     def put(self, enty_id):
         args = parser.parse_args()
@@ -134,48 +102,38 @@ class EntryApi(Resource):
             entry_date = datetime.datetime.now().timestamp()
 
             entry = Entry(
-                enty_id, current_user["user_id"], entry_title, entry, entry_date)
+                enty_id,
+                current_user["user_id"],
+                entry_title,
+                entry,
+                entry_date)
             # replaces entry at a given id with the new data sent
             res = Entries(current_user["user_id"]
                           ).replace_entry(entry)
             return res
 
     # "Documentation for delete"
-    @swagger.operation(
-        notes="""Theis deletes an entry from user's entries using an id. 
-        First login using the login end point and obtain the user's 
+    @swagger.operation(notes="""Theis deletes an entry from user's entries using an id.
+        First login using the login end point and obtain the user's
         access token to use for Authorization. Then add the entry id if the item to delete.""",
-        nickname='delete entry',
-        parameters=[
-            {
-                "name": "Authorization",
-                "description": "After loging in, get the access_token add 'Beaer' +access_token",
-                "required": True,
-                "allowMultiple": False,
-                "dataType": "string",
-                "paramType": "header"
-            },
-            {
-                "allowMultiple": False,
-                "dataType": "string",
-                "description": """This is the id of the entry to be obtained. 
+                       nickname='delete entry',
+                       parameters=[{"name": "Authorization",
+                                    "description": "After loging in, get the access_token add 'Beaer' +access_token",
+                                    "required": True,
+                                    "allowMultiple": False,
+                                    "dataType": "string",
+                                    "paramType": "header"},
+                                   {"allowMultiple": False,
+                                    "dataType": "string",
+                                    "description": """This is the id of the entry to be obtained.
                 Its better to first get all entries for the user to idetify the id""",
-                "name": "enty_id",
-                "paramType": "path",
-                "required": True
-            }
-        ],
-        responseMessages=[
-            {
-                "code": 401,
-                "message": "Not authorised. The reason should be in the returned message"
-            },
-            {
-                "code": 405,
-                "message": "Invalid input"
-            }
-        ]
-    )
+                                    "name": "enty_id",
+                                    "paramType": "path",
+                                    "required": True}],
+                       responseMessages=[{"code": 401,
+                                          "message": "Not authorised. The reason should be in the returned message"},
+                                         {"code": 405,
+                                          "message": "Invalid input"}])
     @jwt_required
     def delete(self, enty_id):
         current_user = get_jwt_identity()

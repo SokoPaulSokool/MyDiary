@@ -38,7 +38,7 @@ These are the endpoints to test
 
 Click [https://sokopaulsokool.github.io/MyDiary/UI](https://sokopaulsokool.github.io/MyDiary/UI) and start using the Diary
 
-Click [https://blooming-escarpment-93743.herokuapp.com/api/v1/entries](https://blooming-escarpment-93743.herokuapp.com/api/v1/entries) for api calls
+Click [https://blooming-escarpment-93743.herokuapp.com/](https://blooming-escarpment-93743.herokuapp.com/) for api calls
 
 ## Setting Up for Development
 

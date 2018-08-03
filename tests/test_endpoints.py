@@ -35,7 +35,7 @@ def test_submit_entry_with_empty_entry(entry_title, entry):
 def test_submit_entry():
     response = test_client.submit_entry("mm", "mmm")
 
-    assert response.status_code == 200
+    assert response.status_code == 201
 
 
 # tests put entry with missing field value

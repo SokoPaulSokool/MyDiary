@@ -3,6 +3,7 @@ from flask import jsonify
 import json
 from api.v1.models.entry_model import Entry
 from database.entries_crud import entries_crud
+import datetime
 
 
 class Entries:
@@ -30,7 +31,7 @@ class Entries:
                 "' has been successfully created"
             return {"message": message,
                     "entry_id": str(new_entry.entry_id)
-                    }, 200
+                    }, 201
 
     def get_entry(self, entry_id):
         print(entries_crud().get_entry_by_id(
@@ -42,7 +43,7 @@ class Entries:
                               entry_got_from_db[1],
                               entry_got_from_db[2],
                               entry_got_from_db[3],
-                              entry_got_from_db[4])
+                              self.timestamp_to_date(entry_got_from_db[4]))
 
             return new_entry.serialize()
         except:
@@ -79,6 +80,11 @@ class Entries:
                           entry_turple[1],
                           entry_turple[2],
                           entry_turple[3],
-                          entry_turple[4])
+                          self.timestamp_to_date(entry_turple[4]))
             items.append(entry.serialize())
         return items
+
+    def timestamp_to_date(self, timestamp):
+        return datetime.datetime.fromtimestamp(
+            float(timestamp)
+        ).strftime('%Y-%m-%d %H:%M:%S')

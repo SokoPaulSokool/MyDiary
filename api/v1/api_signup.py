@@ -6,6 +6,8 @@ from api.v1.models.first_data import diary_users
 from api.v1.models.user_model import User
 from database.auth_crud import auth_crud
 from flask_restful_swagger import swagger
+from re import match as re_match
+from re import compile, findall
 
 
 # signup user  endpoint
@@ -68,11 +70,35 @@ class SignUpApi(Resource):
         password = args['password']
         name = args['name']
         res = ''
-        if not name or not phonenumber or not password:
-            res = ResponseMessage(
-                "'phonenumber' or 'Password' is empty",
+        if not name:
+            return ResponseMessage(
+                "The field 'name' is empty. Please add name",
                 400).response()
-        else:
+        if not phonenumber:
+            return ResponseMessage(
+                "The field 'phonenumber' is empty. Please add phonenumber",
+                400).response()
+        if not password:
+            return ResponseMessage(
+                "The field 'password' is empty. Please add password",
+                400).response()
+
+        if not name.isalpha():
+            return ResponseMessage(
+                "The name " + name+" is not accepted. Please use a different name",
+                400).response()
+
+        if not bool(re_match(r"^\+\d{0,3}.\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}?", phonenumber)):
+            print(phonenumber.isdigit())
+            return ResponseMessage(
+                "The field 'phonenumber' is not valid. use example +256753112233",
+                400).response()
+        if len(password) < 5:
+            return ResponseMessage(
+                "password is too short. mut have atleats 4 characters",
+                400).response()
+
+        if name or phonenumber or password:
             diary_user = User(name, phonenumber, password)
             res = diary_user.signup_user()
-        return res
+            return res

@@ -33,7 +33,7 @@ class User():
                 "' has been successfully registered. You can now login"
             return {
                 "message": message
-            }, 200
+            }, 201
 
     def authenticate_user(self):
         print("auth start")

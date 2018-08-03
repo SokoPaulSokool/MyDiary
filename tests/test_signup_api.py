@@ -47,9 +47,9 @@ test_client = test_signup(app)
 
 
 def test_signup_add_user():
-    response = test_client.signup("paul", "1", "12")
+    response = test_client.signup("paul", "+256753000000", "password")
 
-    assert response.status_code == 200
+    assert response.status_code == 201
 
 # tests adding a single user empty field
 
@@ -71,15 +71,15 @@ def test_login_user_missing_field(value):
 
 
 def test_signup_add_existing_user():
-    test_client.test_client.post('/api/v1/auth/signup', data=dict(name="soko",
-                                                                  phonenumber="123",
-                                                                  password="8"
+    test_client.test_client.post('/api/v1/auth/signup', data=dict(name="kool",
+                                                                  phonenumber="+256753682060",
+                                                                  password="sokool"
                                                                   )
                                  )
     response = test_client.test_client.post('/api/v1/auth/signup',
-                                            data=dict(name="soko",
-                                                      phonenumber="123",
-                                                      password="8"
+                                            data=dict(name="kool",
+                                                      phonenumber="+256753682060",
+                                                      password="sokool"
                                                       )
                                             )
 

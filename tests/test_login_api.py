@@ -20,8 +20,8 @@ class test_login():
 
     def user_signup(self):
         return self.test_client.post('/api/v1/auth/signup',
-                                     data=dict(phonenumber="12",
-                                               password="24",
+                                     data=dict(phonenumber="+256753682060",
+                                               password="sokool",
                                                name="kool"
                                                )
                                      )
@@ -83,6 +83,6 @@ def test_login_user_wrong_phone():
 
 def test_login_user_correct_password():
     test_client.user_signup()
-    response = test_client.login("12", "24")
+    response = test_client.login("+256753682060", "sokool")
 
     assert response.status_code == 200

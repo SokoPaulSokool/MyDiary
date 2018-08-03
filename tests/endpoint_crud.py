@@ -8,14 +8,14 @@ class entriescrud():
 
     def signup_get_token(self):
         self.test_client.post('/api/v1/auth/signup',
-                              data=dict(phonenumber="122",
-                                        password="112",
+                              data=dict(phonenumber="+256753682060",
+                                        password="sokool",
                                         name="kool"
                                         )
                               )
         response = self.test_client.post('/api/v1/auth/login',
-                                         data=dict(phonenumber="122",
-                                                   password="112"
+                                         data=dict(phonenumber="+256753682060",
+                                                   password="sokool"
                                                    )
                                          )
         return json.loads(response.get_data(as_text=True))["access_token"]

@@ -11,8 +11,7 @@ from flask_jwt_extended import (create_access_token, create_refresh_token,
                                 jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
 
-
- 
+  
 @swagger.model
 class LoginModel:
     "Model describing inputs for documetation"
@@ -34,7 +33,7 @@ parser.add_argument('password',
                     )
 
 class LoginApi(Resource):
-    "Documentation for login"
+    "Documentation for login" 
     @swagger.operation(
         notes='Send a json object as decribed in the schema. User is authorized if they are aready registered',
         parameters=[

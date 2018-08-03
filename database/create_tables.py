@@ -15,13 +15,12 @@ class create_tables():
     # creates table for entries
 
     def entries_table(self):
+        self.conn
         try:
-            self.conn
-            try:
-                # entry_id, entry_title, entry, entry_date
-                # self.cursor.execute('DROP  TABLE Entries ;')
-                create_table_query = (
-                    """CREATE TABLE IF NOT EXISTS Entries (
+            # entry_id, entry_title, entry, entry_date
+            # self.cursor.execute('DROP  TABLE Entries ;')
+            create_table_query = (
+                """CREATE TABLE IF NOT EXISTS Entries (
                         entry_id SERIAL PRIMARY KEY,
                         user_id INTEGER,
                         entry_title VARCHAR(255) NOT NULL,
@@ -30,15 +29,12 @@ class create_tables():
                         FOREIGN KEY (user_id) REFERENCES Users (user_id) ON DELETE CASCADE
                         )
                         """)
-                self.cursor.execute(create_table_query)
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-                print("I can't  create entries!")
-        except (Exception, psycopg2.DatabaseError) as error:
-            print(error)
-            print("I am unable to create entries")
-
-        print("entries table creation")
+            self.cursor.execute(create_table_query)
+        except:
+            print("I can't  create entries!")
+        finally:
+            if self.conn is not None:
+                self.conn.close()
 
     # create table for users
 
@@ -60,7 +56,6 @@ class create_tables():
         finally:
             if self.conn is not None:
                 self.conn.close()
-                print('create table for users')
 
     def entries_drop_table(self):
         try:
@@ -73,19 +68,17 @@ class create_tables():
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
             print("I am unable to drop entries")
-
-        print("entries table drop")
+        finally:
+            if self.conn is not None:
+                self.conn.close()
 
     def users_drop_table(self):
+        self.conn
         try:
-            self.conn
-            try:
-                self.cursor.execute('DROP  TABLE Users CASCADE;')
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-                print("I can't  drop users!")
+            self.cursor.execute('DROP  TABLE Users CASCADE;')
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I am unable to drop users")
-
-        print("entries table users")
+            print("I can't  drop users!")
+        finally:
+            if self.conn is not None:
+                self.conn.close()

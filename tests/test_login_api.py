@@ -1,6 +1,7 @@
 from api.v1.endpoints import app
 import unittest
 import pytest
+import json
 # Testing the login feature
 
 
@@ -46,11 +47,12 @@ test_client = test_login(app)
 # tests logging in a single user empty field
 
 
-@pytest.mark.parametrize("phonenumber,password", [("", "password"), ("name", "")])
-def test_login_user_empty_field(phonenumber, password):
+@pytest.mark.parametrize("phonenumber,password,key", [("", "password", "phonenumber"), ("name", "", "password")])
+def test_login_user_empty_field(phonenumber, password, key):
     response = test_client.login(phonenumber, password)
-
-    assert response.status_code == 400
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "The field '"+key+"' is empty. Please add "+key
 
 # tests login a user with missing field
 
@@ -58,17 +60,19 @@ def test_login_user_empty_field(phonenumber, password):
 @pytest.mark.parametrize("value", [("phonenumber"), ("password")])
 def test_login_user_missing_field(value):
     response = test_client.login_with_missing_form_value(value)
-
-    assert response.status_code == 400
+    data = json.loads(response.get_data(as_text=True))[
+        "message"][value]
+    assert data == "This field is required"
 
     # tests logging in wrong password
 
 
 def test_login_user_wrong_password():
     test_client.user_signup()
-    response = test_client.login("12", "120")
-
-    assert response.status_code == 401
+    response = test_client.login("+256753682060", "120")
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "login failed  wrong password "
 
     # tests logging in wrong phone
 
@@ -76,13 +80,15 @@ def test_login_user_wrong_password():
 def test_login_user_wrong_phone():
     test_client.user_signup()
     response = test_client.login("12ii", "10")
-
-    assert response.status_code == 401
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "Login failed  phone number does not exist. First signup "
 # tests logging in wrong password
 
 
 def test_login_user_correct_password():
     test_client.user_signup()
     response = test_client.login("+256753682060", "sokool")
-
-    assert response.status_code == 200
+    data = json.loads(response.get_data(as_text=True))[
+        "message"]
+    assert data == "user 'kool' has been authorised."

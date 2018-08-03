@@ -36,35 +36,27 @@ class auth_crud():
             return 'failed'
 
     def get_user_by_id(self, id):
+        cur = self.conn.cursor()
         try:
-            cur = self.conn.cursor()
-            try:
-                cur.execute(
-                    """SELECT * from Users WHERE user_id = %s""", [id])
-                rows = cur.fetchall()
-                return rows[0]
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-                print("I can't fetch  test database!")
-                return "failed"
+            cur.execute(
+                """SELECT * from Users WHERE user_id = %s""", [id])
+            rows = cur.fetchall()
+            return rows[0]
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I am unable to fetch to the database")
-            return "failed"
+            print("I can't fetch  test database!")
+        finally:
+            if self.conn is not None:
+                self.conn.close()
 
     def get_user_by_phone(self, phone_number):
+        cur = self.conn.cursor()
         try:
-            cur = self.conn.cursor()
-            try:
-                cur.execute(
-                    """SELECT * from Users WHERE phone_number = %s  """, [phone_number])
-                rows = cur.fetchall()
-                return rows[0]
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-                print("I can't fetch  test database!")
-                return "failed"
+            cur.execute(
+                """SELECT * from Users WHERE phone_number = %s  """, [phone_number])
+            rows = cur.fetchall()
+            return rows[0]
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I am unable to fetch to the database")
+            print("I can't fetch  test database!")
             return "failed"

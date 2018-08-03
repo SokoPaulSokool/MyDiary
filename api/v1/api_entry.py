@@ -22,11 +22,13 @@ class EntryModel:
 parser = reqparse.RequestParser()
 parser.add_argument('entry',
                     type=str,
-                    required=False
+                    required=False,
+                    help="This field is required"
                     ),
 parser.add_argument('entry_title',
                     type=str,
-                    required=False
+                    required=False,
+                    help="This field is required"
                     )
 
 

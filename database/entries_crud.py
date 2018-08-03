@@ -32,51 +32,53 @@ class entries_crud():
 
         except:
             return "failed"
+        finally:
+            if self.conn is not None:
+                self.conn.close()
 
     def get_all_user_entries(self, user_id):
+        cur = self.conn.cursor()
         try:
-            cur = self.conn.cursor()
-            try:
-                cur.execute(
-                    """SELECT * from Entries WHERE user_id=%s""", [user_id])
-                rows = cur.fetchall()
-                return rows
-            except:
-                print("I can't fetch  test database!")
+            cur.execute(
+                """SELECT * from Entries WHERE user_id=%s""", [user_id])
+            rows = cur.fetchall()
+            return rows
         except:
-            print("I am unable to fetch to the database")
+            print("I can't fetch  test database!")
+        finally:
+            if self.conn is not None:
+                self.conn.close()
 
     def get_entry_by_id(self, user_id, entry_id):
+
+        cur = self.conn.cursor()
         try:
-            cur = self.conn.cursor()
-            try:
-                cur.execute(
-                    """SELECT * from Entries WHERE user_id =%s AND entry_id = %s""", [user_id, entry_id])
-                rows = cur.fetchall()
-                return rows[0]
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-                print("I can't fetch  test database!")
+            cur.execute(
+                """SELECT * from Entries WHERE user_id =%s AND entry_id = %s""", [user_id, entry_id])
+            rows = cur.fetchall()
+            return rows[0]
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I am unable to fetch to the database")
+            print("I can't fetch  test database!")
+        finally:
+            if self.conn is not None:
+                self.conn.close()
 
     def delete_entry(self, user_id, entry_id):
+        cur = self.conn.cursor()
         try:
-            cur = self.conn.cursor()
-            try:
-                deli = cur.execute(
-                    """DELETE FROM Entries WHERE user_id =%s AND entry_id = %s""", [user_id, entry_id])
-                rows_deleted = cur.rowcount
-                print(rows_deleted)
+            deli = cur.execute(
+                """DELETE FROM Entries WHERE user_id =%s AND entry_id = %s""", [user_id, entry_id])
+            rows_deleted = cur.rowcount
+            print(rows_deleted)
 
-                return rows_deleted
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-                print("I can't delete  test database!")
+            return rows_deleted
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I am unable to delete to the database")
+            print("I can't delete  test database!")
+        finally:
+            if self.conn is not None:
+                self.conn.close()
 
     def edit_entry(self, user_id, enty):
         try:

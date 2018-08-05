@@ -68,7 +68,7 @@ Click [https://blooming-escarpment-93743.herokuapp.com/](https://blooming-escarp
 
 ## Setting Up for Development
 
-These are instructions for setting up MyDiary app in a development enivornment.
+These are instructions for setting up MyDiary app in the development enivornment.
 
 ### Prerequisites
 

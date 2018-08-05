@@ -23,32 +23,6 @@ You can;
 
 These are the endpoints to test
 
-| METHOD |      Endpoint      | Description                         |
-| ------ | :----------------: | ----------------------------------- |
-| GET    |  /api/v1/entries   | Get all entries                     |
-| GET    | /api/v1/entries/id | Get specific entry using an id      |
-| POST   |  /api/v1/entries   | Create a new entry                  |
-| PUT    | /api/v1/entries/id | Modify a specific entry using an id |
-
-## Site and api
-
-Click [https://sokopaulsokool.github.io/MyDiary/UI](https://sokopaulsokool.github.io/MyDiary/UI) and start using the Diary
-
-Click [https://blooming-escarpment-93743.herokuapp.com/api/v1/entries](https://blooming-escarpment-93743.herokuapp.com/api/v1/entries) for api calls
-
-#Easy to use Features
-
-You can;
-
-- Sign up to create your diary
-- Login
-- Add thoughts, ideas or anything to your diary
-- View your records
-- Delete your records
-- Edit your records
-
-These are the endpoints to test
-
 | METHOD |      Endpoint       | Description                         |
 | ------ | :-----------------: | ----------------------------------- |
 | GET    |   /api/v1/entries   | Get all entries                     |

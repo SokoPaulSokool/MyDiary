@@ -60,11 +60,13 @@ These are the endpoints to test
 | POST   | /api/v1/auth/signup | Signup user                         |
 | GET    |   /api/spec.html    | Access api documentation            |
 
-## Site and api
+## Site UI
 
 Click [https://sokopaulsokool.github.io/MyDiary/UI](https://sokopaulsokool.github.io/MyDiary/UI) and start using the Diary
 
-Click [https://blooming-escarpment-93743.herokuapp.com/](https://blooming-escarpment-93743.herokuapp.com/) for api calls
+## API
+
+Click [https://blooming-escarpment-93743.herokuapp.com](https://blooming-escarpment-93743.herokuapp.com) for api calls
 
 ## Setting Up for Development
 

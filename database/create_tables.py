@@ -39,7 +39,7 @@ class create_tables():
                 """CREATE TABLE Users(
                 user_id SERIAL PRIMARY KEY, 
                 name VARCHAR(20),
-                phone_number VARCHAR(20),
+                email VARCHAR(20),
                 password VARCHAR(260)
                 );
                 """)

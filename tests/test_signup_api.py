@@ -12,10 +12,10 @@ class test_signup():
 
     # signs  up user with the provided args
 
-    def signup(self, name, phonenumber, password):
+    def signup(self, name, email, password):
         return self.test_client.post('/api/v1/auth/signup',
                                      data=dict(name=name,
-                                               phonenumber=phonenumber,
+                                               email=email,
                                                password=password
                                                )
                                      )
@@ -26,11 +26,11 @@ class test_signup():
         if missing_form_name == "name":
             return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(
-                                             phonenumber="3",
+                                             email="3",
                                              password="5"
                                          )
                                          )
-        if missing_form_name == "phonenumber":
+        if missing_form_name == "email":
             return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(name="paul",
                                                    password="5"
@@ -39,7 +39,7 @@ class test_signup():
         if missing_form_name == "password":
             return self.test_client.post('/api/v1/auth/signup',
                                          data=dict(name="paul",
-                                                   phonenumber="3"
+                                                   email="3"
                                                    )
                                          )
 
@@ -57,22 +57,22 @@ def test_signup_add_user():
 # tests adding a single user empty field
 
 
-@pytest.mark.parametrize("name,phonenumber,password,key",
+@pytest.mark.parametrize("name,email,password,key",
                          [("",
-                           "phonenumber",
+                           "email",
                            "password",
                            "name"),
                           ("name",
                            "",
                            "password",
-                           "phonenumber"),
+                           "email"),
                              ("name",
-                              "phonenumber",
+                              "email",
                               "",
                               "password"),
                           ])
-def test_signup_add_user_empty_field(name, phonenumber, password, key):
-    response = test_client.signup(name, phonenumber, password)
+def test_signup_add_user_empty_field(name, email, password, key):
+    response = test_client.signup(name, email, password)
     data = json.loads(response.get_data(as_text=True))[
         "message"]
     assert data == "The field '" + key + "' is empty. Please add " + key
@@ -80,7 +80,7 @@ def test_signup_add_user_empty_field(name, phonenumber, password, key):
 
 # tests adding a single user with missing field
 
-@pytest.mark.parametrize("value", [("name"), ("phonenumber"), ("password")])
+@pytest.mark.parametrize("value", [("name"), ("email"), ("password")])
 def test_login_user_missing_field(value):
     response = test_client.signup_with_missing_form_value(value)
     data = json.loads(response.get_data(as_text=True))[

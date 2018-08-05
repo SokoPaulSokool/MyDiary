@@ -8,13 +8,13 @@ class entriescrud():
 
     def signup_get_token(self):
         self.test_client.post('/api/v1/auth/signup',
-                              data=dict(phonenumber="+256753682060",
+                              data=dict(email="+256753682060",
                                         password="sokool",
                                         name="kool"
                                         )
                               )
         response = self.test_client.post('/api/v1/auth/login',
-                                         data=dict(phonenumber="+256753682060",
+                                         data=dict(email="+256753682060",
                                                    password="sokool"
                                                    )
                                          )

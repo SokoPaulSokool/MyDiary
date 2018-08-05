@@ -12,12 +12,12 @@ from re import match
 class SignupModel:
     "Model describing inputs for documetation"
 
-    def __init__(self, name, phonenumber="123", password="12rr"):
+    def __init__(self, name, email, password):
         pass
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('phonenumber',
+parser.add_argument('email',
                     type=str,
                     required=True,
                     help="This field is required"
@@ -41,7 +41,7 @@ class SignUpApi(Resource):
         parameters=[
             {
                 "name": "Signup body",
-                "description": "requires ones name phonenumber and password to authenticate them",
+                "description": "requires ones name email and password to authenticate them",
                 "required": True,
                 "allowMultiple": False,
                 "dataType": SignupModel.__name__,
@@ -61,7 +61,7 @@ class SignUpApi(Resource):
     )
     def post(self):
         args = parser.parse_args()
-        phonenumber = args['phonenumber']
+        email = args['email']
         password = args['password']
         name = args['name']
         res = ''
@@ -69,9 +69,9 @@ class SignUpApi(Resource):
             return ResponseMessage(
                 "The field 'name' is empty. Please add name",
                 400).response()
-        if not phonenumber:
+        if not email:
             return ResponseMessage(
-                "The field 'phonenumber' is empty. Please add phonenumber",
+                "The field 'email' is empty. Please add email",
                 400).response()
         if not password:
             return ResponseMessage(
@@ -88,17 +88,17 @@ class SignUpApi(Resource):
         if not bool(
             match(
                 r"^\+\d{0,3}.\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}?",
-                phonenumber)):
-            print(phonenumber.isdigit())
+                email)):
+            print(email.isdigit())
             return ResponseMessage(
-                "The field 'phonenumber' is not valid. use example +256753112233",
+                "email is not valid. use example +256753112233",
                 400).response()
         if len(password) < 5:
             return ResponseMessage(
                 "password is too short. mut have atleats 5 characters",
                 400).response()
 
-        if name or phonenumber or password:
-            diary_user = User(name, phonenumber, password)
+        if name or email or password:
+            diary_user = User(name, email, password)
             res = diary_user.signup_user()
             return res

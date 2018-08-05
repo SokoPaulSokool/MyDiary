@@ -14,12 +14,12 @@ from flask_jwt_extended import (
 class LoginModel:
     "Model describing inputs for documetation"
 
-    def __init__(self, phonenumber="123", password="12rr"):
+    def __init__(self, email, password):
         pass
 
 
 parser = reqparse.RequestParser()
-parser.add_argument('phonenumber',
+parser.add_argument('email',
                     type=str,
                     required=True,
                     help="This field is required"
@@ -58,19 +58,19 @@ class LoginApi(Resource):
     )
     def post(self):
         args = parser.parse_args()
-        phonenumber = args['phonenumber']
+        email = args['email']
         password = args['password']
         res = ''
-        if not phonenumber:
+        if not email:
             return ResponseMessage(
-                "The field 'phonenumber' is empty. Please add phonenumber",
+                "The field 'phonenumber' is empty. Please add email",
                 400).response()
         if not password:
             return ResponseMessage(
                 "The field 'password' is empty. Please add password",
                 400).response()
 
-        if phonenumber or password:
-            new_user = User("", phonenumber, password)
+        if email or password:
+            new_user = User("", email, password)
             res = new_user.authenticate_user()
             return res

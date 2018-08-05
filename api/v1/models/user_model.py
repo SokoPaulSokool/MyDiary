@@ -22,10 +22,10 @@ class User():
     password -- phone_number of the user
     """
 
-    def __init__(self, name, phone_number, password):
+    def __init__(self, name, email, password):
         """Initialize the args"""
         self.name = name
-        self.phone_number = phone_number
+        self.email = email
         self.password = password
 
     def signup_user(self):
@@ -34,7 +34,7 @@ class User():
         Return: returns Response object or a message with a status code
         """
         check_result = auth_crud().add_user(
-            User(self.name, self.phone_number, sha256.hash(self.password)))
+            User(self.name, self.email, sha256.hash(self.password)))
 
         if check_result == 'failed':
             print(check_result)
@@ -58,7 +58,7 @@ class User():
         Return: returns Response object
         """
         check_result = auth_crud().get_user_by_phone(
-            self.phone_number)
+            self.email)
         if check_result == 'failed':
             return ResponseMessage(
                 "Login failed  phone number does not exist. First signup ",
@@ -71,7 +71,7 @@ class User():
                     identity={
                         "user_id": check_result[0],
                         "name": check_result[1],
-                        "phone_number": check_result[2]})
+                        "email": check_result[2]})
                 message = "user '" + \
                     check_result[1] + \
                     "' has been authorised."

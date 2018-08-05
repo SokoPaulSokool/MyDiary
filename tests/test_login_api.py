@@ -11,9 +11,9 @@ class test_login():
 
     # logs in user with the provided args
 
-    def login(self, phonenumber, password):
+    def login(self, email, password):
         return self.test_client.post('/api/v1/auth/login',
-                                     data=dict(phonenumber=phonenumber,
+                                     data=dict(email=email,
                                                password=password
                                                )
                                      )
@@ -21,7 +21,7 @@ class test_login():
 
     def user_signup(self):
         return self.test_client.post('/api/v1/auth/signup',
-                                     data=dict(phonenumber="+256753682060",
+                                     data=dict(email="+256753682060",
                                                password="sokool",
                                                name="kool"
                                                )
@@ -30,7 +30,7 @@ class test_login():
     # login
 
     def login_with_missing_form_value(self, missing_form_name):
-        if missing_form_name == "phonenumber":
+        if missing_form_name == "email":
             return self.test_client.post('/api/v1/auth/login',
                                          data=dict(name="paul",
                                                    password="5"
@@ -39,7 +39,7 @@ class test_login():
         if missing_form_name == "password":
             return self.test_client.post('/api/v1/auth/login',
                                          data=dict(name="paul",
-                                                   phonenumber="3"
+                                                   email="3"
                                                    )
                                          )
 
@@ -49,10 +49,10 @@ test_client = test_login(app)
 
 
 @pytest.mark.parametrize(
-    "phonenumber,password,key", [
-        ("", "password", "phonenumber"), ("name", "", "password")])
-def test_login_user_empty_field(phonenumber, password, key):
-    response = test_client.login(phonenumber, password)
+    "email,password,key", [
+        ("", "password", "email"), ("name", "", "password")])
+def test_login_user_empty_field(email, password, key):
+    response = test_client.login(email, password)
     data = json.loads(response.get_data(as_text=True))[
         "message"]
     assert data == "The field '" + key + "' is empty. Please add " + key
@@ -60,7 +60,7 @@ def test_login_user_empty_field(phonenumber, password, key):
 # tests login a user with missing field
 
 
-@pytest.mark.parametrize("value", [("phonenumber"), ("password")])
+@pytest.mark.parametrize("value", [("email"), ("password")])
 def test_login_user_missing_field(value):
     response = test_client.login_with_missing_form_value(value)
     data = json.loads(response.get_data(as_text=True))[

@@ -12,15 +12,13 @@ class auth_crud():
         self.dict_cursor = self.conn.cursor(
             cursor_factory=extra.DictCursor)
 
-
-
     def add_user(self, user):
         try:
-            if self.get_user_by_phone(user.phone_number) == 'failed':
+            if self.get_user_by_phone(user.email) == 'failed':
                 cur = self.conn.cursor()
-                db_query = """INSERT INTO Users (user_id,name,phone_number, password)
-                            VALUES (DEFAULT,%s,%s,%s) RETURNING user_id, name, phone_number, password """
-                cur.execute(db_query, (user.name, user.phone_number,
+                db_query = """INSERT INTO Users (user_id,name,email, password)
+                            VALUES (DEFAULT,%s,%s,%s) RETURNING user_id, name, email, password """
+                cur.execute(db_query, (user.name, user.email,
                                        user.password))
 
                 print("created")
@@ -47,12 +45,12 @@ class auth_crud():
             if self.conn is not None:
                 self.conn.close()
 
-    def get_user_by_phone(self, phone_number):
+    def get_user_by_email(self, email):
         cur = self.conn.cursor()
         try:
             cur.execute(
-                """SELECT * from Users WHERE phone_number = %s  """,
-                [phone_number])
+                """SELECT * from Users WHERE email = %s  """,
+                [email])
             rows = cur.fetchall()
             return rows[0]
         except (Exception, psycopg2.DatabaseError) as error:

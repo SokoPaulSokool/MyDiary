@@ -14,7 +14,7 @@ class auth_crud():
 
     def add_user(self, user):
         try:
-            if self.get_user_by_phone(user.email) == 'failed':
+            if self.get_user_by_email(user.email) == 'failed':
                 cur = self.conn.cursor()
                 db_query = """INSERT INTO Users (user_id,name,email, password)
                             VALUES (DEFAULT,%s,%s,%s) RETURNING user_id, name, email, password """
@@ -40,7 +40,6 @@ class auth_crud():
             return rows[0]
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I can't fetch  test database!")
         finally:
             if self.conn is not None:
                 self.conn.close()
@@ -55,5 +54,4 @@ class auth_crud():
             return rows[0]
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I can't fetch  test database!")
             return "failed"

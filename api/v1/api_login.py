@@ -38,7 +38,7 @@ class LoginApi(Resource):
         parameters=[
             {
                 "name": "Login body",
-                "description": "requires ones phonenumber and password to authenticate them",
+                "description": "requires ones email and password to authenticate them",
                 "required": True,
                 "allowMultiple": False,
                 "dataType": LoginModel.__name__,
@@ -63,11 +63,11 @@ class LoginApi(Resource):
         res = ''
         if not email:
             return ResponseMessage(
-                "The field 'phonenumber' is empty. Please add email",
+                "email is empty. Please add email",
                 400).response()
         if not password:
             return ResponseMessage(
-                "The field 'password' is empty. Please add password",
+                "password is empty. Please add password",
                 400).response()
 
         if email or password:

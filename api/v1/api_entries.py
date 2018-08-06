@@ -55,7 +55,10 @@ class EntriesApi(Resource):
     @jwt_required
     def get(self):
         current_user = get_jwt_identity()
-        return Entries(current_user["user_id"]).entries_from_turple_list(), 200
+        if current_user["user_id"]:
+            return Entries(current_user["user_id"]).entries_from_turple_list(), 200
+        else:
+            return ResponseMessage("Wrong token", 401)
 
     "Documentation for create entry"
     @swagger.operation(notes="""This adds an entry to the user's entries.\n
@@ -81,24 +84,27 @@ class EntriesApi(Resource):
                                           "message": "Invalid input"}])
     @jwt_required
     def post(self):
-        args = parser.parse_args()
-        entry = args['entry']
-        entry_title = args['entry_title']
-        entry_id = 1
         current_user = get_jwt_identity()
-        if not entry or not entry_title:
-            res = ResponseMessage(
-                'entry_title or entry or entry_date is empty', 400).response()
-            return res
+        if current_user["user_id"]:
+            args = parser.parse_args()
+            entry = args['entry']
+            entry_title = args['entry_title']
+            entry_id = 1
+            if not entry or not entry_title:
+                res = ResponseMessage(
+                    'entry_title or entry or entry_date is empty', 400).response()
+                return res
+            else:
+                entry_date = datetime.datetime.now().timestamp()
+                new_entry = Entries(
+                    current_user["user_id"]).add_entry(
+                    Entry(
+                        entry_id,
+                        current_user["user_id"],
+                        entry_title,
+                        entry,
+                        entry_date))
+                res = new_entry
+                return res
         else:
-            entry_date = datetime.datetime.now().timestamp()
-            new_entry = Entries(
-                current_user["user_id"]).add_entry(
-                Entry(
-                    entry_id,
-                    current_user["user_id"],
-                    entry_title,
-                    entry,
-                    entry_date))
-            res = new_entry
-            return res
+            return ResponseMessage("Wrong token", 401)

@@ -56,7 +56,11 @@ class EntryApi(Resource):
     @jwt_required
     def get(self, enty_id):
         current_user = get_jwt_identity()
-        return Entries(current_user["user_id"]).get_entry(enty_id)
+        if current_user["user_id"]:
+            current_user = get_jwt_identity()
+            return Entries(current_user["user_id"]).get_entry(enty_id)
+        else:
+            return ResponseMessage("Wrong token", 401)
 
     #
     # "Documentation for put"
@@ -90,29 +94,33 @@ class EntryApi(Resource):
                                           "message": "Invalid input"}])
     @jwt_required
     def put(self, enty_id):
-        args = parser.parse_args()
-        entry = args['entry']
-        entry_title = args['entry_title']
         current_user = get_jwt_identity()
+        if current_user["user_id"]:
+            args = parser.parse_args()
+            entry = args['entry']
+            entry_title = args['entry_title']
 
-        if not entry or not entry_title:
-            res = 'entry_title or entry or entry_date is empty'
-            return ResponseMessage(res, 400).response()
+            if not entry or not entry_title:
+                res = 'entry_title or entry or entry_date is empty'
+                return ResponseMessage(res, 400).response()
+            else:
+                entry_date = datetime.datetime.now().timestamp()
+
+                entry = Entry(
+                    enty_id,
+                    current_user["user_id"],
+                    entry_title,
+                    entry,
+                    entry_date)
+                # replaces entry at a given id with the new data sent
+                res = Entries(current_user["user_id"]
+                              ).replace_entry(entry)
+                return res
         else:
-            entry_date = datetime.datetime.now().timestamp()
-
-            entry = Entry(
-                enty_id,
-                current_user["user_id"],
-                entry_title,
-                entry,
-                entry_date)
-            # replaces entry at a given id with the new data sent
-            res = Entries(current_user["user_id"]
-                          ).replace_entry(entry)
-            return res
+            return ResponseMessage("Wrong token", 401)
 
     # "Documentation for delete"
+
     @swagger.operation(notes="""Theis deletes an entry from user's entries using an id.
         First login using the login end point and obtain the user's
         access token to use for Authorization. Then add the entry id if the item to delete.""",
@@ -137,5 +145,9 @@ class EntryApi(Resource):
     @jwt_required
     def delete(self, enty_id):
         current_user = get_jwt_identity()
-        res = Entries(current_user["user_id"]).remove_entry(enty_id)
-        return res
+        if current_user["user_id"]:
+            current_user = get_jwt_identity()
+            res = Entries(current_user["user_id"]).remove_entry(enty_id)
+            return res
+        else:
+            return ResponseMessage("Wrong token", 401)

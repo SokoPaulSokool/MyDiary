@@ -26,8 +26,8 @@ class create_tables():
                         )
                         """)
             self.cursor.execute(create_table_query)
-        except:
-            print("I can't  create entries!")
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
         finally:
             if self.conn is not None:
                 self.conn.close()
@@ -53,14 +53,10 @@ class create_tables():
     def entries_drop_table(self):
         try:
             self.conn
-            try:
-                self.cursor.execute('DROP TABLE Entries ;')
-            except (Exception, psycopg2.DatabaseError) as error:
-                print(error)
-                print("I can't  drop entries!")
+            self.cursor.execute('DROP TABLE Entries ;')
+            
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I am unable to drop entries")
         finally:
             if self.conn is not None:
                 self.conn.close()
@@ -71,7 +67,6 @@ class create_tables():
             self.cursor.execute('DROP  TABLE Users CASCADE;')
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I can't  drop users!")
         finally:
             if self.conn is not None:
                 self.conn.close()

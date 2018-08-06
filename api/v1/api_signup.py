@@ -37,7 +37,7 @@ parser.add_argument('name',
 class SignUpApi(Resource):
     "Documentation for signup"
     @swagger.operation(
-        notes="Send a json object as decribed in the schema. User is registered if the phone number has not been used already",
+        notes="Send a json object as decribed in the schema. User is registered if the email  has not been used already",
         parameters=[
             {
                 "name": "Signup body",
@@ -67,15 +67,15 @@ class SignUpApi(Resource):
         res = ''
         if not name:
             return ResponseMessage(
-                "The field 'name' is empty. Please add name",
+                "name is empty. Please add name",
                 400).response()
         if not email:
             return ResponseMessage(
-                "The field 'email' is empty. Please add email",
+                "email is empty. Please add email",
                 400).response()
         if not password:
             return ResponseMessage(
-                "The field 'password' is empty. Please add password",
+                "password is empty. Please add password",
                 400).response()
 
         if not name.isalpha():
@@ -87,11 +87,11 @@ class SignUpApi(Resource):
 
         if not bool(
             match(
-                r"^\+\d{0,3}.\s?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}?",
+                r"^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$",
                 email)):
             print(email.isdigit())
             return ResponseMessage(
-                "email is not valid. use example +256753112233",
+                "email is not valid. use example soko@andela.com",
                 400).response()
         if len(password) < 5:
             return ResponseMessage(

@@ -16,10 +16,10 @@ from flask import jsonify
 class User():
     """User class
 
-    Keyword arguments: name, phone_number, password
+    Keyword arguments: name, email, password
     name -- name of the user
-    phone_number -- phone_number of the user
-    password -- phone_number of the user
+    email -- email of the user
+    password -- password of the user
     """
 
     def __init__(self, name, email, password):
@@ -38,16 +38,15 @@ class User():
 
         if check_result == 'failed':
             print(check_result)
-            return ResponseMessage("failed to create user", 500).response()
+            return ResponseMessage("failed to create user", 400).response()
         elif check_result == 'user exists':
             print(check_result)
             return ResponseMessage(
-                "phone number is already being used", 401).response()
+                "The email is already being used", 401).response()
         else:
             print(check_result)
-            message = "user '" + \
-                check_result[1] + \
-                "' has been successfully registered. You can now login"
+            message = check_result[1] + \
+                " has been successfully registered. You can now login"
             return {
                 "message": message
             }, 201
@@ -57,24 +56,21 @@ class User():
 
         Return: returns Response object
         """
-        check_result = auth_crud().get_user_by_phone(
+        check_result = auth_crud().get_user_by_email(
             self.email)
         if check_result == 'failed':
             return ResponseMessage(
-                "Login failed  phone number does not exist. First signup ",
+                "Login failed  email does not exist. First signup",
                 401).response()
         else:
-            print(check_result[0])
-            print(sha256.verify(self.password, check_result[3]))
             if sha256.verify(self.password, check_result[3]):
                 access_token = create_access_token(
                     identity={
                         "user_id": check_result[0],
                         "name": check_result[1],
                         "email": check_result[2]})
-                message = "user '" + \
-                    check_result[1] + \
-                    "' has been authorised."
+                message = check_result[1] + \
+                    " has been authorised."
                 return {
                     "message": message,
                     'access_token': access_token

@@ -21,7 +21,7 @@ class test_login():
 
     def user_signup(self):
         return self.test_client.post('/api/v1/auth/signup',
-                                     data=dict(email="+256753682060",
+                                     data=dict(email="soko@andela.com",
                                                password="sokool",
                                                name="kool"
                                                )
@@ -55,7 +55,7 @@ def test_login_user_empty_field(email, password, key):
     response = test_client.login(email, password)
     data = json.loads(response.get_data(as_text=True))[
         "message"]
-    assert data == "The field '" + key + "' is empty. Please add " + key
+    assert data == key + " is empty. Please add " + key
 
 # tests login a user with missing field
 
@@ -72,26 +72,26 @@ def test_login_user_missing_field(value):
 
 def test_login_user_wrong_password():
     test_client.user_signup()
-    response = test_client.login("+256753682060", "120")
+    response = test_client.login("soko@andela.com", "120")
     data = json.loads(response.get_data(as_text=True))[
         "message"]
     assert data == "login failed  wrong password "
 
-    # tests logging in wrong phone
+    # tests logging in wrong email
 
 
-def test_login_user_wrong_phone():
+def test_login_user_wrong_email():
     test_client.user_signup()
     response = test_client.login("12ii", "10")
     data = json.loads(response.get_data(as_text=True))[
         "message"]
-    assert data == "Login failed  phone number does not exist. First signup "
+    assert data == "Login failed  email does not exist. First signup"
 # tests logging in wrong password
 
 
 def test_login_user_correct_password():
     test_client.user_signup()
-    response = test_client.login("+256753682060", "sokool")
+    response = test_client.login("soko@andela.com", "sokool")
     data = json.loads(response.get_data(as_text=True))[
         "message"]
-    assert data == "user 'kool' has been authorised."
+    assert data == "kool has been authorised."

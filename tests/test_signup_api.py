@@ -49,10 +49,10 @@ test_client = test_signup(app)
 
 
 def test_signup_add_user():
-    response = test_client.signup("paul", "+256753000000", "password")
+    response = test_client.signup("paul", "soko@andela2.com", "password")
     data = json.loads(response.get_data(as_text=True))[
         "message"]
-    assert data == "user 'paul' has been successfully registered. You can now login"
+    assert data == "paul has been successfully registered. You can now login"
 
 # tests adding a single user empty field
 
@@ -75,7 +75,7 @@ def test_signup_add_user_empty_field(name, email, password, key):
     response = test_client.signup(name, email, password)
     data = json.loads(response.get_data(as_text=True))[
         "message"]
-    assert data == "The field '" + key + "' is empty. Please add " + key
+    assert data == key + " is empty. Please add " + key
 
 
 # tests adding a single user with missing field
@@ -91,9 +91,9 @@ def test_login_user_missing_field(value):
 
 
 def test_signup_add_existing_user():
-    test_client.signup("kool", "+256753682060", "sokool")
-    response = test_client.signup("kool", "+256753682060", "sokool")
+    test_client.signup("kool", "soko@andela.com", "sokool")
+    response = test_client.signup("kool", "soko@andela.com", "sokool")
     # assert response.status_code == 401
     data = json.loads(response.get_data(as_text=True))[
         "message"]
-    assert data == "phone number is already being used"
+    assert data == "The email is already being used"

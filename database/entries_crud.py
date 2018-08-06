@@ -39,8 +39,8 @@ class entries_crud():
                 """SELECT * from Entries WHERE user_id=%s""", [user_id])
             rows = cur.fetchall()
             return rows
-        except BaseException:
-            print("I can't fetch  test database!")
+        except (Exception, psycopg2.DatabaseError) as error:
+            print(error)
         finally:
             if self.conn is not None:
                 self.conn.close()
@@ -55,7 +55,6 @@ class entries_crud():
             return rows[0]
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I can't fetch  test database!")
         finally:
             if self.conn is not None:
                 self.conn.close()
@@ -72,7 +71,6 @@ class entries_crud():
             return rows_deleted
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I can't delete  test database!")
         finally:
             if self.conn is not None:
                 self.conn.close()
@@ -90,8 +88,6 @@ class entries_crud():
 
         except (Exception, psycopg2.DatabaseError) as error:
             print(error)
-            print("I can't fetch  edit database!")
         finally:
             if self.conn is not None:
                 self.conn.close()
-                print("I am unable to edit to the database")

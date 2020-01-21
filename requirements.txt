@@ -34,7 +34,7 @@ pylint==2.0.1
 pytest==3.6.4
 pytest-cov==2.5.1
 pytz==2018.5
-requests==2.19.1
+requests==2.20.0
 six==1.11.0
 typed-ast==1.1.0
 urllib3==1.23
